@@ -1,0 +1,59 @@
+.Calendar {
+    
+    margin-top: 400px;
+    background: #FFFBEB;
+    align-items: center;
+    height:80%;
+    width: 80%;
+    margin-left: 30px;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.header p {
+    margin-top: 45px;
+    font-size:30px;
+}
+
+.move {
+    margin: 50px;
+    background: #d8dbe0;
+    border: none;
+    font-size: 30px;
+
+}
+
+.choice{
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.25rem 1rem;
+    color: #768192;
+    outline: none;
+    cursor: pointer;
+    background: #d8dbe0;
+    margin: 30px;
+}
+.choice:hover {
+    background: black;
+}
+
+input {
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 25px;
+}
+
+
