@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeField, initializeForm} from "../../modules/auth";
 import AuthForm from "../../Components/auth/AuthForm";
+import axios from "axios";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -21,9 +22,9 @@ const LoginForm = () => {
     };
 
     //폼 등록 이벤트 핸들러
-    const onSubmit = e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        //구현 예정이래유
+        await axios.post(`http://localhost:8080/users/login`,form,{withCredentials: true});
     };
 
     //컴포넌트가 처음 렌더링될 떄 form을 초기화함
@@ -33,10 +34,10 @@ const LoginForm = () => {
 
     return (
         <AuthForm
-            type="login"
-            form={form}
-            onChange={onChange}
-            onSubmit={onSubmit}
+                    type="login"
+                    form={form}
+                    onChange={onChange}
+                    onSubmit={onSubmit}
         />
     );
 };

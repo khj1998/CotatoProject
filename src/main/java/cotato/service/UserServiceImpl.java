@@ -19,10 +19,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
-        boolean isExists = checkUserExists(userDto.getUserId());
+        boolean isExists = checkUserExists(userDto.getUsername());
 
         if (isExists) {
-            throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUserId()));
+            throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
             ModelMapper mapper = new ModelMapper();
             mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService{
         return userDto;
     }
 
-    private boolean checkUserExists(String userId) {
-        User user = userRepository.findByUserId(userId);
+    private boolean checkUserExists(String userName) {
+        User user = userRepository.findByUsername(userName);
         return user!=null;
     }
 }

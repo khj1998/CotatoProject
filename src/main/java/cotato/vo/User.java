@@ -14,15 +14,15 @@ public class User {
     private Long id;
 
     @Column(nullable = false,unique = true)
-    private String userId;
+    private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String nickname;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer generation;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

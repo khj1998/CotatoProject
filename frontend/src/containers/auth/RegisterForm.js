@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeField, initializeForm} from "../../modules/auth";
 import AuthForm from "../../Components/auth/AuthForm";
+import axios from "axios";
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -21,9 +22,9 @@ const RegisterForm = () => {
     };
 
     //폼 등록 이벤트 핸들러
-    const onSubmit = e => {
+    const onSubmit = async(e) => {
         e.preventDefault();
-        //구현 예정이래유
+        await axios.post(`http://localhost:8080/users/registration`,form,{withCredentials: true});
     };
 
     //컴포넌트가 처음 렌더링될 떄 form을 초기화함

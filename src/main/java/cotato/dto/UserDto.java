@@ -9,8 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
+
     @NotBlank
-    private String userId;
+    private String username;
     @NotBlank
     private String password;
     @Nullable
