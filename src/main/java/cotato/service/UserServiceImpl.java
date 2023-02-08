@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
-
         boolean isExists = checkUserExists(userDto.getUserId());
 
         if (isExists) {
