@@ -5,7 +5,6 @@ import cotato.repository.UserRepository;
 import cotato.vo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -20,5 +19,5 @@ public class UserServiceImpl implements UserService{
         return userDto;
     }
 
-    
+
 }
