@@ -20,6 +20,9 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    private String nickname;
+
+    @Column(nullable = false)
     private Integer generation;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
