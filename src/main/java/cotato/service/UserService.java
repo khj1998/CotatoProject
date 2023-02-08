@@ -4,4 +4,5 @@ import cotato.dto.UserDto;
 
 public interface UserService {
     UserDto saveUser(UserDto userDto);
+    boolean checkUserValid(UserDto userDto);
 }
