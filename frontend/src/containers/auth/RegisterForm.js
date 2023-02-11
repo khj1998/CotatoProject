@@ -32,7 +32,7 @@ const RegisterForm = () => {
             const result = res.data.message;
             if (result == "REGISTRATION SUCCESS") {
                 alert("회원가입에 성공하였습니다! 로그인 창으로 이동합니다.");
-                window.open('http://localhost:3000/login','_blank');
+                window.open('http://localhost:3000/login','_self');
             } else if (result == "DUPLICATED") {
                 alert("이미 가입되어 있는 아이디입니다!");
             } else if (result == "NOT VALID") {
