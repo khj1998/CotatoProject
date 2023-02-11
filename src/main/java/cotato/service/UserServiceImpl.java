@@ -2,7 +2,9 @@ package cotato.service;
 
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
+import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
+import cotato.vo.Role;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,12 +13,15 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -26,9 +31,7 @@ public class UserServiceImpl implements UserService{
         if (isExists) {
             throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
-            ModelMapper mapper = new ModelMapper();
-            mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-            UserEntity user = mapper.map(userDto, UserEntity.class);
+            UserEntity user = setRoleToUser(userDto);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userRepository.save(user);
         }
@@ -39,5 +42,25 @@ public class UserServiceImpl implements UserService{
     private boolean checkUserExists(String userName) {
         UserEntity user = userRepository.findByUsername(userName);
         return user!=null;
+    }
+
+    private UserEntity setRoleToUser(UserDto userDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserEntity user = modelMapper.map(userDto, UserEntity.class);
+        Role role = roleRepository.findByName("ROLE_USER");
+
+        if (role == null) {
+            role = createRole();
+        }
+
+        user.setRoles(Arrays.asList(role));
+        return user;
+    }
+
+    private Role createRole() {
+        Role role = new Role();
+        role.setName("ROLE_USER");
+        return roleRepository.save(role);
     }
 }
