@@ -24,9 +24,9 @@ public class CalendarServiceImpl implements CalendarService{
 
         CalendarPost calendarPost = modelMapper.map(calendarPostDto, CalendarPost.class);
 
-        calendarPostRepository.save(calendarPost);
-
         System.out.println(calendarPost);
+
+        calendarPostRepository.save(calendarPost);
 
         return calendarPostDto;
     }

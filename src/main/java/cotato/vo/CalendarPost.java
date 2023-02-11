@@ -13,7 +13,7 @@ public class CalendarPost {
     private Long postId;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID", referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
     private User author;
 
     @Column
