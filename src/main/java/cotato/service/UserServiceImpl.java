@@ -3,7 +3,7 @@ package cotato.service;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
 import cotato.repository.UserRepository;
-import cotato.vo.User;
+import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
         } else {
             ModelMapper mapper = new ModelMapper();
             mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-            User user = mapper.map(userDto,User.class);
+            UserEntity user = mapper.map(userDto, UserEntity.class);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userRepository.save(user);
         }
@@ -36,18 +36,8 @@ public class UserServiceImpl implements UserService{
         return userDto;
     }
 
-    @Override
-    public boolean checkUserValid(UserDto userDto) {
-        User user = userRepository.findByUsername(userDto.getUsername());
-
-        if (user == null || !passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-            return false;
-        }
-        return true;
-    }
-
     private boolean checkUserExists(String userName) {
-        User user = userRepository.findByUsername(userName);
+        UserEntity user = userRepository.findByUsername(userName);
         return user!=null;
     }
 }
