@@ -52,7 +52,7 @@ const AuthForm = ({type, form, onChange, onSubmit}) => {
     return (
         <AuthFormBlock>
             <h3>{text}</h3>
-            <form action="/login">
+            <form onSubmit={onSubmit}>
                 <StyledInput
                     autocomplete="username"
                     name="username"
