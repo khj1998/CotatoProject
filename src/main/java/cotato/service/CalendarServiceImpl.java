@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class CalendarServiceImpl implements CalendarService{
 
-    private CalendarPostRepository calendarPostRepository;
+    private final CalendarPostRepository calendarPostRepository;
 
     @Override
     public CalendarPostDto savePost(CalendarPostDto calendarPostDto) {
