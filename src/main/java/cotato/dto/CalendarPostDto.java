@@ -9,7 +9,6 @@ import org.springframework.lang.Nullable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CalendarPostDto {
 
-    @Nullable
     private Long postId;
 
     private User author;

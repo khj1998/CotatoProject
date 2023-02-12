@@ -9,5 +9,9 @@ public interface CalendarService {
 
     CalendarPostDto savePost(CalendarPostDto calendarPostDto);
 
+    CalendarPostDto deletePost(CalendarPostDto calendarPostDto);
+
     Boolean isUserExist(Long id);
+
+    Boolean isPostExist(Long postId);
 }

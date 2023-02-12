@@ -32,7 +32,23 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
+    public CalendarPostDto deletePost(CalendarPostDto calendarPostDto) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        CalendarPost calendarPost = modelMapper.map(calendarPostDto, CalendarPost.class);
+
+        calendarPostRepository.delete(calendarPost);
+
+        return calendarPostDto;
+    }
+
+    @Override
     public Boolean isUserExist(Long id) {
         return userRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public Boolean isPostExist(Long postId) {
+        return calendarPostRepository.findById(postId).isPresent();
     }
 }
