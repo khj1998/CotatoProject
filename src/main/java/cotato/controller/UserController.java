@@ -7,10 +7,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Slf4j
 @RestController
@@ -29,6 +35,21 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userDto);
     }*/
+
+    @GetMapping("/users/auth")
+    public ResponseEntity<String> authCheck() {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        Object principal = authentication.getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        log.info("username : {}, principal : {}, authorities : {} , authenticated? : {}",
+                username,principal,authorities,authentication.isAuthenticated());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("ok");
+    }
 
     @PostMapping("/users/registration")
     public ResponseEntity<SignUpResponse> register(@RequestBody @Valid UserDto userDto) {

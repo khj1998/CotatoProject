@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -46,9 +48,10 @@ public class SecurityConfig {
                 .configurationSource(corsConfigurationSource())
                 .and()
                 .csrf().disable()
-                .authorizeHttpRequests( (authorize) -> {
-                    authorize.antMatchers("register").authenticated();
-                })
+                .authorizeHttpRequests()
+                .requestMatchers(new AntPathRequestMatcher("/cotato/**"))
+                .hasRole("ROLE_USER")
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("username")
@@ -57,6 +60,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/login");
