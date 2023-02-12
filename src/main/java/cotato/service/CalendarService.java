@@ -8,4 +8,6 @@ import java.time.LocalDate;
 public interface CalendarService {
 
     CalendarPostDto savePost(CalendarPostDto calendarPostDto);
+
+    Boolean isUserExist(Long id);
 }

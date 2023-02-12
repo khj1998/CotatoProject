@@ -2,6 +2,7 @@ package cotato.controller;
 
 import cotato.dto.CalendarDto;
 import cotato.dto.CalendarPostDto;
+import cotato.exception.UserNotFoundException;
 import cotato.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +27,9 @@ public class CalendarController {
     ResponseEntity<CalendarPostDto> saveCalendarPost(@RequestBody CalendarPostDto calendarPostDto){
 
         System.out.println(calendarPostDto);
+
+        if(!calendarService.isUserExist(calendarPostDto.getAuthor().getId()))
+            throw new UserNotFoundException(calendarPostDto.getAuthor().getId());
 
         calendarService.savePost(calendarPostDto);
 

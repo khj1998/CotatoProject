@@ -3,6 +3,7 @@ package cotato.service;
 import cotato.dto.CalendarDto;
 import cotato.dto.CalendarPostDto;
 import cotato.repository.CalendarPostRepository;
+import cotato.repository.UserRepository;
 import cotato.vo.CalendarPost;
 import cotato.vo.User;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 public class CalendarServiceImpl implements CalendarService{
 
     private final CalendarPostRepository calendarPostRepository;
+    private final UserRepository userRepository;
 
     @Override
     public CalendarPostDto savePost(CalendarPostDto calendarPostDto) {
@@ -24,10 +26,13 @@ public class CalendarServiceImpl implements CalendarService{
 
         CalendarPost calendarPost = modelMapper.map(calendarPostDto, CalendarPost.class);
 
-        System.out.println(calendarPost);
-
         calendarPostRepository.save(calendarPost);
 
         return calendarPostDto;
+    }
+
+    @Override
+    public Boolean isUserExist(Long id) {
+        return userRepository.findById(id).isPresent();
     }
 }
