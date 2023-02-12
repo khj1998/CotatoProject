@@ -1,7 +1,6 @@
 package cotato.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import cotato.vo.User;
 import lombok.Data;
 
 @Data

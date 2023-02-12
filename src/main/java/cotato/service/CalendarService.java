@@ -9,6 +9,8 @@ public interface CalendarService {
 
     List<CalendarShowUserDto> showAllPostsWithCalendarPostDto();
 
+    List<CalendarShowUserDto> showPostsWithDay(Long year, Long month, Long day);
+
     CalendarPostDto savePost(CalendarPostDto calendarPostDto);
 
     CalendarPostDto deletePost(CalendarPostDto calendarPostDto);

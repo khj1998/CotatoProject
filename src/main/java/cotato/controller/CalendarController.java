@@ -25,6 +25,16 @@ public class CalendarController {
                 .body(calendarService.showAllPostsWithCalendarPostDto());
     }
 
+    @GetMapping("/cotato/{year}/{month}/{day}")
+    ResponseEntity<List<CalendarShowUserDto>> showPostsWithDay(@PathVariable Long year,
+                                                             @PathVariable Long month,
+                                                             @PathVariable Long day)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(calendarService.showPostsWithDay(year, month, day));
+    }
+
     @PostMapping("/cotato")
     ResponseEntity<CalendarPostDto> saveCalendarPost(@RequestBody CalendarPostDto calendarPostDto){
 

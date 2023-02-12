@@ -37,6 +37,27 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
+    public List<CalendarShowUserDto> showPostsWithDay(Long year, Long month, Long day) {
+        List<CalendarPost> calendarPostList = calendarPostRepository.findAll();
+        List<CalendarShowUserDto> calendarShowUserDtoList = new ArrayList<>();
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        for(CalendarPost calendarPost : calendarPostList)
+            if(calendarPost.getStartYear()<=year && calendarPost.getEndYear()>=year)
+                if(calendarPost.getStartMonth()<=month && calendarPost.getEndMonth()>=month)
+                    if(calendarPost.getStartDay()<=day && calendarPost.getEndDay()>=day){
+
+                        CalendarShowUserDto calendarShowUserDto = modelMapper.map(calendarPost, CalendarShowUserDto.class);
+                        calendarShowUserDto.setAuthorId(calendarPost.getAuthor().getId());
+
+                        calendarShowUserDtoList.add(calendarShowUserDto);
+                    }
+
+        return calendarShowUserDtoList;
+    }
+
+    @Override
     public CalendarPostDto savePost(CalendarPostDto calendarPostDto) {
         ModelMapper modelMapper = new ModelMapper();
 
