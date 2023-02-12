@@ -27,11 +27,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("{} 해당 계정을 찾을 수 없습니다!",username));
         }
-        return new User(
+
+        UserDetails userDetails = new UserDetailsImpl(
                 user.getUsername(),
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles())
         );
+        return userDetails;
     }
 
     private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {

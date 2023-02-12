@@ -2,6 +2,7 @@ package cotato.controller.exceptioncontroller;
 
 import cotato.exception.UserAlreadyExistsException;
 import cotato.exception.UserNotExistsException;
+import cotato.exception.UserPasswordInValidException;
 import cotato.vo.SignResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,13 @@ public class ExceptionHandleController {
     @ExceptionHandler(UserNotExistsException.class)
     public ResponseEntity<SignResponse> handleUserNotExistsException() {
         res.setMessage("USER NOT FOUND");
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(res);
+    }
+
+    @ExceptionHandler(UserPasswordInValidException.class)
+    public ResponseEntity<SignResponse> handleUserPasswordNotValidException() {
+        res.setMessage("PASSWORD INVALID");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(res);
     }

@@ -33,7 +33,7 @@ const LoginForm = () => {
             if (result == "LOGIN SUCCESS") {
                 alert("로그인에 성공하였습니다! 로그인 창으로 이동합니다.");
                 window.open('http://localhost:3000/cotato','_self');
-            } else if (result == "NOT VALID") {
+            } else if (result == "PASSWORD INVALID") {
                 alert("비밀번호를 확인해주세요!");
             } else if (result == "USER NOT FOUND") {
                 alert("가입되지 않은 아이디입니다!");

@@ -9,5 +9,4 @@ public class CotatoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CotatoApplication.class, args);
 	}
-
 }

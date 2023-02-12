@@ -4,6 +4,7 @@ import cotato.dto.LogInDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
 import cotato.exception.UserNotExistsException;
+import cotato.exception.UserPasswordInValidException;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
@@ -15,11 +16,13 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Arrays;
 
 @Slf4j
@@ -34,17 +37,22 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String Login(LogInDto logInDto) {
+        UserEntity user = userRepository.findByUsername(logInDto.getUsername());
 
-        if (userRepository.findByUsername(logInDto.getUsername()) == null) {
+        if (user == null) {
             throw new UserNotExistsException(String.format("User %s not exists", logInDto.getUsername()));
         }
 
-        Authentication authentication = authenticationManager.authenticate
-                (new UsernamePasswordAuthenticationToken(logInDto.getUsername(),logInDto.getPassword()));
+        log.info("pwd : {},encoded DB pwd : {}",logInDto.getPassword(),user.getPassword());
+        if (!passwordEncoder.matches(logInDto.getPassword(), user.getPassword())) {
+            throw new UserPasswordInValidException("User password not valid!");
+        }
+        /* 유효한 로그인 정보. SecurityContextHolder 에 authentication 객체 주입 */
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        //Principal principal = new
+        //Authentication authentication = new UsernamePasswordAuthenticationToken();
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        User principal = (User) authentication.getPrincipal();
-        return principal.getUsername();
+        return "씨발!";
     }
 
     @Override
