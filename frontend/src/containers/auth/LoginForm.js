@@ -24,7 +24,7 @@ const LoginForm = () => {
     //폼 등록 이벤트 핸들러
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post(`http://localhost:8080/users/login`,form,
+        await axios.post(`http://localhost:8080/login`,form,
         {
             withCredentials: true,
             headers : {"Content-Type" : "application/json"}

@@ -6,5 +6,4 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserService {
     UserDto saveUser(UserDto userDto);
-    UserDetails Login(LogInDto logInDto);
 }

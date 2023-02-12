@@ -42,12 +42,11 @@ public class UserController {
                 .body("ok");
     }
 
-    @PostMapping("/users/login")
+    @PostMapping("/login")
     public ResponseEntity<SignResponse> login(@RequestBody @Valid LogInDto logInDto) {
-        UserDetails userDetails = userService.Login(logInDto);
-        log.info("인증 정보 : {},{}",userDetails.getUsername(),userDetails.getPassword());
+
         SignResponse res = new SignResponse();
-        res.setMessage("LOGIN SUCCESS");
+        res.setMessage("NOT VALID");
 
         return ResponseEntity
                 .status(HttpStatus.OK)

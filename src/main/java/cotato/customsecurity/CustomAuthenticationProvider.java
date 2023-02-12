@@ -1,5 +1,6 @@
 package cotato.customsecurity;
 
+import cotato.exception.UserNotExistsException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsService customUserDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -26,17 +27,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
         String username = String.valueOf(authentication.getName());
         String password = String.valueOf(authentication.getCredentials());
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-        //User is an org.springframework.security.core.userdetails.User object
-        UserDetails user = userDetailsService.loadUserByUsername(username);
-
-        if (user == null) {
-            return null; //throw new UsernameNotFoundException(String.format("Username not found"));
+        if (userDetails == null) {
+            throw new UserNotExistsException("헤당 유저가 존재하지 않습니다!");
         }
 
-        if (user.getPassword().equals(password)) {
-            authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
+        if (userDetails.getPassword().equals(password)) {
+            authToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
         }
+        log.info("Authentication token : {}",authToken);
         return authToken;
     }
 
