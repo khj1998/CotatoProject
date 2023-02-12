@@ -15,8 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,6 +27,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .configurationSource(corsConfigurationSource())
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers(HttpMethod.POST,"/users/login/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/users/login/**").authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -64,13 +64,14 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/login");
 
+        http.addFilter(new BasicAuthenticationFilter(authenticationManager(http)));
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .authenticationProvider(new DaoAuthenticationProvider())
+                .authenticationProvider(authenticationProvider)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
                 .and()

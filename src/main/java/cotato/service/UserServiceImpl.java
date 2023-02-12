@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails Login(LogInDto logInDto) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(logInDto.getUsername());
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(logInDto.getUsername());
         log.info("pwd : {},encoded DB pwd : {}",logInDto.getPassword(),userDetails.getPassword());
         if (!passwordEncoder.matches(logInDto.getPassword(), userDetails.getPassword())) {
             throw new UserPasswordInValidException("User password not valid!");
@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService{
         );
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
+        authenticationManager.authenticate(authentication);
 
         return userDetails;
     }
