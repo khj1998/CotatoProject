@@ -1,5 +1,6 @@
 package cotato.controller;
 
+import cotato.dto.LogInDto;
 import cotato.dto.UserDto;
 import cotato.service.UserService;
 import cotato.vo.SignResponse;
@@ -41,9 +42,9 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public ResponseEntity<SignResponse> login(@RequestBody @Valid UserDto userDto) {
-        userService.Login(userDto);
-        log.info("로그인 정보 : {},{}",userDto.getUsername(),userDto.getPassword());
+    public ResponseEntity<SignResponse> login(@RequestBody @Valid LogInDto logInDto) {
+        userService.Login(logInDto);
+        log.info("로그인 정보 : {},{}",logInDto.getUsername(),logInDto.getPassword());
         SignResponse res = new SignResponse();
         res.setMessage("LOGIN SUCCESS");
 

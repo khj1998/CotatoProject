@@ -1,5 +1,6 @@
 package cotato.service;
 
+import cotato.dto.LogInDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
 import cotato.exception.UserNotExistsException;
@@ -32,14 +33,14 @@ public class UserServiceImpl implements UserService{
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public String Login(UserDto userDto) {
+    public String Login(LogInDto logInDto) {
 
-        if (userRepository.findByUsername(userDto.getUsername()) == null) {
-            throw new UserNotExistsException(String.format("User %s not exists", userDto.getUsername()));
+        if (userRepository.findByUsername(logInDto.getUsername()) == null) {
+            throw new UserNotExistsException(String.format("User %s not exists", logInDto.getUsername()));
         }
 
         Authentication authentication = authenticationManager.authenticate
-                (new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword()));
+                (new UsernamePasswordAuthenticationToken(logInDto.getUsername(),logInDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User principal = (User) authentication.getPrincipal();
