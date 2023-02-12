@@ -2,7 +2,7 @@ package cotato.controller;
 
 import cotato.dto.UserDto;
 import cotato.service.UserService;
-import cotato.vo.SignUpResponse;
+import cotato.vo.SignResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,17 +25,6 @@ public class UserController {
 
     private final UserService userService;
 
-    /*@PostMapping("/users/login")
-    public ResponseEntity<UserDto> logIn(@RequestBody UserDto userDto, HttpServletRequest req) {
-
-        HttpSession session = req.getSession(true);
-        session.setAttribute(SessionConst.USER_SESSION,userDto);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userDto);
-    }*/
-
     @GetMapping("/users/auth")
     public ResponseEntity<String> authCheck() {
 
@@ -51,12 +40,24 @@ public class UserController {
                 .body("ok");
     }
 
+    @PostMapping("/users/login")
+    public ResponseEntity<SignResponse> login(@RequestBody @Valid UserDto userDto) {
+        userService.Login(userDto);
+        log.info("로그인 정보 : {},{}",userDto.getUsername(),userDto.getPassword());
+        SignResponse res = new SignResponse();
+        res.setMessage("LOGIN SUCCESS");
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(res);
+    }
+
     @PostMapping("/users/registration")
-    public ResponseEntity<SignUpResponse> register(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<SignResponse> register(@RequestBody @Valid UserDto userDto) {
 
         log.info("user id : {}, password : {}",userDto.getUsername(),userDto.getPassword());
         userService.saveUser(userDto);
-        SignUpResponse res = new SignUpResponse();
+        SignResponse res = new SignResponse();
         res.setMessage("REGISTRATION SUCCESS");
 
         return ResponseEntity

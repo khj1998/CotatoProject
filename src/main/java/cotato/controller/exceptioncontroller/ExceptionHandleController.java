@@ -1,7 +1,8 @@
 package cotato.controller.exceptioncontroller;
 
 import cotato.exception.UserAlreadyExistsException;
-import cotato.vo.SignUpResponse;
+import cotato.exception.UserNotExistsException;
+import cotato.vo.SignResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,24 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionHandleController {
 
+    SignResponse res = new SignResponse();
+
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<SignUpResponse> handleUserExistsError() {
-        SignUpResponse res = new SignUpResponse();
+    public ResponseEntity<SignResponse> handleUserExistsException() {
         res.setMessage("DUPLICATED");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(res);
     }
 
+    @ExceptionHandler(UserNotExistsException.class)
+    public ResponseEntity<SignResponse> handleUserNotExistsException() {
+        res.setMessage("USER NOT FOUND");
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(res);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<SignUpResponse> handleAnnotationError() {
-        SignUpResponse res = new SignUpResponse();
+    public ResponseEntity<SignResponse> handleAnnotationException() {
         res.setMessage("NOT VALID");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(res);
