@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandleController {
-
     SignResponse res = new SignResponse();
 
     @ExceptionHandler(UserAlreadyExistsException.class)

@@ -1,5 +1,6 @@
 package cotato.securityservice;
 
+import cotato.exception.UserNotExistsException;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
 import cotato.vo.UserEntity;
@@ -25,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("{} 해당 계정을 찾을 수 없습니다!",username));
+            throw new UserNotExistsException("가입되지 않은 아이디 입니다!");
         }
 
         UserDetails userDetails = new UserDetailsImpl(

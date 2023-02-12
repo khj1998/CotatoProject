@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,8 +44,8 @@ public class UserController {
 
     @PostMapping("/users/login")
     public ResponseEntity<SignResponse> login(@RequestBody @Valid LogInDto logInDto) {
-        userService.Login(logInDto);
-        log.info("로그인 정보 : {},{}",logInDto.getUsername(),logInDto.getPassword());
+        UserDetails userDetails = userService.Login(logInDto);
+        log.info("인증 정보 : {},{}",userDetails.getUsername(),userDetails.getPassword());
         SignResponse res = new SignResponse();
         res.setMessage("LOGIN SUCCESS");
 

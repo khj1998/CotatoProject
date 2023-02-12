@@ -19,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,26 +35,29 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public String Login(LogInDto logInDto) {
-        UserEntity user = userRepository.findByUsername(logInDto.getUsername());
+    public UserDetails Login(LogInDto logInDto) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(logInDto.getUsername());
 
-        if (user == null) {
-            throw new UserNotExistsException(String.format("User %s not exists", logInDto.getUsername()));
-        }
-
-        log.info("pwd : {},encoded DB pwd : {}",logInDto.getPassword(),user.getPassword());
-        if (!passwordEncoder.matches(logInDto.getPassword(), user.getPassword())) {
+        log.info("pwd : {},encoded DB pwd : {}",logInDto.getPassword(),userDetails.getPassword());
+        if (!passwordEncoder.matches(logInDto.getPassword(), userDetails.getPassword())) {
             throw new UserPasswordInValidException("User password not valid!");
         }
-        /* 유효한 로그인 정보. SecurityContextHolder 에 authentication 객체 주입 */
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        //Principal principal = new
-        //Authentication authentication = new UsernamePasswordAuthenticationToken();
 
-        return "씨발!";
+        /* 유효한 로그인 정보. SecurityContextHolder 에 authentication 객체 주입 */
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        return userDetails;
     }
 
     @Override
