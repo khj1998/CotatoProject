@@ -1,6 +1,5 @@
 package cotato.controller;
 
-import cotato.dto.CalendarDto;
 import cotato.dto.CalendarPostDto;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
@@ -10,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class CalendarController {
@@ -17,8 +18,10 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @GetMapping("/cotato")
-    ResponseEntity<CalendarPostDto> showPosts(@RequestBody CalendarDto calendarDto){
-        return null;
+    ResponseEntity<List<CalendarPostDto>> showAllPosts(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(calendarService.showAllPostsWithCalendarPostDto());
     }
 
     @PostMapping("/cotato")
