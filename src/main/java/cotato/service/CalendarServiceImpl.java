@@ -1,6 +1,7 @@
 package cotato.service;
 
 import cotato.dto.CalendarPostDto;
+import cotato.dto.CalendarShowUserDto;
 import cotato.repository.CalendarPostRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.CalendarPost;
@@ -19,19 +20,20 @@ public class CalendarServiceImpl implements CalendarService{
     private final UserRepository userRepository;
 
     @Override
-    public List<CalendarPostDto> showAllPostsWithCalendarPostDto() {
+    public List<CalendarShowUserDto> showAllPostsWithCalendarPostDto() {
         List<CalendarPost> calendarPostList = calendarPostRepository.findAll();
-        List<CalendarPostDto> calendarPostDtoList = new ArrayList<>();
+        List<CalendarShowUserDto> calendarShowUserDtoList= new ArrayList<>();
 
         ModelMapper modelMapper = new ModelMapper();
 
         for (CalendarPost calendarPost : calendarPostList) {
-            CalendarPostDto calendarPostDto = modelMapper.map(calendarPost, CalendarPostDto.class);
+            CalendarShowUserDto calendarShowUserDto = modelMapper.map(calendarPost, CalendarShowUserDto.class);
+            calendarShowUserDto.setAuthorId(calendarPost.getAuthor().getId());
 
-            calendarPostDtoList.add(calendarPostDto);
+            calendarShowUserDtoList.add(calendarShowUserDto);
         }
 
-        return calendarPostDtoList;
+        return calendarShowUserDtoList;
     }
 
     @Override

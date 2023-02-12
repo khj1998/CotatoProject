@@ -1,12 +1,13 @@
 package cotato.service;
 
 import cotato.dto.CalendarPostDto;
+import cotato.dto.CalendarShowUserDto;
 
 import java.util.List;
 
 public interface CalendarService {
 
-    List<CalendarPostDto> showAllPostsWithCalendarPostDto();
+    List<CalendarShowUserDto> showAllPostsWithCalendarPostDto();
 
     CalendarPostDto savePost(CalendarPostDto calendarPostDto);
 

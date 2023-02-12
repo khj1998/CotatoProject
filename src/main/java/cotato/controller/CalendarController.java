@@ -1,6 +1,7 @@
 package cotato.controller;
 
 import cotato.dto.CalendarPostDto;
+import cotato.dto.CalendarShowUserDto;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
 import cotato.service.CalendarService;
@@ -18,7 +19,7 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @GetMapping("/cotato")
-    ResponseEntity<List<CalendarPostDto>> showAllPosts(){
+    ResponseEntity<List<CalendarShowUserDto>> showAllPosts(){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(calendarService.showAllPostsWithCalendarPostDto());
