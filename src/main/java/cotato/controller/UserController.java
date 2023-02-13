@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,31 +26,33 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/users/auth")
-    public ResponseEntity<String> authCheck() {
+    @PostMapping("/login/result")
+    public ResponseEntity<SignResponse> loginResult(@RequestBody LogInDto logInDto) {
+
+        SignResponse res = new SignResponse();
 
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
-        Object principal = authentication.getPrincipal();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        log.info("username : {}, principal : {}, authorities : {} , authenticated? : {}",
-                username,principal,authorities,authentication.isAuthenticated());
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("ok");
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<SignResponse> login(@RequestBody @Valid LogInDto logInDto) {
-
-        SignResponse res = new SignResponse();
-        res.setMessage("NOT VALID");
+        if (username.equals(logInDto.getUsername())){
+            res.setMessage("LOGIN SUCCESS");
+        } else {
+            res.setMessage("INVALID");
+        }
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(res);
     }
+
+    @GetMapping("/users/login")
+    public ResponseEntity loginSuccessEndPoint() {
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/users/login")
+    public void login() {}
 
     @PostMapping("/users/registration")
     public ResponseEntity<SignResponse> register(@RequestBody @Valid UserDto userDto) {

@@ -9,14 +9,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-
     private final UserDetailsService customUserDetailsService;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -29,14 +32,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = String.valueOf(authentication.getCredentials());
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-        if (userDetails == null) {
-            throw new UserNotExistsException("헤당 유저가 존재하지 않습니다!");
-        }
-
-        if (userDetails.getPassword().equals(password)) {
+        if (userDetails!=null && passwordEncoder.matches(password,userDetails.getPassword())) {
             authToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
         }
-        log.info("Authentication token : {}",authToken);
+
         return authToken;
     }
 

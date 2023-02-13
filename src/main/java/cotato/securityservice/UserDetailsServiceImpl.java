@@ -1,13 +1,11 @@
 package cotato.securityservice;
 
-import cotato.exception.UserNotExistsException;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,16 +23,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
+
         if (user == null) {
-            throw new UserNotExistsException("가입되지 않은 아이디 입니다!");
+            return null;
         }
 
-        UserDetails userDetails = new UserDetailsImpl(
+        return new UserDetailsImpl(
                 user.getUsername(),
                 user.getPassword(),
                 mapRolesToAuthorities(user.getRoles())
         );
-        return userDetails;
     }
 
     private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
