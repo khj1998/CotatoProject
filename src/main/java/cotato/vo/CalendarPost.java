@@ -20,20 +20,20 @@ public class CalendarPost {
     private String content;
 
     @Column
-    private Long startYear;
+    private String startYear;
 
     @Column
-    private Long startMonth;
+    private String startMonth;
 
     @Column
-    private Long startDay;
+    private String startDay;
 
     @Column
-    private Long endYear;
+    private String endYear;
 
     @Column
-    private Long endMonth;
+    private String endMonth;
 
     @Column
-    private Long endDay;
+    private String endDay;
 }

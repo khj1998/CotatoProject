@@ -14,15 +14,15 @@ public class CalendarPostDto {
 
     private String content;
 
-    private Long startYear;
+    private String startYear;
 
-    private Long startMonth;
+    private String startMonth;
 
-    private Long startDay;
+    private String startDay;
 
-    private Long endYear;
+    private String endYear;
 
-    private Long endMonth;
+    private String endMonth;
 
-    private Long endDay;
+    private String endDay;
 }

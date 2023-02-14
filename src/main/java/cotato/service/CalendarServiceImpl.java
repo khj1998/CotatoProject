@@ -44,9 +44,9 @@ public class CalendarServiceImpl implements CalendarService{
         ModelMapper modelMapper = new ModelMapper();
 
         for(CalendarPost calendarPost : calendarPostList)
-            if(calendarPost.getStartYear()<=year && calendarPost.getEndYear()>=year)
-                if(calendarPost.getStartMonth()<=month && calendarPost.getEndMonth()>=month)
-                    if(calendarPost.getStartDay()<=day && calendarPost.getEndDay()>=day){
+            if(Long.parseLong(calendarPost.getStartYear())<=year && Long.parseLong(calendarPost.getEndYear())>=year)
+                if(Long.parseLong(calendarPost.getStartMonth())<=month && Long.parseLong(calendarPost.getEndMonth())>=month)
+                    if(Long.parseLong(calendarPost.getStartDay())<=day && Long.parseLong(calendarPost.getEndDay())>=day){
 
                         CalendarShowUserDto calendarShowUserDto = modelMapper.map(calendarPost, CalendarShowUserDto.class);
                         calendarShowUserDto.setAuthorId(calendarPost.getAuthor().getId());
