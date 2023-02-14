@@ -39,9 +39,9 @@ public class VotePost {
     @Column
     private Long endDay;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     List<User> participatedUsers = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     List<User> notParticipatedUsers = new ArrayList<>();
 }
