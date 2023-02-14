@@ -1,9 +1,7 @@
 package cotato.service;
 
-import cotato.dto.LogInDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
-import cotato.exception.UserPasswordInValidException;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
@@ -13,13 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
@@ -35,9 +29,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
-        boolean isExists = checkUserExists(userDto.getUsername());
-
-        if (isExists) {
+        if (checkUserExists(userDto.getUsername())) {
             throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
             UserEntity user = setRoleToUser(userDto);
@@ -74,16 +66,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void checkUserNameValid(String reqUserName, SignResponse res) {
+    public void checkUserValid(String reqUserName, SignResponse res) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
-
-        if (username.equals(reqUserName)){
-            res.setMessage("LOGIN SUCCESS");
-            return;
-        }
-
-        res.setMessage("INVALID");
+        
+        /** 추후 API 유효성 검증시 사용 예정 */
     }
 }

@@ -36,7 +36,7 @@ const RegisterForm = () => {
             } else if (result == "DUPLICATED") {
                 alert("이미 가입되어 있는 아이디입니다!");
             } else if (result == "NOT VALID") {
-                alert("아이디/비밀번호를 확인해주세요!");
+                alert("아이디/비밀번호를 모두 기입해주세요!");
             }
         });
     };
