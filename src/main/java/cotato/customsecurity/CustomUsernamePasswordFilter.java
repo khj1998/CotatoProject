@@ -2,9 +2,7 @@ package cotato.customsecurity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cotato.dto.UserDto;
-import cotato.vo.SignResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,8 +10,6 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
@@ -70,12 +66,8 @@ public class CustomUsernamePasswordFilter extends AbstractAuthenticationProcessi
 
         setDetails(request, authRequest);
         Authentication authResult = this.getAuthenticationManager().authenticate(authRequest);
-        log.info("authentication result {}", authResult);
 
-        if (authResult == null) {
-            log.info("인증실패!");
-            throw new UsernameNotFoundException("가입되지 않은 유저입니다!");
-        }
+        log.info("authentication result {}", authResult);
 
         response.sendRedirect("/users/login");
         return authResult;

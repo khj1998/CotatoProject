@@ -7,6 +7,7 @@ import cotato.exception.UserPasswordInValidException;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
+import cotato.vo.SignResponse;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,5 +71,19 @@ public class UserServiceImpl implements UserService{
         Role role = new Role();
         role.setName("ROLE_USER");
         return roleRepository.save(role);
+    }
+
+    @Override
+    public void checkUserNameValid(String reqUserName, SignResponse res) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+
+        if (username.equals(reqUserName)){
+            res.setMessage("LOGIN SUCCESS");
+            return;
+        }
+
+        res.setMessage("INVALID");
     }
 }

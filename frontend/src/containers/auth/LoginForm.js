@@ -6,6 +6,7 @@ import axios from "axios";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
+    const UNAUTHORIZED  = 401;
     const {form} = useSelector(({auth}) => ({
         form: auth.login
     }));
@@ -28,6 +29,8 @@ const LoginForm = () => {
         {
             withCredentials: true,
             headers : {"Content-Type" : "application/json"}
+        }).catch((error) => {
+            alert("아이디 혹은 비밀번호를 확인하세요!");
         });
         
         await axios.post(`http://localhost:8080/login/result`,form,
@@ -39,11 +42,9 @@ const LoginForm = () => {
             if (result == "LOGIN SUCCESS") {
                 alert("로그인에 성공하였습니다! 메인 페이지로 이동합니다.");
                 window.open('http://localhost:3000/cotato','_self');
-            } else if (result == "INVALID") {
-                alert("아이디 혹은 비밀번호를 확인해주세요!");
             }
         });
-    };
+    }
 
     //컴포넌트가 처음 렌더링될 떄 form을 초기화함
     useEffect(() => {

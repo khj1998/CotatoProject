@@ -30,16 +30,7 @@ public class UserController {
     public ResponseEntity<SignResponse> loginResult(@RequestBody LogInDto logInDto) {
 
         SignResponse res = new SignResponse();
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        String username = authentication.getName();
-
-        if (username.equals(logInDto.getUsername())){
-            res.setMessage("LOGIN SUCCESS");
-        } else {
-            res.setMessage("INVALID");
-        }
+        userService.checkUserNameValid(logInDto.getUsername(),res);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

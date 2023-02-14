@@ -22,10 +22,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication)  throws AuthenticationException {
         UsernamePasswordAuthenticationToken authToken = null;
 
         if (authentication == null) {
+            log.info("authentication is null!!");
             return null;
         }
         String username = String.valueOf(authentication.getName());
@@ -41,6 +42,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
+        log.info("support? : {}", authentication.equals(UsernamePasswordAuthenticationToken.class));
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
