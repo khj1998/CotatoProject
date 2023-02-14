@@ -7,8 +7,12 @@ import MyPage from './Components/MyPage';
 import Modify from './Components/Modify';
 import WritePage from './Components/WritePage';
 import PostDetailPage from './Components/PostDetailPage';
+import {useState, useCallback} from 'react';
+
+import Categories from './Components/Categories';
 
 const App = () => {
+
     return (
         <>
             <Route component={MainPage} path="/cotato" />
