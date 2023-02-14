@@ -7,6 +7,7 @@ import cotato.repository.UserRepository;
 import cotato.vo.Role;
 import cotato.vo.SignResponse;
 import cotato.vo.UserEntity;
+import cotato.vo.ValidResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -66,11 +67,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void checkUserValid(String reqUserName, SignResponse res) {
+    public void checkUserValid(ValidResponse res) {
         SecurityContext context = SecurityContextHolder.getContext();
+        log.info("context : {}",context);
         Authentication authentication = context.getAuthentication();
-        String username = authentication.getName();
         
         /** 추후 API 유효성 검증시 사용 예정 */
+        if (authentication.isAuthenticated()) {
+            res.setStatus("AUTHORIZED");
+            res.setMessage("인증된 유저입니다.");
+        } else {
+            res.setStatus("UNAUTHORIZED");
+            res.setMessage("인증되지 않은 유저입니다.");
+        }
+    }
+
+    @Override
+    public void logoutProcess() {
+        SecurityContextHolder.clearContext();
+        SecurityContext context = SecurityContextHolder.getContext();
+        log.info("context : {}",context);
     }
 }

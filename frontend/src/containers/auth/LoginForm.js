@@ -6,7 +6,7 @@ import axios from "axios";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
-    const UNAUTHORIZED  = 401;
+    let isLoginFailed = false;
     const {form} = useSelector(({auth}) => ({
         form: auth.login
     }));
@@ -31,19 +31,23 @@ const LoginForm = () => {
             headers : {"Content-Type" : "application/json"}
         }).catch((error) => {
             alert("아이디 혹은 비밀번호를 확인하세요!");
-        });
+            isLoginFailed = true;
+        })
         
-        await axios.post(`http://localhost:8080/login/result`,form,
+        if (!isLoginFailed)
         {
-            withCredentials: true,
-            headers : {"Content-Type" : "application/json"}
-        }).then((res) => {
-            const result = res.data.message;
-            if (result == "LOGIN SUCCESS") {
-                alert("로그인에 성공하였습니다! 메인 페이지로 이동합니다.");
-                window.open('http://localhost:3000/cotato','_self');
-            }
-        });
+            await axios.post(`http://localhost:8080/login/result`,form,
+            {
+                withCredentials: true,
+                headers : {"Content-Type" : "application/json"}
+            }).then((res) => {
+                const result = res.data.message;
+                if (result == "LOGIN SUCCESS") {
+                    alert("로그인에 성공하였습니다! 메인 페이지로 이동합니다.");
+                    window.open('http://localhost:3000/cotato','_self');
+                }
+            });
+        }
     }
 
     //컴포넌트가 처음 렌더링될 떄 form을 초기화함

@@ -76,7 +76,7 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/users/logout");
 
         http.addFilterBefore(new CustomUsernamePasswordFilter(authenticationConfiguration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
