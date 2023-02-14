@@ -1,5 +1,7 @@
-package cotato.exception;
+package cotato.controller.exceptioncontroller;
 
+import cotato.exception.PostNotFoundException;
+import cotato.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
