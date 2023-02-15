@@ -12,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+<<<<<<< HEAD
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+=======
+>>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
@@ -25,7 +28,10 @@ import java.util.Arrays;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+<<<<<<< HEAD
     private final RoleRepository roleRepository;
+=======
+>>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -33,12 +39,28 @@ public class UserServiceImpl implements UserService{
         if (checkUserExists(userDto.getUsername())) {
             throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
+<<<<<<< HEAD
             UserEntity user = setRoleToUser(userDto);
+=======
+            ModelMapper mapper = new ModelMapper();
+            mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+            User user = mapper.map(userDto,User.class);
+>>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userRepository.save(user);
         }
 
         return userDto;
+    }
+
+    @Override
+    public boolean checkUserValid(UserDto userDto) {
+        User user = userRepository.findByUsername(userDto.getUsername());
+
+        if (user == null || !passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+            return false;
+        }
+        return true;
     }
 
     private boolean checkUserExists(String userName) {

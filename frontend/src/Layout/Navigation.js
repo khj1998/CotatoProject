@@ -8,9 +8,11 @@ class Navigation extends Component {
             <Nav>
                 <NavList>
                     <NavItem>소개</NavItem>
-                    <NavItem>게시판</NavItem>
+                    <NavItem>
+                        <Link to = "/PostList">
+                        게시판</Link></NavItem>
                     <NavItem>내 글보기</NavItem>
-                    <NavItem>마이페이지</NavItem>
+                    <NavItem><Link to = "/mypage">마이페이지</Link></NavItem>
                     <LogItem>
                         <Link to="/login">로그인/</Link>
                         <Link to="/register" >회원가입</Link>
@@ -55,9 +57,4 @@ const LogItem = styled.li`
     margin-top: 5px;
     display: flex;
     text-align: left;
-
-
-
-
-
     `

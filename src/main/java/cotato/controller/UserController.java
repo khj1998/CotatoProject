@@ -1,6 +1,10 @@
 package cotato.controller;
 
+<<<<<<< HEAD
 import cotato.dto.LogInDto;
+=======
+import cotato.config.SessionConst;
+>>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
 import cotato.dto.UserDto;
 import cotato.service.UserService;
 import cotato.vo.SignResponse;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -23,10 +29,20 @@ public class UserController {
 
     private final UserService userService;
 
+<<<<<<< HEAD
     @PostMapping("/login/result")
     public ResponseEntity<SignResponse> loginResult(@RequestBody LogInDto logInDto) {
         SignResponse res = new SignResponse();
         res.setMessage("LOGIN SUCCESS");
+=======
+    @PostMapping("/users/login")
+    public ResponseEntity<UserDto> logIn(@RequestBody UserDto userDto, HttpServletRequest req) {
+        boolean isUserValid = userService.checkUserValid(userDto);
+        log.info ("로그인 성공 여부 : {}",isUserValid);
+
+        HttpSession session = req.getSession(true);
+        session.setAttribute(SessionConst.USER_SESSION,userDto);
+>>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
 
         return ResponseEntity
                 .status(HttpStatus.OK)
