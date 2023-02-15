@@ -1,7 +1,7 @@
 package cotato.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import cotato.vo.User;
+import cotato.vo.UserEntity;
 import lombok.Data;
 
 @Data
@@ -10,7 +10,7 @@ public class CalendarPostDto {
 
     private Long postId;
 
-    private User author;
+    private UserEntity author;
 
     private String content;
 

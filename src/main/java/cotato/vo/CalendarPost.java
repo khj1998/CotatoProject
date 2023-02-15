@@ -14,7 +14,7 @@ public class CalendarPost {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User author;
+    private UserEntity author;
 
     @Column
     private String content;

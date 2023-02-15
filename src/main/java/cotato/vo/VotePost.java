@@ -16,7 +16,7 @@ public class VotePost {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User author;
+    private UserEntity author;
 
     @Column
     private String content;
@@ -40,8 +40,8 @@ public class VotePost {
     private Long endDay;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    List<User> participatedUsers = new ArrayList<>();
+    List<UserEntity> participatedUsers = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    List<User> notParticipatedUsers = new ArrayList<>();
+    List<UserEntity> notParticipatedUsers = new ArrayList<>();
 }
