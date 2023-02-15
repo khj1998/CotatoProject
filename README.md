@@ -6,6 +6,9 @@ node_modules,package.json 제거하고 다시 npm init할 경우
 존재한다.
 => react 버전은 17.0.2로 맞춘다.
 
+
+
+
 App.js 코드중 MainPage, Login등 컴포넌트를 인식하지 못하는 버그 발생할시
 => <Route><Route/>들을 <Routes>로 감싸고, component = {컴포넌트/}로 작성된 코드를 element로 수정한다.
 
@@ -19,6 +22,9 @@ const App = () => {
         </Routes>
     );
 };
+
+
+
 
 
 터미널에서 npm start 실행시 Missing script: "start" 에러를 뱉으며 실행 실패시 다음과 같이 설정한다.
