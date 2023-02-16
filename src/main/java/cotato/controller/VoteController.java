@@ -5,6 +5,7 @@ import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
+import cotato.service.UserService;
 import cotato.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,12 @@ public class VoteController {
                                        @RequestParam(name = "userid") Long userId,
                                        @RequestParam(name = "attend") Boolean attend)
     {
+
+        if(!voteService.isPostExist(postId))
+            throw new PostNotFoundException(postId);
+
+        if(!voteService.isUserExist(userId))
+            throw new UserNotFoundException(userId);
 
         String respond = voteService.vote(postId, userId, attend);
 
