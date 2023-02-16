@@ -51,4 +51,15 @@ public class VoteController {
                 .status(HttpStatus.OK)
                 .body(votePostDto);
     }
+
+    @GetMapping("/cotato/vote/{postId}")
+    public ResponseEntity<VoteShowPostDto> showVotePost(@PathVariable Long postId){
+
+        if(!voteService.isPostExist(postId))
+            throw new PostNotFoundException(postId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(voteService.findVotePost(postId));
+    }
 }

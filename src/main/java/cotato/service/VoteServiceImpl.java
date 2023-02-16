@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +47,23 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
+    public VoteShowPostDto findVotePost(Long postId) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        VotePost votePost = votePostRepository.findById(postId).get();
+
+        VoteShowPostDto voteShowPostDto = modelMapper.map(votePost, VoteShowPostDto.class);
+
+        for(UserEntity userEntity : votePost.getParticipatedUsers())
+            voteShowPostDto.getParticipatedUsersId().add(userEntity.getId());
+
+        for(UserEntity userEntity : votePost.getNotParticipatedUsers())
+            voteShowPostDto.getNotParticipatedUsersId().add(userEntity.getId());
+
+        return voteShowPostDto;
+    }
+
+    @Override
     public VotePostDto savePost(VotePostDto votePostDto) {
         ModelMapper modelMapper = new ModelMapper();
 
@@ -68,17 +86,31 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
-    public List<Long> showAllAttendUsers() {
-        return null;
+    public List<Long> showAllAttendUsers(Long postId) {
+        Optional<VotePost> votePost = votePostRepository.findById(postId);
+
+        List<Long> attendList = new ArrayList<>();
+
+        for(UserEntity votePostAttend : votePost.get().getParticipatedUsers())
+            attendList.add(votePostAttend.getId());
+
+        return attendList;
     }
 
     @Override
-    public List<Long> showAllNotAttendUsers() {
-        return null;
+    public List<Long> showAllNotAttendUsers(Long postId) {
+        Optional<VotePost> votePost = votePostRepository.findById(postId);
+
+        List<Long> notAttendList = new ArrayList<>();
+
+        for(UserEntity votePostNotAttend : votePost.get().getNotParticipatedUsers())
+            notAttendList.add(votePostNotAttend.getId());
+
+        return notAttendList;
     }
 
     @Override
-    public UserEntity vote(Long votePostId, Long userId, Boolean isAttend) {
+    public UserEntity vote(Long postId, Long userId, Boolean isAttend) {
         return null;
     }
 

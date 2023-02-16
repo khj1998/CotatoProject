@@ -11,15 +11,18 @@ public interface VoteService {
 
     List<VoteShowPostDto> showAllVotePostsWithVoteShowPostDto();
 
+    VoteShowPostDto findVotePost(Long postId);
+
     VotePostDto savePost(VotePostDto votePostDto);
 
     VotePostDto deletePost(VotePostDto votePostDto);
 
-    List<Long> showAllAttendUsers();
+    //추후 게시글에 유저들의 목록만 필요할 경우 사용(아래의 2개 메소드)
+    List<Long> showAllAttendUsers(Long postId);
 
-    List<Long> showAllNotAttendUsers();
+    List<Long> showAllNotAttendUsers(Long postId);
 
-    UserEntity vote(Long votePostId, Long userId, Boolean isAttend);
+    UserEntity vote(Long postId, Long userId, Boolean isAttend);
 
     UserEntity cancelVote(Long votePostId, Long userId);
 
