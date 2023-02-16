@@ -1,11 +1,9 @@
 package cotato.controller;
 
-import cotato.dto.CalendarPostDto;
 import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
-import cotato.service.UserService;
 import cotato.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -77,6 +75,23 @@ public class VoteController {
             throw new UserNotFoundException(userId);
 
         String respond = voteService.vote(postId, userId, attend);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respond);
+    }
+
+    @DeleteMapping("/cotato/vote/{postId}")
+    public ResponseEntity<String> cancelVote(@PathVariable Long postId,
+                                             @RequestParam(name = "userid") Long userId){
+
+        if(!voteService.isPostExist(postId))
+            throw new PostNotFoundException(postId);
+
+        if(!voteService.isUserExist(userId))
+            throw new UserNotFoundException(userId);
+
+        String respond = voteService.cancelVote(postId, userId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

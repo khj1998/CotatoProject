@@ -173,8 +173,31 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
-    public UserEntity cancelVote(Long votePostId, Long userId) {
-        return null;
+    public String cancelVote(Long postId, Long userId) {
+
+        VotePost votePost = votePostRepository.findById(postId).get();
+
+        List<Long> attendList = votePost.getParticipatedUsers();
+        List<Long> notAttendList = votePost.getNotParticipatedUsers();
+
+        for(Long user : attendList){
+            if(user.equals(userId)){
+                votePost.getParticipatedUsers().remove(user);
+
+                votePostRepository.save(votePost);
+                return "정상적으로 참가 투표가 취소되셨습니다.";
+            }
+        }
+        for(Long user : notAttendList){
+            if(user.equals(userId)){
+                votePost.getNotParticipatedUsers().remove(user);
+
+                votePostRepository.save(votePost);
+                return "정상적으로 불참 투표가 취소되셨습니다.";
+            }
+        }
+
+        return "아직 투표하지 않으셨습니다.";
     }
 
     @Override

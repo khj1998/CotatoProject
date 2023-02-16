@@ -24,7 +24,7 @@ public interface VoteService {
 
     String vote(Long postId, Long userId, Boolean isAttend);
 
-    UserEntity cancelVote(Long votePostId, Long userId);
+    String cancelVote(Long postId, Long userId);
 
     Boolean isUserExist(Long id);
 
