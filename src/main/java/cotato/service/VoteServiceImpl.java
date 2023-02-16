@@ -58,7 +58,13 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public VotePostDto deletePost(VotePostDto votePostDto) {
-        return null;
+        ModelMapper modelMapper = new ModelMapper();
+
+        VotePost calendarPost = modelMapper.map(votePostDto, VotePost.class);
+
+        votePostRepository.delete(calendarPost);
+
+        return votePostDto;
     }
 
     @Override

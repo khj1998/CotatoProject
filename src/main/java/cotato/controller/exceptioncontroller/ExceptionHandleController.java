@@ -1,15 +1,17 @@
 package cotato.controller.exceptioncontroller;
 
-import cotato.exception.UserAlreadyExistsException;
-import cotato.exception.UserNotExistsException;
-import cotato.exception.UserPasswordInValidException;
+import cotato.exception.*;
 import cotato.vo.SignResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestControllerAdvice
@@ -42,5 +44,25 @@ public class ExceptionHandleController {
         res.setMessage("NOT VALID");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(res);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> userExceptionHandler(UserNotFoundException exception){
+
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+
+        return errorMap;
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> postExceptionHandler(PostNotFoundException exception){
+
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+
+        return errorMap;
     }
 }
