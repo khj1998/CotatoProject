@@ -62,4 +62,17 @@ public class VoteController {
                 .status(HttpStatus.OK)
                 .body(voteService.findVotePost(postId));
     }
+
+    @PostMapping("/cotato/vote/{postId}")
+    public ResponseEntity<String> vote(@PathVariable Long postId,
+                                       @RequestParam(name = "userid") Long userId,
+                                       @RequestParam(name = "attend") Boolean attend)
+    {
+
+        String respond = voteService.vote(postId, userId, attend);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(respond);
+    }
 }

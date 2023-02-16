@@ -22,7 +22,7 @@ public interface VoteService {
 
     List<Long> showAllNotAttendUsers(Long postId);
 
-    UserEntity vote(Long postId, Long userId, Boolean isAttend);
+    String vote(Long postId, Long userId, Boolean isAttend);
 
     UserEntity cancelVote(Long votePostId, Long userId);
 
