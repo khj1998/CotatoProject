@@ -9,7 +9,7 @@ class Navigation extends Component {
                 <NavList>
                     <NavItem>소개</NavItem>
                     <NavItem>
-                        <Link to = "/PostList">
+                        <Link to = "/postList">
                         게시판</Link></NavItem>
                     <NavItem>내 글보기</NavItem>
                     <NavItem><Link to = "/mypage">마이페이지</Link></NavItem>
