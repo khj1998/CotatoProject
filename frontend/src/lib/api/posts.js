@@ -1,24 +1,5 @@
 import client from './client';
-// post create
-export const writePost = ({ title, body, tags }) =>
-  client.post('/api/posts', { title, body, tags });
-
-// post read id 값 가져오기 위해서 backtic 사용
-export const readPost = (id) => client.get(`/api/posts/${id}`);
-
-// post list api with qs
-export const listPosts = ({ page, username, tag }) => {
-  return client.get(`/api/posts`,{
-    params: {page, username, tag},
-  });
-};
-
-// update api
-export const updatePost = ({ id, title, body, tags }) =>
-  client.patch(`/api/posts/${id}`, { title, body, tags });
-
-//delete api
-export const removePost = id => client.delete(`/api/posts/${id}`);
+import axios from 'axios';
 
 export const write = ({
     userId,
@@ -58,6 +39,9 @@ export const write = ({
         client.post('/post-service/write', formData);
     }
 }
+
+
+
 export const readAllPosts = () => client.get('/post-service');
 
 export const readPostsByStatus = status => client.get(`/post-service/posts/status/${status}`)
