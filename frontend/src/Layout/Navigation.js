@@ -16,6 +16,7 @@ class Navigation extends Component {
                     <LogItem>
                         <Link to="/login">로그인/</Link>
                         <Link to="/register" >회원가입</Link>
+                        <Link to ="/List"> 리스트 </Link>
                     </LogItem>
                 </NavList>
             </Nav>
