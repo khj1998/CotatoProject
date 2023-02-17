@@ -61,10 +61,10 @@ const AuthForm = ({type, form, onChange, onSubmit}) => {
                     value={form.username}
                 />
                 <StyledInput
-                    autocomplete="new=password"
+                    autoautocomplete="new=password"
                     name="password"
                     placeholder="비밀번호"
-                    type="password"
+                    typle="password"
                     onChange={onChange}
                     value={form.password}
                 />

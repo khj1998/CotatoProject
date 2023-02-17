@@ -1,68 +1,81 @@
-import {useEffect} from "react";
+import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {changeField, initializeForm} from "../../modules/auth";
+import {changeField, initializeForm, login} from "../../modules/auth";
 import AuthForm from "../../Components/auth/AuthForm";
-import axios from "axios";
+import {check} from '../../modules/user';
+import {useHistory} from 'react-router-dom';
+import React from "react";
 
 const LoginForm = () => {
+    const[error, setError] = useState(null);
+    const history = useHistory();
     const dispatch = useDispatch();
-    let isLoginFailed = false;
-    const {form} = useSelector(({auth}) => ({
-        form: auth.login
+    const {form, auth, authError, user} = useSelector(({auth, user}) => ({
+        form: auth.login,
+        auth: auth.auth,
+        authError: auth.authError,
+        user: user.user,
     }));
     //인풋 변경 이벤트 핸들러
-    const onChange = e => {
-        const {value, name} = e.target;
+    const onChange = (e) => {
+        const{value, name} = e.target;
         dispatch(
             changeField({
-                form: 'login',
+                form:'login',
                 key: name,
-                value
-            })
+                value,
+            }),
         );
     };
 
-    //폼 등록 이벤트 핸들러
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await axios.post(`http://localhost:8080/users/login`,form,
-        {
-            withCredentials: true,
-            headers : {"Content-Type" : "application/json"}
-        }).catch((error) => {
-            alert("아이디 혹은 비밀번호를 확인하세요!");
-            isLoginFailed = true;
-        })
-        
-        if (!isLoginFailed)
-        {
-            await axios.post(`http://localhost:8080/login/result`,form,
-            {
-                withCredentials: true,
-                headers : {"Content-Type" : "application/json"}
-            }).then((res) => {
-                const result = res.data.message;
-                if (result == "LOGIN SUCCESS") {
-                    alert("로그인에 성공하였습니다! 메인 페이지로 이동합니다.");
-                    window.open('http://localhost:3000/cotato','_self');
-                }
-            });
-        }
-    }
+  // 폼 등록 이벤트 핸들러
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const {username, password} = form;
+    dispatch (login({username, password}));
+  };
 
-    //컴포넌트가 처음 렌더링될 떄 form을 초기화함
-    useEffect(() => {
+  // 컴포넌트가 처음 렌더링될 때 form을 초기화함
+  useEffect(() => {
         dispatch(initializeForm('login'));
-    }, [dispatch]);
+    },[dispatch]);
 
-    return (
-        <AuthForm
-                    type="login"
-                    form={form}
-                    onChange={onChange}
-                    onSubmit={onSubmit}
-        />
-    );
+  useEffect(() => {
+    if(authError) {
+        console.log('오류발생');
+        console.log(authError);
+        setError('로그인 실패');
+        return;
+    }
+    if(auth) {
+        console.log('로그인 성공');
+        dispatch(check());
+    }
+},[auth, authError, dispatch]);
+
+
+useEffect(() => {
+    if (user) {
+      history('/'); // 홈 화면으로 이동
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [history, user]);
+
+  return (
+    <AuthForm
+      type="login"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      error = {error}
+    />
+  );
 };
 
 export default LoginForm;
+
+
