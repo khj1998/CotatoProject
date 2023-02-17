@@ -15,7 +15,6 @@ const SearchHeaderTemplate = () => {
     return(
         <HeaderTemplateBlock>
             <SearchBarTemplate />
-            <SearchButton />
         </HeaderTemplateBlock>
     );
 };

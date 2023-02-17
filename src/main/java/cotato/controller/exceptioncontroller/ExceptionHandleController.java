@@ -1,8 +1,6 @@
 package cotato.controller.exceptioncontroller;
 
-import cotato.exception.UserAlreadyExistsException;
-import cotato.exception.UserNotExistsException;
-import cotato.exception.UserPasswordInValidException;
+import cotato.exception.*;
 import cotato.vo.SignResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,6 +33,18 @@ public class ExceptionHandleController {
         res.setMessage("PASSWORD INVALID");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(res);
+    }
+
+    @ExceptionHandler(UserNotAuthenticated.class)
+    public ResponseEntity handleUserNotAuthenticatedException() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("User Not Authenticated");
+    }
+
+    @ExceptionHandler(BoardPostDataInValid.class)
+    public ResponseEntity handleBoardPostDataInValidException() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

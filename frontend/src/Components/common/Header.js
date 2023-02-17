@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
 import Button from './Button';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -48,7 +50,19 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
-const Header = ({ user }) => {
+const onClick = async (e) => {
+  e.preventDefault();
+  await axios.get(`http://localhost:8080/logout`).then((res) => {
+      if (res.status == 200) {
+        alert("로그아웃 되었습니다.");
+        window.open('http://localhost:3000/login','_self');
+      } else {
+        alert("로그아웃에 실패하였습니다.");
+      }
+  });
+}
+
+const Header = (User) => {
   return (
     <>
       <HeaderBlock>
@@ -58,10 +72,10 @@ const Header = ({ user }) => {
             Cotato
           </Link>
           {/* user 값이 있으면 즉, 로그인 상태면 로그아웃을 버튼을 보여주고, 그렇지 않으면 로그인 버튼 보여주기 */}
-          {user ? (
+          {User != null ? (
             <div className="right">
-              <UserInfo>{user.username}</UserInfo>
-              <Button>로그아웃</Button>
+              <UserInfo>{User.username}</UserInfo>
+              <Button onClick = {(e) => onClick(e)}>로그아웃</Button>
             </div>
           ) : (
             <div className="right">
@@ -75,4 +89,4 @@ const Header = ({ user }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

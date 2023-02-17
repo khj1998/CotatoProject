@@ -63,7 +63,7 @@ const WriteForm = ({
     type
 }) => {
     const [error, setError] = useState('');
-
+    console.log(error);
     return(
         <>
             {

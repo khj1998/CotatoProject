@@ -66,9 +66,6 @@ public class CustomUsernamePasswordFilter extends AbstractAuthenticationProcessi
 
         setDetails(request, authRequest);
         Authentication authResult = this.getAuthenticationManager().authenticate(authRequest);
-
-        log.info("authentication result {}", authResult);
-
         response.sendRedirect("/users/login");
         return authResult;
     }

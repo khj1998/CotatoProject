@@ -6,6 +6,7 @@ import axios from "axios";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
+
     let isLoginFailed = false;
     const {form} = useSelector(({auth}) => ({
         form: auth.login
@@ -36,11 +37,7 @@ const LoginForm = () => {
         
         if (!isLoginFailed)
         {
-            await axios.post(`http://localhost:8080/login/result`,form,
-            {
-                withCredentials: true,
-                headers : {"Content-Type" : "application/json"}
-            }).then((res) => {
+            await axios.get(`http://localhost:8080/login/result`,).then((res) => {
                 const result = res.data.message;
                 if (result == "LOGIN SUCCESS") {
                     alert("로그인에 성공하였습니다! 메인 페이지로 이동합니다.");

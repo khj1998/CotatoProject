@@ -41,7 +41,7 @@ const CardDate = styled.div`
     color: ${ palette.gray[6] }
 `;
 
-const PostCard = ({ item, i }) => {
+const PostCard = ({ item }) => {
     return(
         <Link to={ `/${item.postId}` }>
             <PostCardBlock>

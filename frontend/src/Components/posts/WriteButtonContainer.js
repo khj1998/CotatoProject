@@ -77,7 +77,7 @@ const WriteButtonContainer = ({ history, error, setError }) => {
 
         if(postError) {
             setError('에러 발생!');
-
+            console.log(postError);
             return;
         }
 

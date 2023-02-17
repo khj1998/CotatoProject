@@ -13,12 +13,12 @@ import {tempSetUser, check} from './modules/user'
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
-const test = { username: 'anna',
-password: '1111'
+const userObj = { 
+    username: 'NONE',
 }
 
-const testobj = JSON.stringify(test);
-localStorage.setItem('user',testobj);
+const userInit = JSON.stringify(userObj);
+localStorage.setItem('user',userInit);
 
 function loadUser() {
 try{

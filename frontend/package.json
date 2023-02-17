@@ -18,17 +18,15 @@
     "react-images-upload": "^1.2.8",
     "react-images-uploading": "^3.1.7",
     "react-redux": "^8.0.5",
-<<<<<<< HEAD
-    "react-router-dom": "^6.8.1",
-=======
-    "react-responsive-carousel": "^3.2.23",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.3.0",
->>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.0",
     "redux": "^4.2.1",
     "redux-actions": "^3.0.0",
     "redux-devtools-extension": "^2.13.9",
+    "redux-saga": "^1.2.2",
+    "redux-saga-effects": "^1.1.0",
     "styled-components": "^5.3.6"
   },
   "browserslist": {

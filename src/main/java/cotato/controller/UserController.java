@@ -1,10 +1,5 @@
 package cotato.controller;
 
-<<<<<<< HEAD
-import cotato.dto.LogInDto;
-=======
-import cotato.config.SessionConst;
->>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
 import cotato.dto.UserDto;
 import cotato.service.UserService;
 import cotato.vo.SignResponse;
@@ -13,36 +8,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
-<<<<<<< HEAD
-    @PostMapping("/login/result")
-    public ResponseEntity<SignResponse> loginResult(@RequestBody LogInDto logInDto) {
+    @GetMapping("/login/result")
+    public ResponseEntity<SignResponse> loginResult() {
         SignResponse res = new SignResponse();
         res.setMessage("LOGIN SUCCESS");
-=======
-    @PostMapping("/users/login")
-    public ResponseEntity<UserDto> logIn(@RequestBody UserDto userDto, HttpServletRequest req) {
-        boolean isUserValid = userService.checkUserValid(userDto);
-        log.info ("로그인 성공 여부 : {}",isUserValid);
-
-        HttpSession session = req.getSession(true);
-        session.setAttribute(SessionConst.USER_SESSION,userDto);
->>>>>>> 6067c6c86cf9d3d9008c5ecf257b3d38e37c0778
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -50,7 +34,9 @@ public class UserController {
     }
 
     @GetMapping("/users/login")
-    public void loginSuccessEndPoint() {}
+    public void loginSuccessEndPoint() {
+        userService.setAuthentication();
+    }
 
     @PostMapping("/users/login")
     public void login() {}
@@ -63,7 +49,6 @@ public class UserController {
     @PostMapping("/users/registration")
     public ResponseEntity<SignResponse> register(@RequestBody @Valid UserDto userDto) {
 
-        log.info("user id : {}, password : {}",userDto.getUsername(),userDto.getPassword());
         userService.saveUser(userDto);
         SignResponse res = new SignResponse();
         res.setMessage("REGISTRATION SUCCESS");
@@ -73,8 +58,8 @@ public class UserController {
                 .body(res);
     }
 
-    @GetMapping("/validation/test")
-    public ResponseEntity<ValidResponse> sendValidResponse() {
+    @GetMapping("/user/valid")
+    public ResponseEntity<ValidResponse> checkUserValid() {
         ValidResponse res = new ValidResponse();
         userService.checkUserValid(res);
 

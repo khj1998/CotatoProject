@@ -37,7 +37,7 @@ const RadioItem = ({ id, name, value, onChange }) => {
                 value={ value }
             />
             <RadioLabel
-                for={ id }
+                htmlFor={ id }
                 onChange={ onChange }
                 value={ value }
             >

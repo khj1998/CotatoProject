@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @JsonSerialize
 public class ValidResponse {
-    String status;
+    String username;
     String message;
 }

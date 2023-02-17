@@ -4,7 +4,6 @@ import WriteHeaderTemplate from '../Components/posts/WriteHeaderTemplate';
 import WriteTemplate from '../Components/posts/WriteTemplate';
 import WriteContainer from '../Components/posts/WriteContainer';
 
-
 const WritePage = () => {
     return(
         <>

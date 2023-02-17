@@ -10,13 +10,9 @@ import Sidebar from './Sidebar';
 const PostListPage = () => {
     return (
         <>
-
-
             <HeaderContainer />
             <Sidebar/>
-
             <SearchHeaderTemplate/>
-
             <PostListTemplate />
         </>
     );

@@ -15,16 +15,16 @@ import { element } from 'prop-types';
 const App = () => {
 
     return (
-        <Routes>
-            <Route element={<MainPage />} path="/cotato"></Route>
-            <Route element={<Login />} path="/login"></Route>
-            <Route element={<Register />} path="/register"></Route>
-            <Route element={<PostList />} path="/PostList"></Route>
-            <Route element={<Modify />} path="/modify"/>
-            <Route element={<MyPage />} path="/mypage"/>
-            <Route element={<WritePage />} path="/write" exact/>
-            <Route element={<PostDetailPage /> } path = "/:postId" />
-        </Routes>
+        <>
+            <Route component={MainPage} path="/cotato" />
+            <Route component={PostList} path="/postlist" />
+            <Route component={Login} path="/login" />
+            <Route component={Register} path="/register" />
+            <Route component={Modify} path="/modify" />
+            <Route component={MyPage} path="/mypage" />
+            <Route component={WritePage} path="/write" exact />
+            <Route component={PostDetailPage} path = "/:postId" />
+        </>
     );
 };
 export default App;
