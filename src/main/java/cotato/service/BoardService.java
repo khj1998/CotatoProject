@@ -1,11 +1,11 @@
 package cotato.service;
 
 import cotato.dto.board.AddPostDto;
-import cotato.vo.BoardResponse;
+import cotato.dto.board.BoardDto;
 
 import java.util.List;
 
 public interface BoardService {
     void saveBoardPost(AddPostDto addPostDto);
-    List<BoardResponse> findPostByKeyword(String keyword);
+    List<BoardDto> findPostByKeyword(String keyword);
 }

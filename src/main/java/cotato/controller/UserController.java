@@ -2,15 +2,11 @@ package cotato.controller;
 
 import cotato.dto.UserDto;
 import cotato.service.UserService;
-import cotato.vo.SignResponse;
-import cotato.vo.ValidResponse;
+import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,18 +20,39 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/login/result")
-    public ResponseEntity<SignResponse> loginResult() {
-        SignResponse res = new SignResponse();
-        res.setMessage("LOGIN SUCCESS");
+    public ResponseEntity<ApiResponse> loginResult() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("LOGIN SUCCESS")
+                .build();
+    }
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(res);
+    @PostMapping("/users/registration")
+    public ResponseEntity<ApiResponse> register(@RequestBody @Valid UserDto userDto) {
+        userService.saveUser(userDto);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("REGISTRATION SUCCESS")
+                .data(userDto)
+                .build();
+    }
+
+    @GetMapping("/user/valid")
+    public ResponseEntity<ApiResponse> checkUserValid() {
+        userService.checkUserValid();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("AUTHENTICATED")
+                .build();
     }
 
     @GetMapping("/users/login")
-    public void loginSuccessEndPoint() {
+    public ResponseEntity<ApiResponse> loginSuccessEndPoint() {
         userService.setAuthentication();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("LOGIN SUCCESS")
+                .build();
     }
 
     @PostMapping("/users/login")
@@ -44,27 +61,5 @@ public class UserController {
     @GetMapping("/users/logout")
     public void logout() {
         userService.logoutProcess();
-    }
-
-    @PostMapping("/users/registration")
-    public ResponseEntity<SignResponse> register(@RequestBody @Valid UserDto userDto) {
-
-        userService.saveUser(userDto);
-        SignResponse res = new SignResponse();
-        res.setMessage("REGISTRATION SUCCESS");
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(res);
-    }
-
-    @GetMapping("/user/valid")
-    public ResponseEntity<ValidResponse> checkUserValid() {
-        ValidResponse res = new ValidResponse();
-        userService.checkUserValid(res);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(res);
     }
 }

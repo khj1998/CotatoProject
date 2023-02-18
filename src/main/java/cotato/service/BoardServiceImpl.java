@@ -7,7 +7,7 @@ import cotato.exception.UserNotAuthenticated;
 import cotato.repository.BoardRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.BoardPostEntity;
-import cotato.vo.BoardResponse;
+import cotato.dto.board.BoardDto;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +16,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +32,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void saveBoardPost(AddPostDto addPostDto) {
         if (authenticationStorage.getAuthentication() == null) {
-            throw new UserNotAuthenticated("인증되지 않은 유저입니다. 글을 게시할 수 없습니다!");
+            throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
 
         if (addPostDto.getPostType().isBlank() || addPostDto.getCategory().isBlank() || addPostDto.getTitle().isBlank()) {
@@ -52,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardResponse> findPostByKeyword(String keyword) {
+    public List<BoardDto> findPostByKeyword(String keyword) {
 
         if (keyword.isBlank()) {
             return new ArrayList<>();
@@ -61,10 +59,10 @@ public class BoardServiceImpl implements BoardService {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         List<BoardPostEntity> posts = boardRepository.findByTitleContaining(keyword);
-        List<BoardResponse> result = new ArrayList<>();
+        List<BoardDto> result = new ArrayList<>();
 
        posts.forEach( post -> {
-           BoardResponse res = mapper.map(post,BoardResponse.class);
+           BoardDto res = mapper.map(post, BoardDto.class);
            res.setCreatedAt(res.getCreatedAt().substring(0,10));
            res.setUpdatedAt(res.getUpdatedAt().substring(0,10));
            result.add(res);

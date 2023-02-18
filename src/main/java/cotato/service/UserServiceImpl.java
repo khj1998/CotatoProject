@@ -3,11 +3,11 @@ package cotato.service;
 import cotato.config.AuthenticationStorage;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
+import cotato.exception.UserNotAuthenticated;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
 import cotato.vo.UserEntity;
-import cotato.vo.ValidResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -67,13 +67,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void checkUserValid(ValidResponse res) {
+    public void checkUserValid() {
         if (authenticationStorage.getAuthentication() == null) {
-            res.setMessage("UNAUTHORIZED");
-            res.setUsername("NONE");
-        } else {
-            res.setMessage("AUTHORIZED");
-            res.setUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+            throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
     }
 
