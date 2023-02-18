@@ -1,5 +1,6 @@
 package cotato.controller;
 
+import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
 import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
@@ -64,6 +65,24 @@ public class UserController {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("LOGOUT SUCCESS")
+                .build();
+    }
+
+    @GetMapping("/users/score")
+    public ResponseEntity<ApiResponse> getUserScore() {
+        ScoreDto scoreDto = userService.getScore();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET SCORE")
+                .data(scoreDto)
+                .build();
+    }
+
+    @PostMapping("/users/modify")
+    public ResponseEntity<ApiResponse> modifyUser() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("MODIFY SUCCESS")
                 .build();
     }
 }

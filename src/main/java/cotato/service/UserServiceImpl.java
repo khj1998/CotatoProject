@@ -1,12 +1,14 @@
 package cotato.service;
 
 import cotato.config.AuthenticationStorage;
+import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
 import cotato.exception.UserNotAuthenticated;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
+import cotato.vo.ScoreEntity;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +37,18 @@ public class UserServiceImpl implements UserService{
         } else {
             UserEntity user = setRoleToUser(userDto);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setScore(new ScoreEntity());
             userRepository.save(user);
         }
 
         return userDto;
+    }
+
+    @Override
+    public ScoreDto getScore() {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        ScoreEntity score = user.getScore();
+        return new ScoreDto(score.getPlus(),score.getMinus());
     }
 
     private boolean checkUserExists(String userName) {

@@ -40,4 +40,8 @@ public class UserEntity {
 
     @ManyToOne
     private VotePost votePost;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_id")
+    private ScoreEntity score;
 }
