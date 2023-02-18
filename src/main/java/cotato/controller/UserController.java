@@ -56,10 +56,14 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public void login() {}
+    public void loginEntryPoint() {}
 
     @GetMapping("/users/logout")
-    public void logout() {
+    public ResponseEntity<ApiResponse> logout() {
         userService.logoutProcess();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("LOGOUT SUCCESS")
+                .build();
     }
 }

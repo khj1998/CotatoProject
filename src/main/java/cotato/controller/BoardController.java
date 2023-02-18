@@ -30,13 +30,23 @@ public class BoardController {
                 .build();
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<ApiResponse> searchPost(@RequestParam("keyword") String keyword) {
-        List<BoardDto> postList =  boardService.findPostByKeyword(keyword);
+    @GetMapping("/user/posts")
+    public ResponseEntity<ApiResponse> searchUserPost() {
+        List<BoardDto> result = boardService.findPostByUserName();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("Search Success")
-                .data(postList)
+                .data(result)
+                .build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse> searchPost(@RequestParam("keyword") String keyword) {
+        List<BoardDto> result =  boardService.findPostByKeyword(keyword);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("Search Success")
+                .data(result)
                 .build();
     }
 }

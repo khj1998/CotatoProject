@@ -70,4 +70,22 @@ public class BoardServiceImpl implements BoardService {
 
         return result;
     }
+
+    @Override
+    public List<BoardDto> findPostByUserName() {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        String username = authenticationStorage.getAuthentication().getPrincipal().toString();
+        UserEntity user = userRepository.findByUsername(username);
+        List<BoardPostEntity> posts = user.getBoardPosts();
+        List<BoardDto> result = new ArrayList<>();
+
+        posts.forEach(post -> {
+            BoardDto boardDto = mapper.map(post,BoardDto.class);
+            result.add(boardDto);
+        });
+
+        return result;
+    }
 }
