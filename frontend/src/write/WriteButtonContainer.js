@@ -102,7 +102,7 @@ const WriteButtonContainer = ({ history, error, setError }) => {
 
     useEffect(() => {
         if(post) {
-            history.onPublish("/posts");
+            history.onPublish("/boards/add");
         }
     }, [history, post]);
 

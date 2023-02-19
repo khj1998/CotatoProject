@@ -39,4 +39,4 @@ out/
 /frontend/node_modules
 /frontend/package.json
 /frontend/package-lock.json
-/resources
+/src/main/resources/application.properties
