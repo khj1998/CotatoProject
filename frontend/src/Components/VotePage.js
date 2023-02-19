@@ -27,7 +27,7 @@ const VotePage = () => {
 
     const submitVote = () => {
         axios
-            .post("", {
+            .post("http://localhost:8080/vote", {
                 offline:offlinevote,
                 online: onlinevote,
             })
@@ -39,10 +39,11 @@ const VotePage = () => {
                     console.log(error);
                 }
             );
-        };
+    };
 
     return (
         <>
+
             대면:{offlinevote} / 비대면: {onlinevote}
             <Divider/>
 

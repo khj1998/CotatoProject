@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import VotePostButton from "./common/VotePostButton";
+import {Link} from "react-router-dom";
 
 const TitleInput = styled.input`
   font-size: 3rem;
@@ -27,9 +28,9 @@ const PlaceInput = styled.input`
 const VoteCreate = () => {
     return(
        <>
-           <TitleInput placeholder="투표 제목을 입력하세요 (ex. 3/3 정기세션 투표)"/>
-           <PlaceInput placeholder="세션 장소를 입력하세요"/>
-           <VotePostButton/>
+           <TitleInput placeholder="투표 제목을 입력하세요 (ex. 3/3 정기세션 투표)" id="title"/>
+           <PlaceInput placeholder="세션 장소를 입력하세요" id="place"/>
+           <Link to="/vote"><VotePostButton/></Link>
        </>
     );
 };
