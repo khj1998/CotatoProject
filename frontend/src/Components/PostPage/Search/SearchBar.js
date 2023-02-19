@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../../common/Input';
 import SearchButton from'./SearchButton';
+import axios from 'axios';
 
 const SearchBarArea = styled.div`
     float: left;
@@ -21,12 +22,16 @@ const SearchBar = () => {
 
     const onSubmit = async(e) => {
         e.preventDefault();
-        await axios.post(`http://localhost:8080/boards/search`,search,
+        await axios.get(`http://localhost:8080/boards/search`,{
+            params : {
+                keyword : search.searchBar
+            }
+        },
         {
             withCredentials: false,
             headers : {"Content-Type" : "application/json"}
         }).then((res) => {
-            console.log(res.data.searchBar);
+            console.log(res);
         });
     }   
     
