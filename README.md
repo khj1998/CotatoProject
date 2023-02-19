@@ -19,3 +19,33 @@ react-router-dom 6버전 이상 설치 해결 => <Route><Route/>들을 <Routes>�
 
 터미널에서 npm start 실행시 Missing script: "start" 에러를 뱉으며 실행 실패시 다음과 같이 설정한다.
 package.json에서 "scripts"부분에 "start": "react-scripts start"를 추가한다.
+
+----------------------------------------------------------------------------------------------------------
+
+앱을 처음 clone해왔을 경우 아래의 코드들을 차례대로 입력해주세요!
+
+cd frontend
+
+npm init
+
+npm init을 했을 때 입력하라고 나오는 것들에 대해서는 그냥 엔터키만 계속 누르면 됨.
+
+npm i react-scripts
+
+npm i react-router-dom
+
+npm i redux react-redux
+
+npm i styled-components
+
+npm i axios
+
+npm i redux-devtools-extension
+
+npm i redux-actions
+
+--"start": "react-scripts start"를 package.json의 "scripts"에 추가--
+
+npm start를 하면 처음 나오는 문장에 y입력
+
+위의 코드들은 clone해온 후 한번만 입력하시면 됩니다!

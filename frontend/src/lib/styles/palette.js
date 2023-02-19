@@ -25,6 +25,29 @@ const palette = {
         '#0c8599',
         '#0b7285',
     ],
+    yellow: [
+            '#FFB400',
+            '#FFBE0A',
+            '#FFC314',
+            '#FFC81E',
+            '#FFCD28',
+            '#FFD232',
+            '#FFD73C',
+            '#FFDC46',
+            '#FFE150',
+            '#FFE65A',
+        ],
+    blue: [
+            '#0000FF',
+            '#0064FF',
+            '#0078FF',
+    ],
+    red: [
+           '#FF0000',
+           '#EB0000',
+           '#FF3232',
+           '#CD1039',
+    ]
 };
 
 export default palette;

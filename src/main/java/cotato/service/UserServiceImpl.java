@@ -1,13 +1,15 @@
 package cotato.service;
 
+import cotato.config.AuthenticationStorage;
+import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
+import cotato.exception.UserNotAuthenticated;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
-import cotato.vo.SignResponse;
+import cotato.vo.ScoreEntity;
 import cotato.vo.UserEntity;
-import cotato.vo.ValidResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -23,10 +25,10 @@ import java.util.Arrays;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationStorage authenticationStorage;
 
     @Override
     public UserDto saveUser(UserDto userDto) {
@@ -35,10 +37,18 @@ public class UserServiceImpl implements UserService{
         } else {
             UserEntity user = setRoleToUser(userDto);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setScore(new ScoreEntity());
             userRepository.save(user);
         }
 
         return userDto;
+    }
+
+    @Override
+    public ScoreDto getScore() {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        ScoreEntity score = user.getScore();
+        return new ScoreDto(score.getPlus(),score.getMinus());
     }
 
     private boolean checkUserExists(String userName) {
@@ -67,25 +77,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void checkUserValid(ValidResponse res) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        log.info("context : {}",context);
-        Authentication authentication = context.getAuthentication();
-        
-        /** 추후 API 유효성 검증시 사용 예정 */
-        if (authentication.isAuthenticated()) {
-            res.setStatus("AUTHORIZED");
-            res.setMessage("인증된 유저입니다.");
-        } else {
-            res.setStatus("UNAUTHORIZED");
-            res.setMessage("인증되지 않은 유저입니다.");
+    public void checkUserValid() {
+        if (authenticationStorage.getAuthentication() == null) {
+            throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
+    }
+
+    @Override
+    public void setAuthentication() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        authenticationStorage.setAuthentication(authentication);
     }
 
     @Override
     public void logoutProcess() {
         SecurityContextHolder.clearContext();
-        SecurityContext context = SecurityContextHolder.getContext();
-        log.info("context : {}",context);
+        authenticationStorage.setAuthentication(null);
     }
 }
