@@ -33,6 +33,12 @@ public class UserEntity {
     )
     private List<Role> roles = new ArrayList<>();
 
-    @ManyToOne
-    private VotePost votePost;
+    @OneToMany(fetch = FetchType.LAZY
+            ,mappedBy = "userEntity"
+            ,cascade = CascadeType.ALL)
+    private List<BoardPostEntity> boardPosts = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_id")
+    private ScoreEntity score;
 }
