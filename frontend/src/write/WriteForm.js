@@ -59,77 +59,14 @@ const WriteForm = ({
     onUpdate,
     onSelect,
     options,
-    option,
-    type
+    option
 }) => {
     const [error, setError] = useState('');
     console.log(error);
     return(
         <>
-            {
-                type === '빌려주세요' ?
-                <>
-                    <WriteFormBlock>
+            <WriteFormBlock>
                         <form>
-                            <PostTypeArea>
-                                <RadioForm>
-                                    <RadioItem
-                                        id="postBorrow"
-                                        name="postType"
-                                        value="빌려주세요"
-                                        for="postBorrow"
-                                        onChange={ onChangeField }
-                                    />
-                                    <RadioItem
-                                        id="postRental"
-                                        name="postType"
-                                        value="빌려줄게요"
-                                        for="postRental"
-                                        onChange={ onChangeField }
-                                    />
-                                </RadioForm>
-                            </PostTypeArea>
-                            <TitleInput
-                                autoComplete="title"
-                                name="title"
-                                placeholder="게시글 제목을 작성해주세요"
-                                onChange={ onChangeField }
-                            />
-                            <ContentInput
-                                autoComplete="content"
-                                name="content"
-                                placeholder="게시글 내용을 작성해주세요"
-                                onChange={ onChangeField }
-                            />
-                        </form>
-                        { error && <ErrorMessage>{ error }</ErrorMessage> }
-                    </WriteFormBlock>
-                    <WriteButtonContainer
-                        error={ error }
-                        setError={ setError }
-                    />
-                </> :
-                <>
-                    <WriteFormBlock>
-                        <form encType="multipart/form-data">
-                            <PostTypeArea>
-                                <RadioForm>
-                                    <RadioItem
-                                        id="postBorrow"
-                                        name="postType"
-                                        value="모집 게시물"
-                                        for="postBorrow"
-                                        onChange={ onChangeField }
-                                    />
-                                    <RadioItem
-                                        id="postRental"
-                                        name="postType"
-                                        value="일반 게시물"
-                                        for="postRental"
-                                        onChange={ onChangeField }
-                                    />
-                                </RadioForm>
-                            </PostTypeArea>
                             <Select
                                 onChange={ onSelect }
                                 options={ options }
@@ -148,18 +85,6 @@ const WriteForm = ({
                                 placeholder="게시글 내용을 작성해주세요"
                                 onChange={ onChangeField }
                             />
-                            <Input
-                                autoComplete="rentalPrice"
-                                name="rentalPrice"
-                                placeholder="가격을 입력해주세요"
-                                onChange={ onChangeField }
-                            />
-                            <RangeDatePicker
-                                onChange={ onUpdate }
-                                startDatePlaceholder="시작 날짜"
-                                endDatePlaceholder="종료 날짜"
-                                disabled={false}
-                            />
                             <ImageUploader
                                 withIcon={ true }
                                 buttonText='이미지를 선택해주세요'
@@ -176,8 +101,6 @@ const WriteForm = ({
                         error={ error }
                         setError={ setError }
                     />
-                </>
-            }
         </>
     );
 };

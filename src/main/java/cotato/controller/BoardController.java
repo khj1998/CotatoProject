@@ -23,6 +23,7 @@ public class BoardController {
 
     @PostMapping("/add")
     public ResponseEntity addPost(@RequestBody AddPostDto addPostDto) {
+        log.info("넘어와? {}",addPostDto);
         boardService.saveBoardPost(addPostDto);
         return ResponseEntity
                 .status(HttpStatus.OK).body(addPostDto);

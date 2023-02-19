@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../../common/Input';
+import SearchButton from'./SearchButton';
 
 const SearchBarArea = styled.div`
     float: left;

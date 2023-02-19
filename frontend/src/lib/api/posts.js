@@ -3,41 +3,25 @@ import axios from 'axios';
 
 export const write = ({
     userId,
-    postType,
     category,
     title,
     content,
-    rentalPrice,
     date,
     writer,
-    images
+    images,
+    type
 }) => {
-    if(postType === '빌려주세요') {
         const formData = new FormData();
 
-        formData.append('userId', userId);
-        formData.append('postType', postType);
-        formData.append('title', title);
-        formData.append('content', content);
-        formData.append('writer', writer);
-
-        client.post('/post-service/write', formData);
-    } else {
-        const formData = new FormData();
-
-        formData.append('userId', userId);
         formData.append('category', category);
         formData.append('images', images);
         formData.append('type', type);
         formData.append('title', title);
         formData.append('content', content);
-        formData.append('rentalPrice', rentalPrice);
-        formData.append('date', date);
-        formData.append('writer', writer);
         images.forEach((image) => formData.append("images", image));
 
-        client.post('/post-service/write', formData);
-    }
+        console.log("안빌려줌 ㅅㄱ");
+        client.post('/boards/add', formData);
 }
 
 

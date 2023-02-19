@@ -48,7 +48,6 @@ public class UserController {
 
     @PostMapping("/users/registration")
     public ResponseEntity<SignResponse> register(@RequestBody @Valid UserDto userDto) {
-
         userService.saveUser(userDto);
         SignResponse res = new SignResponse();
         res.setMessage("REGISTRATION SUCCESS");
