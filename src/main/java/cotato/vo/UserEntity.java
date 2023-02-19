@@ -38,9 +38,6 @@ public class UserEntity {
             ,cascade = CascadeType.ALL)
     private List<BoardPostEntity> boardPosts = new ArrayList<>();
 
-    @ManyToOne
-    private VotePost votePost;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "score_id")
     private ScoreEntity score;
