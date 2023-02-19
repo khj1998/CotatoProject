@@ -20,7 +20,7 @@ import java.util.Map;
 public class ExceptionHandleController {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<ApiResponse> handleUserExistsException(@RequestBody UserDto userDto) {
+    public ResponseEntity<ApiResponse> handleUserExistsException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("DUPLICATED")

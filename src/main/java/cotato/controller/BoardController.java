@@ -42,6 +42,7 @@ public class BoardController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse> searchPost(@RequestParam("keyword") String keyword) {
+        log.info("{}",keyword);
         List<BoardDto> result =  boardService.findPostByKeyword(keyword);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
