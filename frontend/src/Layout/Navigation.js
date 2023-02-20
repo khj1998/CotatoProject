@@ -39,6 +39,7 @@ const Nav = styled.div`
     width: 105vw;
     height: -10px;
     background-color: #D0B8A8;
+
 `
 
 const NavList = styled.ul`
@@ -50,6 +51,7 @@ const NavList = styled.ul`
 
 
 const NavItem = styled.li`
+
     width: 20vw;
     margin-left: 50px;
     margin-top: 5px;

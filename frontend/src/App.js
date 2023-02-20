@@ -10,6 +10,7 @@ import PostList from './Components/PostPage/BoardList/PostList';
 import MyPage from './Components/MyPage/MyPage';
 import CalendarView from './Components/calendar/CalendarView';
 
+import Home from './Components/main/Home';
 
 const App = () => {
 
@@ -25,6 +26,8 @@ const App = () => {
             <Route component={PostList} path="/postlist" />
             <Route component={MyPage} path="/mypage"/>
             <Route component={CalendarView} path="/calendar" />
+
+            <Route component={Home} path="/home" />
         </>
     );
 };

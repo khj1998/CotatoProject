@@ -2,24 +2,27 @@ import React from "react";
 import styled from 'styled-components';
 export default function AboutPage() {
   return (
-  <Element>
-   <Container>
-      <Image>
-            <img
-                  width="40%"
-                  height="50%"
-                  src="https://velog.velcdn.com/images/kkaerrung/post/0f00c4b1-c4a6-4e78-873e-cd794b44e246/image.jpg"
-                  alt="logo"/>
-      </Image>
-      <StyledDiv>
-    <h4><h2><p>코테이토는</p></h2><p>서울, 경기 지역 대학생들의 IT 연합 동아리입니다</p>
-               <p>개발자, 기획자, 디자이너가 모여 자신의 전공 지식을 공유하고, </p>
-               <p>스터디와 프로젝트를 진행합니다. </p>
-               <p>함께 감자에서 회오리 감자로 성장해봅시다.</p>
-               </h4>
-         </StyledDiv>
-         </Container>
+    <div className="content">
+    <Element>
+     <Container>
+        <Image>
+              <img
+                    width="40%"
+                    height="50%"
+                    src="https://velog.velcdn.com/images/kkaerrung/post/0f00c4b1-c4a6-4e78-873e-cd794b44e246/image.jpg"
+                    alt="logo"/>
+        </Image>
+        <StyledDiv>
+      <h4><h2><p>코테이토는</p></h2><p>서울, 경기 지역 대학생들의 IT 연합 동아리입니다</p>
+                 <p>개발자, 기획자, 디자이너가 모여 자신의 전공 지식을 공유하고, </p>
+                 <p>스터디와 프로젝트를 진행합니다. </p>
+                 <p>함께 감자에서 회오리 감자로 성장해봅시다.</p>
+                 </h4>
+           </StyledDiv>
+           </Container>
          </Element>
+      </div>
+
      );
    }
    const Container = styled.div`

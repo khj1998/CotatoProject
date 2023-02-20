@@ -69,8 +69,9 @@ const Search = styled.div`
     width: 105vw;
     height:90px;
     background-color: #EEE3CB;
-    text-align: center;
+ //text-align:center;
     position: relative;
+    right:40px;
     z-index: 1;
     padding:10px;
 `
