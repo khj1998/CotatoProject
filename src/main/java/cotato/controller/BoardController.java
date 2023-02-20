@@ -7,8 +7,10 @@ import cotato.dto.board.BoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,9 +22,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addPost(@RequestBody AddPostDto addPostDto) {
-        boardService.saveBoardPost(addPostDto);
+    @PostMapping(value = "/add",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ApiResponse> addPost(@RequestPart AddPostDto addPostDto,
+                                               @RequestPart List<MultipartFile> files) {
+        boardService.saveBoardPost(addPostDto,files);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("Board Add Success")

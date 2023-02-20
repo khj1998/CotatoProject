@@ -14,7 +14,8 @@ const WriteHeaderTemplate = () => {
     return(
         <WriteHeaderBlock>
             감자에서<br/>
-            회오리 감자가 되는 기적        </WriteHeaderBlock>
+            <br/>회오리 감자가 되는 기적        
+        </WriteHeaderBlock>
     );
 };
 

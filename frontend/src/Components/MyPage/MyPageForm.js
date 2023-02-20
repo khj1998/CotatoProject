@@ -9,7 +9,7 @@ import {logout} from '../../modules/user';
 
 const MyPageFormBlock = styled.table`
     width: 50%;
-    height: 400px;
+    height: 200px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
@@ -20,11 +20,6 @@ const LineBlock = styled.tr`
     padding: 0;
     margin: auto 0;
 `;
-
-   const onLogout = () => {
-        dispatch(logout());
-    };
-
 
 const FullLine = styled.td`
     display: flex;
@@ -72,11 +67,8 @@ const MyPageForm = ({ history }) => {
         <MyPageFormBlock>
             <LineBlock>
                 <FullLine>
-                    <TextBox>
-                        안녕하세요 <b>nickname</b> 님!
-                    </TextBox>
                     <LogoutBox>
-                    <LogoutButton onLogout={ onLogout } />
+                    <LogoutButton />
                     </LogoutBox>
                 </FullLine>
             </LineBlock>
@@ -98,28 +90,11 @@ const MyPageForm = ({ history }) => {
             </LineBlock>
             <LineBlock>
                 <HalfLeftLine>
-                    <TextBox>
-                        <Link to="#">
-                            찜 리스트
-                        </Link>
-                    </TextBox>
+                    내 상점 : {localStorage.getItem("plus")}
                 </HalfLeftLine>
                 <HalfRightLine>
-                    <TextBox>
-                        <Link to="#">
-                            쪽지함
-                        </Link>
-                    </TextBox>
+                    내 벌점 : {localStorage.getItem("minus")}
                 </HalfRightLine>
-            </LineBlock>
-            <LineBlock>
-                <FullLine>
-                    <TextBox>
-                        <Link to="#">
-                            대여 내역
-                        </Link>
-                    </TextBox>
-                </FullLine>
             </LineBlock>
         </MyPageFormBlock>
     );

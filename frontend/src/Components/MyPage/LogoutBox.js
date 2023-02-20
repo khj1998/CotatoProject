@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Box = styled.div`
+    align-items: center
     margin-left: 20%;
     width: 30%;
 `;

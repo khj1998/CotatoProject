@@ -4,6 +4,7 @@ import cotato.config.AuthenticationStorage;
 import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
 import cotato.exception.UserAlreadyExistsException;
+import cotato.exception.UserAlreadyLogoutException;
 import cotato.exception.UserNotAuthenticated;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
@@ -92,6 +93,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void logoutProcess() {
+        if (authenticationStorage.getAuthentication() == null) {
+            throw new UserAlreadyLogoutException("이미 로그아웃한 유저입니다.");
+        }
+
         SecurityContextHolder.clearContext();
         authenticationStorage.setAuthentication(null);
     }

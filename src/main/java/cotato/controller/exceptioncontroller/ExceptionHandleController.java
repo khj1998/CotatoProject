@@ -1,6 +1,5 @@
 package cotato.controller.exceptioncontroller;
 
-import cotato.dto.UserDto;
 import cotato.exception.*;
 import cotato.vo.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,6 +22,14 @@ public class ExceptionHandleController {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("DUPLICATED")
+                .build();
+    }
+
+    @ExceptionHandler(UserAlreadyLogoutException.class)
+    public ResponseEntity<ApiResponse> handleUserAlreadyLogoutException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("USER ALREADY LOGGED OUT")
                 .build();
     }
 
@@ -51,7 +57,7 @@ public class ExceptionHandleController {
                 .build();
     }
 
-    @ExceptionHandler(BoardPostDataInValid.class)
+    @ExceptionHandler(BoardPostDataInValidException.class)
     public ResponseEntity<ApiResponse> handleBoardPostDataInValidException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
