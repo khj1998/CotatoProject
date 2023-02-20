@@ -19,19 +19,9 @@ public class VotePostDto {
 
     private UserEntity author;
 
+    private String title;
+
     private String content;
-
-    private String startYear;
-
-    private String startMonth;
-
-    private String startDay;
-
-    private String endYear;
-
-    private String endMonth;
-
-    private String endDay;
 
     List<Long> participatedUsersId = new ArrayList<>();
 

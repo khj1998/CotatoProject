@@ -86,4 +86,14 @@ public class ExceptionHandleController {
 
         return errorMap;
     }
+
+    @ExceptionHandler(DateInversionException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> dateInversionHandler(DateInversionException exception){
+
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+
+        return errorMap;
+    }
 }
