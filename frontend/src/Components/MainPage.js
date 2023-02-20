@@ -29,9 +29,11 @@ const MainPage = () => {
                 <Layout1>
                 <SnsTemplate/>
                 </Layout1>
-                <Layout1>
+
+                <Footer>
                 <Copy/>
-                </Layout1>
+                </Footer>
+
             </Layout>
 
     );
@@ -68,10 +70,10 @@ const Layout1 = styled.div`
   transform: translate( 5%, 55%);
 `
 const Footer = styled.div`
-    position: flex;
+   display:flex;
     bottom: 0;
-    width: 100%;
-    transform: translate( 0%, 1420%);
+    width: 120%;
+    transform: translate( 0%, 300%);
     `
 
 export default MainPage;

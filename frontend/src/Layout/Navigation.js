@@ -19,10 +19,12 @@ class Navigation extends Component {
                             게시판</Link></NavItem>
 
                     <NavItem><Link to = "/mypage">마이페이지</Link></NavItem>
+                    <NavItem>
+                         <Link to ="/List"> 리스트 </Link>
+                    </NavItem>
                     <LogItem>
                          <Button to="/login">로그인</Button>
                          <Button to="/register">회원가입</Button>
-                        <Link to ="/List"> 리스트 </Link>
                     </LogItem>
                 </NavList>
             </Nav>
@@ -49,10 +51,11 @@ const NavList = styled.ul`
 
 const NavItem = styled.li`
     width: 20vw;
-    margin-left: 18px;
+    margin-left: 50px;
     margin-top: 5px;
     display: flex;
     padding-right:20px;
+    padding-top:10px;
 
 
 
@@ -62,6 +65,7 @@ const NavItem = styled.li`
 const LogItem = styled.li`
     width: 30vw;
     margin-top: 5px;
+    margin-left:20px;
     display: flex;
     text-align: left;
     `
