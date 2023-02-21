@@ -58,3 +58,6 @@ yarn add datepicker
 yarn add react-big-calendar
 yarn add date-fns
 yarn add react-scroll
+yarn add semantic-ui-react
+yarn add semantic-ui-css
+yarn add chart.js
