@@ -65,12 +65,52 @@ const SUBMIT_FORMAT = {
 
 
 
+
 function CalendarView(){
 
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
+    const [date, setDate]=useState({
+        postId:"",
+        authorId:"",
+        content:"",
+        startYear:"",
+        startMonth:"",
+        startDay:"",
+        endYear:"",
+        endMonth:"",
+        endDay:""
+    })
 
+    useEffect(()=>{
+        loadUser();
+    }, []);
 
+    const loadUser=async ()=>{
+        const result=await axios.get(`http://localhost:8080/cotato`)
+        .then(function (response) {
+                console.log(response.data);
+                let appointments = response.data;
+
+                for (let i = 0; i < appointments.length; i++) {
+                    var startDate = appointments[i].startYear+"-"+appointments[i].startMonth+"-"+appointments[i].startDay;
+                    var endDate = appointments[i].endYear+"-"+appointments[i].endMonth+"-"+appointments[i].endDay;
+
+                    newEvent.title = appointments[i].content;
+                    newEvent.start = startDate;
+                    newEvent.end = endDate;
+
+                    events.fill(setNewEvent(appointments[i].content, startDate, endDate));
+
+                    console.log(appointments[i])
+                }
+
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+    }
 
     const onSubmit= async(e) => {
         e.preventDefault();

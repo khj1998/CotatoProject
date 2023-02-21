@@ -17,7 +17,7 @@ const App = () => {
     return (
         <>
             <Route component={MainPage} path="/cotato" />
-            <Route component={Board} path="/Board" />
+            <Route component={Board} path="/board" />
             <Route component={Login} path="/login" />
             <Route component={Register} path="/register" />
             <Route component={VotePage} path="/vote" />
