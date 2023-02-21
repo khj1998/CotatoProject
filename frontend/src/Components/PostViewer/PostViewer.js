@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palettes';
+import palette from '../../lib/styles/palette';
 import FullButton from '../common/FullButton';
 import Shortcut from '../common/Shortcut';
-import paper_plane_outline from '../../static/img/paper-plane-outline.svg';
+//import paper_plane_outline from '../../static/img/paper-plane-outline.svg';
 import CommentContainer from '../comment/CommentContainer';
 import ImageSlider from '../common/ImageSlider';
 
