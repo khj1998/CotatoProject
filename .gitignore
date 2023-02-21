@@ -34,6 +34,9 @@ out/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/package.json
+.vscode/
+/frontend/yarn.lock
 /frontend/package.json
 /frontend/package-lock.json
+/frontend/node_modules
+/src/main/resources/application.properties
