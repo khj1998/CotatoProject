@@ -3,7 +3,7 @@ import createRequestSaga,{
     createRequestActionTypes,
 } from '../lib/createRequestSaga';
 
-import * as votepostAPI from '../lib/api/votepost';
+import votepost from '../lib/api/votepost';
 import { takeLatest } from 'redux-saga/effects';
 
 // 액션 타입 정의
@@ -27,7 +27,7 @@ export const votePost = createAction(VOTE_POST, ({title,content}) =>({
 }));
 
 // saga 생성
-const votePostSaga = createRequestSaga(VOTE_POST, votepostAPI.votePost);
+const votePostSaga = createRequestSaga(VOTE_POST, votepost);
 
 export function* voteSaga(){
     yield takeLatest(VOTE_POST,votePostSaga);
