@@ -9,6 +9,7 @@ import VoteCreate from "./Components/VoteCreate";
 import PostList from './Components/PostPage/BoardList/PostList';
 import MyPage from './Components/MyPage/MyPage';
 import WritePage from './write/WritePage';
+import Modify from './Components/Modify'
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
             <Route component={PostList} path="/postlist" />
             <Route component={MyPage} path="/mypage"/>
             <Route component = {WritePage} path="/write" exact/>
+            <Route component = {Modify} path = "/modify"/>
         </>
     );
 };

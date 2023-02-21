@@ -1,7 +1,7 @@
 package cotato.controller;
 
-import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
+import cotato.dto.UserInfoDto;
 import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -68,21 +68,23 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/users/score")
+    @GetMapping("/users/info")
     public ResponseEntity<ApiResponse> getUserScore() {
-        ScoreDto scoreDto = userService.getScore();
+        UserInfoDto userInfoDto = userService.getUserInfo();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("GET SCORE")
-                .data(scoreDto)
+                .data(userInfoDto)
                 .build();
     }
 
     @PostMapping("/users/modify")
-    public ResponseEntity<ApiResponse> modifyUser() {
+    public ResponseEntity<ApiResponse> modifyUser(@RequestBody UserInfoDto userInfoDto) {
+        userService.modifyUserPassword(userInfoDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("MODIFY SUCCESS")
+                .message("PASSWORD MODIFY SUCCESS")
+                .data(userInfoDto)
                 .build();
     }
 }

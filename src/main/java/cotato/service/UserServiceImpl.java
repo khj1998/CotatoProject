@@ -1,11 +1,12 @@
 package cotato.service;
 
 import cotato.config.AuthenticationStorage;
-import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
+import cotato.dto.UserInfoDto;
 import cotato.exception.UserAlreadyExistsException;
 import cotato.exception.UserAlreadyLogoutException;
 import cotato.exception.UserNotAuthenticated;
+import cotato.exception.UserPasswordInValidException;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
@@ -46,10 +47,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ScoreDto getScore() {
+    public UserInfoDto getUserInfo() {
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
         ScoreEntity score = user.getScore();
-        return new ScoreDto(score.getPlus(),score.getMinus());
+        return UserInfoDto.builder()
+                .username(user.getUsername())
+                .plus(score.getPlus())
+                .minus(score.getMinus())
+                .nickname(user.getNickname())
+                .build();
     }
 
     private boolean checkUserExists(String userName) {
@@ -99,5 +105,16 @@ public class UserServiceImpl implements UserService{
 
         SecurityContextHolder.clearContext();
         authenticationStorage.setAuthentication(null);
+    }
+
+    @Override
+    public void modifyUserPassword(UserInfoDto userInfoDto) {
+        if (!userInfoDto.getPassword().equals(userInfoDto.getPasswordConfirm())) {
+            throw new UserPasswordInValidException("패스워드 불일치!");
+        }
+
+        UserEntity user = userRepository.findByUsername(userInfoDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
+        userRepository.save(user);
     }
 }

@@ -66,17 +66,20 @@ const MyPageForm = ({ history }) => {
     return(
         <MyPageFormBlock>
             <LineBlock>
-                <FullLine>
+                <HalfLeftLine>
+
+                </HalfLeftLine>
+                <HalfRightLine>
                     <LogoutBox>
                     <LogoutButton />
                     </LogoutBox>
-                </FullLine>
+                </HalfRightLine>
             </LineBlock>
             <LineBlock>
                 <HalfLeftLine>
                     <TextBox>
                         <Link to="/modify">
-                            회원 정보 수정
+                            비밀번호 변경
                         </Link>
                     </TextBox>
                 </HalfLeftLine>

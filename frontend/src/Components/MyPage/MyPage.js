@@ -4,21 +4,24 @@ import MyPageTemplate from './MyPageTemplate';
 import MyPageForm from './MyPageForm';
 import axios from 'axios';
 
-let scoreData;
-const getScore = async() => {
-    await axios.get(`http://localhost:8080/users/score`,
+let userData;
+const getUserInfo = async() => {
+    await axios.get(`http://localhost:8080/users/info`,
     {
         withCredentials: true,
         headers : {"Content-Type" : "application/json"}
-    }).then(res => {
-        scoreData = res.data.data;
-        localStorage.setItem("plus",scoreData.plus);
-        localStorage.setItem("minus",scoreData.minus);
+    }).then((res) => {
+        localStorage.clear();   
+        userData = res.data.data;
+        localStorage.setItem("plus",userData.plus);
+        localStorage.setItem("minus",userData.minus);
+        localStorage.setItem("username",userData.username);
+        localStorage.setItem("nickname",userData.nickname);
     });
 }
 
 const MyPage = () => {
-    getScore();
+    getUserInfo();
     return(
         <>
             <HeaderTemplate />

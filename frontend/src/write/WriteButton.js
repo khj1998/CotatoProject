@@ -18,6 +18,7 @@ const CustomFullButton = styled(FullButton)`
         margin-right: 25px;
         margin-left: 25px;
         width: 200px;
+        cursor: pointer;
     }
 `;
 
