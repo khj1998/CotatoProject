@@ -53,6 +53,8 @@ npm start를 하면 처음 나오는 문장에 y입력
 
 
 ----------------------------------------------------------------------------------------------------------
+pm i redux-saga-effects
 yarn add datepicker
 yarn add react-big-calendar
 yarn add date-fns
+yarn add react-scroll
