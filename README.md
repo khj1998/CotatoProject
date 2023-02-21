@@ -68,3 +68,5 @@ yarn add semantic-ui-react
 yarn add semantic-ui-css
   
 yarn add chart.js
+  
+yarn add  @reactchartjs/react-chart.js
