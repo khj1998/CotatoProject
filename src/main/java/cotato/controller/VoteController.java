@@ -1,5 +1,6 @@
 package cotato.controller;
 
+import cotato.dto.VoteAddDto;
 import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
 import cotato.exception.PostNotFoundException;
@@ -83,12 +84,11 @@ public class VoteController {
 
     @PostMapping("/cotato/vote/{postId}")
     public ResponseEntity<String> vote(@PathVariable String postId,
-                                       @RequestParam(name = "userid") String userId,
-                                       @RequestParam(name = "attend") Boolean attend)
+                                       @RequestBody VoteAddDto voteAddDto)
     {
-        log.info("{},{}",attend,postId);
         Long postID = Long.valueOf(postId);
-        Long userID = Long.valueOf(userId);
+        //Long userID = Long.valueOf(voteAddDto.getUserid());
+        Long userID = voteAddDto.getUserid();
 
         if(!voteService.isPostExist(postID))
             throw new PostNotFoundException(postID);
@@ -96,7 +96,7 @@ public class VoteController {
         if(!voteService.isUserExist(userID))
             throw new UserNotFoundException(userID);
 
-        String respond = voteService.vote(postID, userID, attend);
+        String respond = voteService.vote(postID, userID, voteAddDto.isAttend());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

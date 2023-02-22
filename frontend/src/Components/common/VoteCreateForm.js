@@ -57,9 +57,9 @@ const VoteCreateForm = () => {
         setVoteForm({...voteForm,[e.target.name]:e.target.value});
     }
 
-    const submitVote = () => {
+    const submitVote = async () => {
         voteForm.userId = localStorage.getItem('Id');
-        axios
+        await axios
             .post("http://localhost:8080/cotato/vote",voteForm,{
                withCredentials : false,
                "Content-Type" : "application/json",
@@ -84,7 +84,7 @@ const VoteCreateForm = () => {
 
     const onCancel = () =>{
         // history 객체 사용으로 뒤로 가기
-        history.goBack()
+        window.open(`http://localhost:3000/cotato`,'_self');
     };
 
     return (

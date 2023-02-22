@@ -73,7 +73,9 @@ const VoteForm = () => {
 
     let voteForm = {
         "title" : localStorage.getItem("title"),
-        "content": localStorage.getItem("content")
+        "content": localStorage.getItem("content"),
+        "userid" : localStorage.getItem("Id"),
+        "attend" : false
     }
 
     const [loading, setLoading] = useState(false);
@@ -81,18 +83,29 @@ const VoteForm = () => {
     const [onlinevote, setOnlinevote] = useState(0);
     const [voted, setVoted] = useState(false);
 
-    const submitVote = (attend) => {
-        const userid = localStorage.getItem('Id');
-        axios
+    const submitVote = async (attend) => {
+        voteForm.attend = attend;
+        await axios
             .post("http://localhost:8080/cotato/vote/1",voteForm,{
-                params : {
-                    userid : userid,
-                    attend : attend
-                }
+                withCredentials : true,
+                headers : {"Content-Type" : "application/json"}
             })
             .then(
                 (response) => {
-                    console.log(response);
+                    if (response.data == "투표를 완료하였습니다.") {
+                        alert("참석으로 투표에 참여하셨습니다.");
+                        window.open('http://localhost:3000/cotato','_self');
+                    } else if( response.data == "이미 참석에 투표하셨습니다.") {
+                        alert("이미 참석으로 투표에 참여하셨습니다.");
+                    } else if(response.data == "참석으로 투표를 변경하셨습니다.") {
+                        alert("참석으로 투표를 변경하셨습니다.");
+                        window.open('http://localhost:3000/cotato','_self');
+                    } else if(response.data == "이미 불참에 투표하셨습니다.") {
+                        alert("이미 불참으로 투표에 참여하셨습니다.");
+                    } else if(response.data == "불참으로 투표를 변경하셨습니다.") {
+                        alert("불참으로 투표를 변경하셨습니다.");
+                        window.open('http://localhost:3000/cotato','_self');
+                    }
                 },
                 (error) => {
                     console.log(error);
@@ -102,7 +115,7 @@ const VoteForm = () => {
 
     const onCancel = () =>{
         // history 객체 사용으로 뒤로 가기
-        history.goBack()
+        window.open('http://localhost:3000/cotato','_self');
     };
     
     return (

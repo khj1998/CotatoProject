@@ -23,7 +23,6 @@ const getUserId = async() => {
                 alert('등록된 투표 게시물이 없습니다.');
                 window.open('http://localhost:3000/cotato','_self');
             } else {
-                localStorage.clear();
                 localStorage.setItem("title",res.data.data.title);
                 localStorage.setItem("content",res.data.data.content);
             }
