@@ -10,17 +10,18 @@ class Header extends Component {
                         <Logo>
                             <img
                                 width="50%"
-                                //height="107%"
+                                height="107%"
                                 src="https://velog.velcdn.com/images/kkaerrung/post/b94c624c-8271-48ff-9242-5fdd8001a3d2/image.png"
                                 alt="logo"/>
                             <img
                                 width="50%"
-                                //height="107%"
+                                height="107%"
                                 src="https://velog.velcdn.com/images/kkaerrung/post/d24630de-7893-439a-ba26-d36827556db8/image.png"
                                 alt="logo"/>
                         </Logo>
                     </ShortCut>
-                    <Search><h1>코테이토</h1></Search>
+                    <Search> <h1>COTATO 일정</h1></Search>
+
                 </Element>
             </Container>
 
@@ -45,7 +46,7 @@ const Logo = styled.div`
     order: 2;
     width: auto;
     max-width: 180px;
-    height: 60px;
+    height: 85px;
     margin-top: 30px;
     margin-right: 180px;
     position:relative;
@@ -69,11 +70,9 @@ const Search = styled.div`
     width: 105vw;
     height:90px;
     background-color: #EEE3CB;
- //text-align:center;
+    text-align: center;
     position: relative;
-    right:40px;
     z-index: 1;
-    padding:10px;
-`
+    padding:10px;`
 
 export default Header;

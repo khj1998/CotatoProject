@@ -10,13 +10,15 @@ import WritePage from './write/WritePage';
 import Modify from './Components/Modify'
 import Vote from "./Components/Vote";
 import DoVote from './Components/DoVote';
+import CalendarView from './Components/calendar/CalendarView';
+import Home from './Components/main/Home';
 
 const App = () => {
 
     return (
         <>
             <Route component={MainPage} path="/cotato" />
-            <Route component={Board} path="/Board" />
+            <Route component={Board} path="/board" />
             <Route component={Login} path="/login" />
             <Route component={Register} path="/register" />
             <Route component={VoteResult} path="/result" />
@@ -26,6 +28,8 @@ const App = () => {
             <Route component = {Modify} path = "/modify"/>
             <Route component={Vote} path="/vote/create" exact/>
             <Route component={DoVote} path="/vote" exact/>
+            <Route component={CalendarView} path="/calendar" />
+            <Route component={Home} path="/home" />
         </>
     );
 };
