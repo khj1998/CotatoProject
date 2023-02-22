@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cotato.vo.UserEntity;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 

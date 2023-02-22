@@ -63,6 +63,14 @@ public class ExceptionHandleController {
                 .build();
     }
 
+    @ExceptionHandler(NoVotePostFoundException.class)
+    public ResponseEntity<ApiResponse> handleNoVotePostFoundException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("NO VOTE POST FOUND")
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleAnnotationException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)

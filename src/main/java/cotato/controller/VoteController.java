@@ -6,6 +6,8 @@ import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
 import cotato.service.UserService;
 import cotato.service.VoteService;
+import cotato.vo.VotePost;
+import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,16 @@ public class VoteController {
 
     private final VoteService voteService;
     private final UserService userService;
+
+    @GetMapping("/cotato/voate/all")
+    public ResponseEntity<ApiResponse> findAllVotePost() {
+        List<VotePost> result = voteService.findAllVotePost();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("FIND ALL VOTE POST")
+                .data(result)
+                .build();
+    }
 
     @GetMapping("/cotato/vote")
     public ResponseEntity<List<VoteShowPostDto>> showAllVotePostList(){
