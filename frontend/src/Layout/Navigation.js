@@ -28,8 +28,7 @@ class Navigation extends Component {
                          <Link to ="/List"> 리스트 </Link>
                     </NavItem>
                     <LogItem>
-                         <Button to="/login">로그인</Button>
-                         <Button to="/register">회원가입</Button>
+                         <Button to="/logout">로그아웃</Button>
                     </LogItem>
                 </NavList>
             </Nav>

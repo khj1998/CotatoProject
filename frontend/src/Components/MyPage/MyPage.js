@@ -1,11 +1,10 @@
 import React from 'react';
 import HeaderTemplate from '../common/HeaderTemplate';
 import MyPageTemplate from './MyPageTemplate';
-import MyPageForm from './MyPageForm';
 import axios from 'axios';
 
-let userData;
 const getUserInfo = async() => {
+    let userData;
     await axios.get(`http://localhost:8080/users/info`,
     {
         withCredentials: true,
@@ -22,6 +21,11 @@ const getUserInfo = async() => {
 
 const MyPage = () => {
     getUserInfo();
+    while(true) {
+        if (localStorage.getItem("username")) {
+            break;
+        } 
+    }
     return(
         <>
             <HeaderTemplate />

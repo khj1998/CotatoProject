@@ -62,7 +62,7 @@ const onClick = async (e) => {
   });
 }
 
-const Header = (User) => {
+const Header = () => {
   return (
     <>
       <HeaderBlock>
@@ -72,9 +72,9 @@ const Header = (User) => {
             Cotato
           </Link>
           {/* user 값이 있으면 즉, 로그인 상태면 로그아웃을 버튼을 보여주고, 그렇지 않으면 로그인 버튼 보여주기 */}
-          {User != null ? (
+          {localStorage.getItem("username") != null ? (
             <div className="right">
-              <UserInfo>{User.username}</UserInfo>
+              <UserInfo>{localStorage.getItem("username")}</UserInfo>
               <Button onClick = {(e) => onClick(e)}>로그아웃</Button>
             </div>
           ) : (
