@@ -21,20 +21,19 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse> getAllPost() {
 
-    /*@PostMapping(value = "/add",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ApiResponse> addPost(@RequestPart AddPostDto addPostDto,
-                                               @RequestPart List<MultipartFile> files) {
-        boardService.saveBoardPost(addPostDto,files);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("Board Add Success")
-                .data(addPostDto)
+                .message("")
+                .data(null)
                 .build();
-    }*/
+    }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<ApiResponse> addPost(@RequestPart AddPostDto addPostDto) {
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse> addPost(@RequestBody AddPostDto addPostDto) {
         boardService.saveBoardPost(addPostDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)

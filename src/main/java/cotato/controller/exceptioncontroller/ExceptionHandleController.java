@@ -55,14 +55,6 @@ public class ExceptionHandleController {
                 .build();
     }
 
-    @ExceptionHandler(BoardPostDataInValidException.class)
-    public ResponseEntity<ApiResponse> handleBoardPostDataInValidException() {
-        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(false)
-                .message("INVALID POST DATA")
-                .build();
-    }
-
     @ExceptionHandler(NoVotePostFoundException.class)
     public ResponseEntity<ApiResponse> handleNoVotePostFoundException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)

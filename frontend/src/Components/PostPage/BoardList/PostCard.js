@@ -6,7 +6,7 @@ import palette from '../../../lib/styles/palette';
 const PostCardBlock = styled.div`
     background-color: white;
     width: 400px;
-    height: 300px;
+    height: 100px;
     margin: 20px;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -15,17 +15,26 @@ const PostCardBlock = styled.div`
 const CardTitle = styled.div`
     float: left;
     width: 400px;
-    height: 50px;
+    height: 20px;
     overflow: hidden;
-    text-align: left;
-    padding-top: 10px;
+    text-align: center;
     padding-left: 10px;
 `;
+
+const CardCategory = styled.div`
+    float: left;
+    width: 400px;
+    height: 45px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+`
 
 const CardImage = styled.img`
     float: left;
     width: 400px;
-    height: 200px;
+    height: 200px
 `;
 
 const CardNickname = styled.div`
@@ -38,21 +47,27 @@ const CardNickname = styled.div`
 const CardDate = styled.div`
     float: left;
     width: 90px;
+    padding-left: 10px;
+    text-align: left;
     color: ${ palette.gray[6] }
 `;
+
+//<CardImage
+//                    src={ item.images[0] }
+//                />
 
 const PostCard = ({ item }) => {
     return(
         <Link to={ `/${item.postId}` }>
             <PostCardBlock>
-                <CardImage
-                    src={ item.images[0] }
-                />
+                <CardCategory>
+                    {"카테고리 : "+item.category}
+                </CardCategory>
                 <CardTitle>
-                    { item.title }
+                    {"제목 : "+item.title }
                 </CardTitle>
                 <CardNickname>
-                    { item.nickname }
+                    {"작성자 : "+item.username }
                 </CardNickname>
                 <CardDate>
                     { item.createdAt }

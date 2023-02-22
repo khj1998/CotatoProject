@@ -8,7 +8,7 @@ import Select from 'react-select';
 import 'react-google-flight-datepicker/dist/main.css';
 import FullButton from "../Components/common/FullButton";
 import { changeField,writePost } from '../modules/write';
-
+import axios from 'axios';
 
 const WriteFormBlock = styled(Responsive)`
     padding-top: 5rem;
@@ -97,17 +97,25 @@ const WriteForm = () => {
     };
 
     const postSubmit = async () => {
-        console.log(postData.title,postData.content,postData.category);
+        await axios.post(`http://localhost:8080/boards/add`,postData,{
+            withCredentials : true,
+            headers : {"Content-Type" : "application/json"}
+        }).then((res) => {
+            if (res.data.message == "Board Add Success") {
+                alert("글 등록이 완료되었습니다.");
+                window.open(`http://localhost:3000/postlist`,'_self');
+            } else {
+                alert("알 수 없는 오류로 글 등록에 실패하였습니다.");
+            }
+        })
     }
 
     const [option, setOption] = useState('');
     const options = [
         { value: '공지사항', label: '공지사항' },
-        { value: '세미나', label: '세미나' },
+        { value: '프로젝트', label: '프로젝트' },
         { value: '스터디', label: '스터디' },
-        { value: '해커톤', label: '해커톤' },
-        { value: '친목', label: '친목' },
-        { value: '소개', label: '소개' },
+        { value: '번개', label: '번개' },
     ];
 
     const onPublish = async () => {

@@ -2,7 +2,6 @@ package cotato.service;
 
 import cotato.config.AuthenticationStorage;
 import cotato.dto.board.AddPostDto;
-import cotato.exception.BoardPostDataInValidException;
 import cotato.exception.UserNotAuthenticated;
 import cotato.repository.BoardFileRepository;
 import cotato.repository.BoardRepository;
@@ -43,10 +42,6 @@ public class BoardServiceImpl implements BoardService {
     public void saveBoardPost(AddPostDto addPostDto) {
         if (authenticationStorage.getAuthentication() == null) {
             throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
-        }
-
-        if (addPostDto.getCategory().isBlank() || addPostDto.getTitle().isBlank()) {
-            throw new BoardPostDataInValidException("Board Post Data Invalid");
         }
 
         ModelMapper modelMapper = new ModelMapper();

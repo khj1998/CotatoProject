@@ -29,11 +29,9 @@ const Menu = styled.div`
 function Sidebar() {
   const menus = [
     { name: "공지사항", path: "/announce" },
-    { name: "세미나", path: "/seminar" },
     { name: "프로젝트", path: "/project" },
     { name: "스터디", path: "/study"},
-    { name: "네트워킹", path: "/networking"},
-    { name: "소개", path: "/introduce"}
+    { name: "번개", path: "/lightening"}
   ];
   return (
     <Side>

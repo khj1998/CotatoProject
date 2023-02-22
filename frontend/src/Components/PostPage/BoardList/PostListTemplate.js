@@ -17,13 +17,10 @@ const PostListTemplateBlock = styled.div`
 
 const PostListTemplate = ({ history }) => {
     const dummyData = [
-        { "images": ["https://picsum.photos/id/0/1000/1000.jpg"],"id" : 1 ,"title": "test-01", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/1/1000/1000.jpg"],"id" : 2 ,"title": "test-02", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/2/1000/1000.jpg"],"id" : 3 , "title": "test-03", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/3/1000/1000.jpg"],"id" : 4 , "title": "test-04", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/4/1000/1000.jpg"],"id" : 5 , "title": "test-05", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/5/1000/1000.jpg"],"id" : 6 , "title": "test-06", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/6/1000/1000.jpg"],"id" : 7 , "title": "test-07", "username": "test-01", createdAt: "2020-01-01" },
+        { "id" : 1 ,"category":"스터디" , "title": "test-01", "content":"", "username": "test-01", createdAt: "2020-01-01" },
+        { "id" : 2 ,"category":"스터디" , "title": "test-02", "content":"", "username": "test-01", createdAt: "2020-01-01" },
+        { "id" : 3 ,"category":"스터디" , "title": "test-03", "content":"", "username": "test-01", createdAt: "2020-01-01" },
+        { "id" : 4 ,"category":"스터디" , "title": "test-04", "content":"", "username": "test-01", createdAt: "2020-01-01" },
     ];
 
     return(
@@ -32,7 +29,7 @@ const PostListTemplate = ({ history }) => {
             <PostListTemplateBlock>
                 {
                     dummyData.map((item) => {
-                        return  <PostCard item={ item } key = {item.title}
+                        return  <PostCard item={ item } key = {item.id}
                                 />
                     })
                 }
