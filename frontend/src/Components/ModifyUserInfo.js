@@ -73,12 +73,12 @@ const ModifyUserInfo = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post(`http://localhost:8080/users/modify`,form,
+    await axios.post(`http://localhost:8080/users/modify/info`,form,
     {
         withCredentials: true,
         headers : {"Content-Type" : "application/json"}
     }).then((res) => {
-        if (res.data.message == "USER INFO MODIFY SUCCESS") {
+        if (res.data.message == "INFO MODIFY SUCCESS") {
           alert("회원 정보가 수정되었습니다."); 
           window.open(`http://localhost:3000/mypage`,'_self');
         } else if (res.data.message = "NICKNAME ALREADY USED") {
