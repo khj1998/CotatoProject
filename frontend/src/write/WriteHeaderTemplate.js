@@ -7,7 +7,7 @@ const WriteHeaderBlock = styled.div`
     width: 60%;
     font-size: 25px;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
 `;
 
 const WriteHeaderTemplate = () => {

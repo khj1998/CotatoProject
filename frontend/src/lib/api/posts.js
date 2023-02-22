@@ -20,8 +20,9 @@ export const write = ({
         )
        .then((data) => console.log(data));
         }
-     
-     
+
+export const readPost = id => client.get(`/api/posts/${id}`); 
+
 
 
 
