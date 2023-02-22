@@ -3,10 +3,7 @@ package cotato.service;
 import cotato.config.AuthenticationStorage;
 import cotato.dto.UserDto;
 import cotato.dto.UserInfoDto;
-import cotato.exception.UserAlreadyExistsException;
-import cotato.exception.UserAlreadyLogoutException;
-import cotato.exception.UserNotAuthenticated;
-import cotato.exception.UserPasswordInValidException;
+import cotato.exception.*;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
@@ -22,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -34,6 +32,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
+        if (userDto.getUsername().equals("admin@gmail.com")) {
+            UserEntity admin = setRoleToAdmin(userDto);
+            admin.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            admin.setScore(new ScoreEntity());
+            admin.setNickname("ADMIN");
+            userRepository.save(admin);
+            log.info("admin 계정 , {}",admin.getRoles());
+        }
+
         if (checkUserExists(userDto.getUsername())) {
             throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
@@ -51,6 +58,7 @@ public class UserServiceImpl implements UserService{
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
         ScoreEntity score = user.getScore();
         return UserInfoDto.builder()
+                .userId(user.getId())
                 .username(user.getUsername())
                 .plus(score.getPlus())
                 .minus(score.getMinus())
@@ -77,9 +85,29 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    private UserEntity setRoleToAdmin(UserDto userDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserEntity admin = modelMapper.map(userDto, UserEntity.class);
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+
+        if (adminRole == null) {
+            adminRole = createAdminRole();
+        }
+
+        admin.setRoles(Arrays.asList(adminRole));
+        return admin;
+    }
+
     private Role createRole() {
         Role role = new Role();
         role.setName("ROLE_USER");
+        return roleRepository.save(role);
+    }
+
+    private Role createAdminRole() {
+        Role role = new Role();
+        role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 
@@ -88,6 +116,18 @@ public class UserServiceImpl implements UserService{
         if (authenticationStorage.getAuthentication() == null) {
             throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
+    }
+
+    @Override
+    public void checkAdmin() {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_ADMIN")) {
+                return;
+            }
+        }
+        throw new UserNotAdminException("관리자만 접근 가능합니다.");
     }
 
     @Override

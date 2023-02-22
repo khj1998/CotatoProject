@@ -6,6 +6,7 @@ import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +66,16 @@ public class UserController {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("LOGOUT SUCCESS")
+                .build();
+    }
+
+    @GetMapping("/users/role")
+    public ResponseEntity<ApiResponse> getUserRole() {
+        UserInfoDto userInfoDto = userService.getUserInfo();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET INFO")
+                .data(userInfoDto)
                 .build();
     }
 

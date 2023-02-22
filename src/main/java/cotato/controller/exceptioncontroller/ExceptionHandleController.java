@@ -3,6 +3,7 @@ package cotato.controller.exceptioncontroller;
 import cotato.exception.*;
 import cotato.vo.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,7 +21,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ApiResponse> handleUserExistsException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("DUPLICATED")
                 .build();
     }
@@ -36,7 +37,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(UserNotExistsException.class)
     public ResponseEntity<ApiResponse> handleUserNotExistsException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("USER NOT FOUND")
                 .build();
     }
@@ -44,7 +45,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(UserPasswordInValidException.class)
     public ResponseEntity<ApiResponse> handleUserPasswordNotValidException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("PASSWORD INVALID")
                 .build();
     }
@@ -52,7 +53,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(UserNotAuthenticated.class)
     public ResponseEntity<ApiResponse> handleUserNotAuthenticatedException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("USER NOT AUTHENTICATED")
                 .build();
     }
@@ -60,7 +61,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(BoardPostDataInValidException.class)
     public ResponseEntity<ApiResponse> handleBoardPostDataInValidException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("INVALID POST DATA")
                 .build();
     }
@@ -68,7 +69,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleAnnotationException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
-                .success(true)
+                .success(false)
                 .message("NOT VALID")
                 .build();
     }
@@ -91,5 +92,13 @@ public class ExceptionHandleController {
         errorMap.put("errorMessage", exception.getMessage());
 
         return errorMap;
+    }
+
+    @ExceptionHandler(UserNotAdminException.class)
+    public ResponseEntity<ApiResponse> userNotAdminExceptionHandler(UserNotAdminException exception) {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("NOT ADMIN")
+                .build();
     }
 }

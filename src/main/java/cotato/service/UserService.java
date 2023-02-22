@@ -6,6 +6,7 @@ import cotato.dto.UserInfoDto;
 public interface UserService {
     UserDto saveUser(UserDto userDto);
     void checkUserValid();
+    void checkAdmin();
     void logoutProcess();
     void setAuthentication();
     UserInfoDto getUserInfo();

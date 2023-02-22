@@ -4,19 +4,23 @@ import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
+import cotato.service.UserService;
 import cotato.service.VoteService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class VoteController {
 
     private final VoteService voteService;
+    private final UserService userService;
 
     @GetMapping("/cotato/vote")
     public ResponseEntity<List<VoteShowPostDto>> showAllVotePostList(){
@@ -26,9 +30,12 @@ public class VoteController {
     }
 
     @PostMapping("/cotato/vote")
-    ResponseEntity<VotePostDto> saveVotePost(@RequestBody VotePostDto votePostDto){
+    ResponseEntity<VotePostDto> saveVotePost(@RequestBody VotePostDto votePostDto,@RequestParam(name = "userid") String userId){
+        userService.checkUserValid();
+        userService.checkAdmin();
 
-        if(!voteService.isUserExist(votePostDto.getAuthor().getId()))
+        Long userID = Long.valueOf(userId);
+        if(!voteService.isUserExist(userID))
             throw new UserNotFoundException(votePostDto.getAuthor().getId());
 
         voteService.savePost(votePostDto);
@@ -63,18 +70,21 @@ public class VoteController {
     }
 
     @PostMapping("/cotato/vote/{postId}")
-    public ResponseEntity<String> vote(@PathVariable Long postId,
-                                       @RequestParam(name = "userid") Long userId,
+    public ResponseEntity<String> vote(@PathVariable String postId,
+                                       @RequestParam(name = "userid") String userId,
                                        @RequestParam(name = "attend") Boolean attend)
     {
+        log.info("{},{}",attend,postId);
+        Long postID = Long.valueOf(postId);
+        Long userID = Long.valueOf(userId);
 
-        if(!voteService.isPostExist(postId))
-            throw new PostNotFoundException(postId);
+        if(!voteService.isPostExist(postID))
+            throw new PostNotFoundException(postID);
 
-        if(!voteService.isUserExist(userId))
-            throw new UserNotFoundException(userId);
+        if(!voteService.isUserExist(userID))
+            throw new UserNotFoundException(userID);
 
-        String respond = voteService.vote(postId, userId, attend);
+        String respond = voteService.vote(postID, userID, attend);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -1,11 +1,50 @@
 import React, {useState} from 'react';
-import { render } from 'react-dom';
+import styled from "styled-components";
+//import Button from "./Button";
 import _ from 'lodash';
-import { Button, Card, Divider, Image, Placeholder } from 'semantic-ui-react';
+import {Button ,Card, Divider, Image, Placeholder } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import axios from "axios";
 
-//투표 카드
+const TitleInput = styled.input`
+  font-size: 3rem;
+  outline: none;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  border: none;
+  border-bottom: 2px solid slategray;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  width: 90%;
+`;
+
+const PlaceInput = styled.input`
+  font-size: 15pt;
+  outline: none;
+  padding-bottom: 0.5rem;
+  border: none;
+  border-bottom: 2px solid slategray;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  width: 50%;
+`;
+
+const VotePostButtonBlock = styled.div`
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    button + button {
+      margin-left: 0.5rem;
+    }
+`;
+
+const StyledButton = styled(Button)`
+  height: 2.125rem;
+  & + & {
+    margin-left: 0.5rem;
+  }
+`;
+
 const cards = [
     {
         id: 'offline',
@@ -19,17 +58,42 @@ const cards = [
     }
     ];
 
-const VotePage = () => {
+
+const VoteForm = ({title, content, onChangeField}) => {
+
+    let attend = false;
+
+    const onAttendClicked = (header) => {
+        if (header == "대면") {
+            attend = true;
+        } else if (header == "비대면") {
+            attend = false;
+        }
+    }
+
+    const [voteForm, setVoteForm] = useState(
+        {
+            "title" : "",
+            "content": ""
+        });
+      
+    const onInputChange = (e) => {
+        setVoteForm({...voteForm,[e.target.name]:e.target.value});
+    }
+
     const [loading, setLoading] = useState(false);
     const [offlinevote, setOfflinevote] = useState(0);
     const [onlinevote, setOnlinevote] = useState(0);
     const [voted, setVoted] = useState(false);
 
-    const submitVote = () => {
+    const submitVote = (attend) => {
+        const userid = localStorage.getItem('Id');
         axios
-            .post("http://localhost:8080/vote", {
-                offline:offlinevote,
-                online: onlinevote,
+            .post("http://localhost:8080/cotato/vote/1",voteForm,{
+                params : {
+                    userid : userid,
+                    attend : attend
+                }
             })
             .then(
                 (response) => {
@@ -41,8 +105,24 @@ const VotePage = () => {
             );
     };
 
+    const onCancel = () =>{
+        // history 객체 사용으로 뒤로 가기
+        history.goBack()
+    };
+
     return (
         <>
+            <TitleInput
+                placeholder="투표 제목을 입력하세요. (ex. 3/3 정기세션 투표)"
+                name = "title"
+                onChange={(e) => onInputChange(e)}
+            />
+            <PlaceInput
+                placeholder="세션 장소를 입력하세요"
+                name = "content"
+                onChange={(e) => onInputChange(e)}
+            />
+            <VotePostButtonBlock>
 
             대면:{offlinevote} / 비대면: {onlinevote}
             <Divider/>
@@ -77,30 +157,24 @@ const VotePage = () => {
                         </Card.Content>
 
                         <Card.Content extra>
-                            <Button disabled={voted}
-                                    onClick={ () => [
-                                        card.id === 'offline' ? setOfflinevote(offlinevote+1)
-                                            : setOnlinevote(onlinevote+1), setVoted(true)
-                                    , submitVote()]}
-                                    primary>
+                            <Button primary
+                                    onClick = {(e) => onAttendClicked(card.header)}>
                                 투표
-                            </Button>
-                            <Button
-                                disabled={
-                                    (card.id === 'offline' && offlinevote <=0)  ||
-                                    (card.id === 'online' && onlinevote <=0)
-                                }
-                                onClick={ () => [card.id === 'offline' ? setOfflinevote(offlinevote-1)
-                                : setOnlinevote(onlinevote-1), setVoted(false), submitVote()]}>
-                                투표 취소
                             </Button>
                         </Card.Content>
 
                     </Card>
                 ))}
             </Card.Group>
+
+                <br></br>                
+                <StyledButton onClick = {() => submitVote(attend)}>
+                    투표 하기
+                </StyledButton>
+                <StyledButton onClick={onCancel}>취소</StyledButton>
+                </VotePostButtonBlock>
         </>
     );
 };
 
-export default VotePage;
+export default VoteForm;
