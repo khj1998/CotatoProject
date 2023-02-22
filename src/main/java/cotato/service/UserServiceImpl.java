@@ -56,6 +56,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserInfoDto getUserInfo() {
+        if (authenticationStorage.getAuthentication() == null) {
+            throw new UserNotAuthenticated("인증되지 않은 유저입니다!");
+        }
+
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
         ScoreEntity score = user.getScore();
         return UserInfoDto.builder()

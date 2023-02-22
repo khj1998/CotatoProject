@@ -26,10 +26,10 @@ public class VoteController {
 
     @GetMapping("/cotato/voate/all")
     public ResponseEntity<ApiResponse> findAllVotePost() {
-        List<VotePost> result = voteService.findAllVotePost();
+        VotePost result = voteService.findVotePostById();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("FIND ALL VOTE POST")
+                .message("FIND VOTE POST")
                 .data(result)
                 .build();
     }

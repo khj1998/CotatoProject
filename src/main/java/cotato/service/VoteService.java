@@ -9,8 +9,7 @@ import cotato.vo.VotePost;
 import java.util.List;
 
 public interface VoteService {
-
-    List<VotePost> findAllVotePost();
+    VotePost findVotePostById();
     List<VoteShowPostDto> showAllVotePostsWithVoteShowPostDto();
 
     VoteShowPostDto findVotePost(Long postId);

@@ -7,8 +7,12 @@ const getUserId = async() => {
         withCredentials : true,
         headers : {"Content-Type" : "application/json"}
     }).then((res) => {
-        console.log(res.data);
-        localStorage.setItem("Id",res.data.data.userId);
+        if (res.data.message == "USER NOT AUTHENTICATED") {
+            alert('로그인 하지 않은 유저입니다. 로그인을 진행하세요.');
+            window.open('http://localhost:3000/login','_self');
+        } else {
+            localStorage.setItem("Id",res.data.data.userId);
+        }
     })
 }
 

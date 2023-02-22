@@ -23,12 +23,12 @@ public class VoteServiceImpl implements VoteService{
     private final UserRepository userRepository;
 
     @Override
-    public List<VotePost> findAllVotePost() {
-        List<VotePost> result = votePostRepository.findAll();
-        if (result.isEmpty()) {
-            throw new NoVotePostFoundException("등록된 투표가 없습니다!");
+    public VotePost findVotePostById() {
+        VotePost post = votePostRepository.findByPostId(1L);
+        if (post == null) {
+            throw new NoVotePostFoundException("등록된 투표가 없습니다.");
         }
-        return result;
+        return post;
     }
 
     @Override

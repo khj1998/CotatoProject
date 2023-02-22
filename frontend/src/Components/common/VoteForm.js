@@ -59,7 +59,7 @@ const cards = [
     ];
 
 
-const VoteForm = ({title, content, onChangeField}) => {
+const VoteForm = () => {
 
     let attend = false;
 
@@ -71,14 +71,9 @@ const VoteForm = ({title, content, onChangeField}) => {
         }
     }
 
-    const [voteForm, setVoteForm] = useState(
-        {
-            "title" : "",
-            "content": ""
-        });
-      
-    const onInputChange = (e) => {
-        setVoteForm({...voteForm,[e.target.name]:e.target.value});
+    let voteForm = {
+        "title" : localStorage.getItem("title"),
+        "content": localStorage.getItem("content")
     }
 
     const [loading, setLoading] = useState(false);
@@ -109,18 +104,18 @@ const VoteForm = ({title, content, onChangeField}) => {
         // history 객체 사용으로 뒤로 가기
         history.goBack()
     };
-
+    
     return (
         <>
             <TitleInput
-                placeholder="투표 제목을 입력하세요. (ex. 3/3 정기세션 투표)"
+                placeholder = {localStorage.getItem("title")}
                 name = "title"
-                onChange={(e) => onInputChange(e)}
+                readOnly
             />
             <PlaceInput
-                placeholder="세션 장소를 입력하세요"
+                placeholder = {"장소 : "+localStorage.getItem("content")}
                 name = "content"
-                onChange={(e) => onInputChange(e)}
+                readOnly
             />
             <VotePostButtonBlock>
 
@@ -158,7 +153,7 @@ const VoteForm = ({title, content, onChangeField}) => {
 
                         <Card.Content extra>
                             <Button primary
-                                    onClick = {(e) => onAttendClicked(card.header)}>
+                                    onClick = {() => onAttendClicked(card.header)}>
                                 투표
                             </Button>
                         </Card.Content>
