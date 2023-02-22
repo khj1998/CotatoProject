@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService{
             admin.setNickname("ADMIN");
             userRepository.save(admin);
             log.info("admin 계정 , {}",admin.getRoles());
+            return userDto;
         }
 
         if (checkUserExists(userDto.getUsername())) {
