@@ -19,25 +19,10 @@ public class VotePost {
     private UserEntity author;
 
     @Column
+    private String title;
+
+    @Column
     private String content;
-
-    @Column
-    private Long startYear;
-
-    @Column
-    private Long startMonth;
-
-    @Column
-    private Long startDay;
-
-    @Column
-    private Long endYear;
-
-    @Column
-    private Long endMonth;
-
-    @Column
-    private Long endDay;
 
     @ElementCollection
     @CollectionTable

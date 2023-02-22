@@ -15,6 +15,8 @@ public interface CalendarService {
 
     CalendarPostDto deletePost(CalendarPostDto calendarPostDto);
 
+    Boolean canCreateDate(CalendarPostDto calendarPostDto);
+
     Boolean isUserExist(Long id);
 
     Boolean isPostExist(Long postId);

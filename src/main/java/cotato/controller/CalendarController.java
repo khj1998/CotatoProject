@@ -2,6 +2,7 @@ package cotato.controller;
 
 import cotato.dto.CalendarPostDto;
 import cotato.dto.CalendarShowUserDto;
+import cotato.exception.DateInversionException;
 import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
 import cotato.service.CalendarService;
@@ -40,6 +41,9 @@ public class CalendarController {
 
         if(!calendarService.isUserExist(calendarPostDto.getAuthor().getId()))
             throw new UserNotFoundException(calendarPostDto.getAuthor().getId());
+
+        if(!calendarService.canCreateDate(calendarPostDto))
+            throw new DateInversionException();
 
         calendarService.savePost(calendarPostDto);
 

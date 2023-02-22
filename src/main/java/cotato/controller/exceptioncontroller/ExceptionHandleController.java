@@ -2,8 +2,6 @@ package cotato.controller.exceptioncontroller;
 
 import cotato.exception.*;
 import cotato.vo.response.ApiResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @RestControllerAdvice
 public class ExceptionHandleController {
 
@@ -100,5 +97,15 @@ public class ExceptionHandleController {
                 .success(false)
                 .message("NOT ADMIN")
                 .build();
+    }
+
+    @ExceptionHandler(DateInversionException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> dateInversionHandler(DateInversionException exception){
+
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+
+        return errorMap;
     }
 }
