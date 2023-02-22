@@ -22,10 +22,20 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping(value = "/add",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+    /*@PostMapping(value = "/add",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ApiResponse> addPost(@RequestPart AddPostDto addPostDto,
                                                @RequestPart List<MultipartFile> files) {
         boardService.saveBoardPost(addPostDto,files);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("Board Add Success")
+                .data(addPostDto)
+                .build();
+    }*/
+
+    @PostMapping(value = "/add")
+    public ResponseEntity<ApiResponse> addPost(@RequestPart AddPostDto addPostDto) {
+        boardService.saveBoardPost(addPostDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("Board Add Success")

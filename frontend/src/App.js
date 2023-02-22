@@ -32,6 +32,8 @@ const App = () => {
             <Route component={DoVote} path="/vote" exact/>
             <Route component={CalendarView} path="/calendar" />
             <Route component={Home} path="/home" />
+
+            <Route component={WritePage} path="/write/test"/>
         </>
     );
 };

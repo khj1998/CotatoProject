@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping("/users/info")
-    public ResponseEntity<ApiResponse> getUserScore() {
+    public ResponseEntity<ApiResponse> getUserInfo() {
         UserInfoDto userInfoDto = userService.getUserInfo();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)

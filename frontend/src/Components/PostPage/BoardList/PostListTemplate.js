@@ -24,8 +24,6 @@ const PostListTemplate = ({ history }) => {
         { "images": ["https://picsum.photos/id/4/1000/1000.jpg"],"id" : 5 , "title": "test-05", "username": "test-01", createdAt: "2020-01-01" },
         { "images": ["https://picsum.photos/id/5/1000/1000.jpg"],"id" : 6 , "title": "test-06", "username": "test-01", createdAt: "2020-01-01" },
         { "images": ["https://picsum.photos/id/6/1000/1000.jpg"],"id" : 7 , "title": "test-07", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/7/1000/1000.jpg"],"id" : 8 , "title": "test-08", "username": "test-01", createdAt: "2020-01-01" },
-        { "images": ["https://picsum.photos/id/8/1000/1000.jpg"],"id" : 9 , "title": "test-09", "username": "test-01", createdAt: "2020-01-01" },
     ];
 
     return(

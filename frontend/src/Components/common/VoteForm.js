@@ -93,17 +93,17 @@ const VoteForm = () => {
             .then(
                 (response) => {
                     if (response.data == "투표를 완료하였습니다.") {
-                        alert("참석으로 투표에 참여하셨습니다.");
+                        attend == true ? alert("대면으로 투표에 참여하셨습니다.") : alert("비대면으로 투표에 참여하셨습니다.");
                         window.open('http://localhost:3000/cotato','_self');
                     } else if( response.data == "이미 참석에 투표하셨습니다.") {
-                        alert("이미 참석으로 투표에 참여하셨습니다.");
+                        alert("이미 대면으로 투표에 참여하셨습니다.");
                     } else if(response.data == "참석으로 투표를 변경하셨습니다.") {
-                        alert("참석으로 투표를 변경하셨습니다.");
+                        alert("대면으로 투표를 변경하셨습니다.");
                         window.open('http://localhost:3000/cotato','_self');
                     } else if(response.data == "이미 불참에 투표하셨습니다.") {
-                        alert("이미 불참으로 투표에 참여하셨습니다.");
+                        alert("이미 비대면으로 투표에 참여하셨습니다.");
                     } else if(response.data == "불참으로 투표를 변경하셨습니다.") {
-                        alert("불참으로 투표를 변경하셨습니다.");
+                        alert("비대면으로 투표를 변경하셨습니다.");
                         window.open('http://localhost:3000/cotato','_self');
                     }
                 },

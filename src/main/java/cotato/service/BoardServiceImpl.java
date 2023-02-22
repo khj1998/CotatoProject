@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
     private final AuthenticationStorage authenticationStorage;
 
     @Override
-    public void saveBoardPost(AddPostDto addPostDto, List<MultipartFile> files) {
+    public void saveBoardPost(AddPostDto addPostDto) {
         if (authenticationStorage.getAuthentication() == null) {
             throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
@@ -52,7 +52,6 @@ public class BoardServiceImpl implements BoardService {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         BoardPostEntity boardPostEntity = modelMapper.map(addPostDto,BoardPostEntity.class);
-        boardPostEntity.setBoardFiles(getFilesList(files,boardPostEntity));
 
         UserEntity userEntity = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
         boardPostEntity.setUserEntity(userEntity);

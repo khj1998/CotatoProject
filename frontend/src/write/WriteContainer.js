@@ -5,19 +5,6 @@ import WriteForm from './WriteForm';
 
 const WriteContainer = () => {
     const dispatch = useDispatch();
-    const { user } = useSelector(({ user }) => ({
-        user: user.user,
-    }));
-    const { postType } = useSelector(({ write }) => ({
-        postType: write.postType,
-    }));
-
-    const onDrop = (pictures, urls) => {
-        dispatch(changeField({
-            key: "images",
-            value: pictures
-        }));
-    };
 
     const onChangeField = e => {
         const { value, name } = e.target;
@@ -25,16 +12,6 @@ const WriteContainer = () => {
         dispatch(changeField({
             key: name,
             value
-        }));
-    };
-
-    const onUpdate = (startDate, endDate) => {
-        var start = splitString(startDate);
-        var end = splitString(endDate);
-
-        dispatch(changeField({
-            key: "date",
-            value: [start, end],
         }));
     };
 
@@ -57,39 +34,12 @@ const WriteContainer = () => {
         { value: '소개', label: '소개' },
     ];
 
-    useEffect(() => {
-        if(user) {
-            dispatch(changeField({
-                key: "writer",
-                value: user.nickname,
-            }));
-        }
-    }, [dispatch, user]);
-
-    useEffect(() => {
-        if(user) {
-            dispatch(changeField({
-                key: "userId",
-                value: user.userId
-            }));
-        }
-    }, [dispatch, user]);
-
-    function splitString(str) {
-        var _arr = `${ str }`.split(' ');
-
-        return _arr[0] + ' ' + _arr[1] + ' ' + _arr[2] + ' ' + _arr[3];
-    }
-
     return (
         <WriteForm
             onChangeField={ onChangeField }
-            onDrop={ onDrop }
-            onUpdate={ onUpdate }
             onSelect={ onSelect }
             options={ options }
             option={ option }
-            postType={ postType }
         />
     );
 };
