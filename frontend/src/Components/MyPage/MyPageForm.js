@@ -1,11 +1,8 @@
 import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import LogoutButton from './LogoutButton';
-import LogoutBox from './LogoutBox';
 import { useDispatch, useSelector } from 'react-redux';
-import {logout} from '../../modules/user';
-
+import axios from 'axios';
 
 const MyPageFormBlock = styled.table`
     width: 50%;
@@ -62,17 +59,32 @@ const TextBox = styled.div`
     font-size: 20px;
 `;
 
+const onClick = async (e) => {
+    e.preventDefault();
+    await axios.get(`http://localhost:8080/logout`)
+    .then((res) => {
+        if (res.data.message == "LOGOUT SUCCESS") {
+            alert("로그아웃 되었습니다.");
+            window.open('http://localhost:3000/login','_self');
+        }
+    });
+}
+
 const MyPageForm = ({ history }) => {
     return(
         <MyPageFormBlock>
             <LineBlock>
                 <HalfLeftLine>
-
+                    <Link to ="/modify/user/info">
+                        닉네임 변경
+                    </Link>
                 </HalfLeftLine>
                 <HalfRightLine>
-                    <LogoutBox>
-                    <LogoutButton />
-                    </LogoutBox>
+                    <TextBox>
+                        <Link onClick={(e) => onClick(e)}>
+                            로그아웃
+                        </Link>
+                    </TextBox>
                 </HalfRightLine>
             </LineBlock>
             <LineBlock>

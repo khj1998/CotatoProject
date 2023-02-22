@@ -2,11 +2,23 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Button from '../Components/common/Button';
+import axios from 'axios';
+import Button from'../Components/common/Button'
+
+const onClick = async (e) => {
+    e.preventDefault();
+    await axios.get(`http://localhost:8080/logout`)
+    .then((res) => {
+        if (res.data.message == "LOGOUT SUCCESS") {
+            alert("로그아웃 되었습니다.");
+            window.open('http://localhost:3000/login','_self');
+        }
+    });
+}
 
 class Navigation extends Component {
-    render() {
 
+    render() {
         return (
             <Nav>
                 <NavList>
@@ -28,7 +40,7 @@ class Navigation extends Component {
                          <Link to ="/List"> 리스트 </Link>
                     </NavItem>
                     <LogItem>
-                         <Button to="/logout">로그아웃</Button>
+                         <Button onClick = {(e) => onClick(e)}>로그아웃</Button>
                     </LogItem>
                 </NavList>
             </Nav>

@@ -11,4 +11,5 @@ public interface UserService {
     void setAuthentication();
     UserInfoDto getUserInfo();
     void modifyUserPassword(UserInfoDto userInfoDto);
+    void modifyUserInfo(UserInfoDto userInfoDto);
 }

@@ -87,7 +87,6 @@ public class VoteController {
                                        @RequestBody VoteAddDto voteAddDto)
     {
         Long postID = Long.valueOf(postId);
-        //Long userID = Long.valueOf(voteAddDto.getUserid());
         Long userID = voteAddDto.getUserid();
 
         if(!voteService.isPostExist(postID))

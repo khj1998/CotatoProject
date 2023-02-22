@@ -126,7 +126,7 @@ const VoteForm = () => {
                 readOnly
             />
             <PlaceInput
-                placeholder = {"장소 : "+localStorage.getItem("content")}
+                placeholder = {"장소 : "+localStorage.getItem("content") == null ? "":localStorage.getItem("content")}
                 name = "content"
                 readOnly
             />

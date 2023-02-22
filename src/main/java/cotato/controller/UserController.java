@@ -83,17 +83,27 @@ public class UserController {
         UserInfoDto userInfoDto = userService.getUserInfo();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("GET SCORE")
+                .message("GET USER INFO")
                 .data(userInfoDto)
                 .build();
     }
 
-    @PostMapping("/users/modify")
-    public ResponseEntity<ApiResponse> modifyUser(@RequestBody UserInfoDto userInfoDto) {
+    @PostMapping("/users/modify/password")
+    public ResponseEntity<ApiResponse> modifyUserPwd(@RequestBody UserInfoDto userInfoDto) {
         userService.modifyUserPassword(userInfoDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("PASSWORD MODIFY SUCCESS")
+                .data(userInfoDto)
+                .build();
+    }
+
+    @PostMapping("/users/modify/info")
+    public ResponseEntity<ApiResponse> modifyUserInfo(@RequestBody UserInfoDto userInfoDto) {
+        userService.modifyUserInfo(userInfoDto);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("INFO MODIFY SUCCESS")
                 .data(userInfoDto)
                 .build();
     }

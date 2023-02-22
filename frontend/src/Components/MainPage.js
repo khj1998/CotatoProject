@@ -30,7 +30,7 @@ const getUserValid = async () => {
 }
 
 const MainPage = () => {
-   getUserValid();
+    getUserValid();
     return (
             <Layout>
                 <Navigation />
@@ -48,7 +48,6 @@ const MainPage = () => {
                 <Layout1>
                 <SnsTemplate/>
                 </Layout1>
-
                 <Footer>
                 <Copy/>
                 </Footer>

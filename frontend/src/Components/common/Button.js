@@ -34,7 +34,8 @@ const buttonStyle = css`
     css`
       background: #D0B8A8;
       &:hover {
-0        background: #D0B8A8;
+        background: #D0B8A8;
+        style="cursor:pointer;"
       }
     `}
 `;

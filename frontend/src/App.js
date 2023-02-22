@@ -12,6 +12,7 @@ import Vote from "./Components/Vote";
 import DoVote from './Components/DoVote';
 import CalendarView from './Components/calendar/CalendarView';
 import Home from './Components/main/Home';
+import ModifyUserInfo from './Components/ModifyUserInfo';
 
 const App = () => {
 
@@ -24,8 +25,9 @@ const App = () => {
             <Route component={VoteResult} path="/result" />
             <Route component={PostList} path="/postlist" />
             <Route component={MyPage} path="/mypage"/>
-            <Route component = {WritePage} path="/write" exact/>
-            <Route component = {Modify} path = "/modify"/>
+            <Route component={WritePage} path="/write" exact/>
+            <Route component={Modify} path = "/modify"/>
+            <Route component={ModifyUserInfo} path="/modify/user/info"/>
             <Route component={Vote} path="/vote/create" exact/>
             <Route component={DoVote} path="/vote" exact/>
             <Route component={CalendarView} path="/calendar" />

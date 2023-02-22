@@ -60,12 +60,11 @@ const ButtonWithMarginTop = styled(Button)`
   margin-top: 1rem;
 `;
 
-const Modify = () => {
+const ModifyUserInfo = () => {
   const [form, setForm] = useState(
     {
-      username: localStorage.getItem("username"),
-      password: "",
-      passwordConfirm: ""});
+       nickname: localStorage.getItem("nickname")
+    });
   
   const onInputChange = (e) => {
     setForm({...form,[e.target.name]:e.target.value});
@@ -73,33 +72,21 @@ const Modify = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let isModified = false;
-    await axios.post(`http://localhost:8080/users/modify/password`,form,
+
+    await axios.post(`http://localhost:8080/users/modify`,form,
     {
         withCredentials: true,
         headers : {"Content-Type" : "application/json"}
     }).then((res) => {
-        if (res.data.message == "PASSWORD MODIFY SUCCESS") {
-          alert("비밀번호가 변경되었습니다. 다시 로그인을 진행하세요."); 
-          isModified = true;
-        } else if (res.data.message = "PASSWORD INVALID") {
-          alert("비밀번호가 일치하지 않습니다.")
-        } else if (res.data.message = "PASSWORD ALREADY USED") {
-          alert("이미 사용중인 비밀번호 입니다.");
+        if (res.data.message == "USER INFO MODIFY SUCCESS") {
+          alert("회원 정보가 수정되었습니다."); 
+          window.open(`http://localhost:3000/mypage`,'_self');
+        } else if (res.data.message = "NICKNAME ALREADY USED") {
+          alert("이미 사용중인 닉네임 입니다.");
         }
     })
-  
-    if (isModified) {
-      await axios.get(`http://localhost:8080/logout`,
-      {
-        withCredentials: true
-      }).then((res) => {
-        if (res.data.message = "LOGOUT SUCCESS") {
-          window.open(`http://localhost:3000/login`,'_self');
-        }
-      })
-    }
   }
+  console.log(localStorage.getItem("nickname"));
 
   return(
     <>
@@ -109,7 +96,7 @@ const Modify = () => {
                     <Link to="/cotato">COTATO</Link>
                 </div>
                 <AuthFormBlock>
-            <h3>비밀번호 변경</h3>
+            <h3>닉네임 설정</h3>
             <form onSubmit={onSubmit}>
                 <StyledInput
                     autocomplete="username"
@@ -118,20 +105,18 @@ const Modify = () => {
                     readOnly
                 />
                 <StyledInput
-                    autocomplete="new-password"
-                    name="password"
-                    placeholder="비밀번호"
-                    onChange={(e) => onInputChange(e)}
-                    type="password"
-                  
+                    autocomplete="username"
+                    name="username"
+                    placeholder= {"현재 닉네임 : "+localStorage.getItem("nickname")}
+                    readOnly
                 />
                 <StyledInput
-                  autocomplete="new-password"
-                  name="passwordConfirm"
-                  placeholder="비밀번호 확인"
-                  onChange={(e) => onInputChange(e)}
-                  type="password"
+                    autocomplete="new-password"
+                    name="nickname"
+                    placeholder={"변경할 닉네임을 입력하세요."}
+                    onChange={(e) => onInputChange(e)}
                 />
+
                 <ButtonWithMarginTop cyan fullWidth style={{marginTop: '1rem'}}>
                     회원수정
                 </ButtonWithMarginTop>
@@ -142,4 +127,4 @@ const Modify = () => {
     </> 
   )
 };
-export default Modify;
+export default ModifyUserInfo;

@@ -71,6 +71,22 @@ public class ExceptionHandleController {
                 .build();
     }
 
+    @ExceptionHandler(UserSameNickNameException.class)
+    public ResponseEntity<ApiResponse> handleUserSameNickNameException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("NICKNAME ALREADY USED")
+                .build();
+    }
+
+    @ExceptionHandler(UserSamePasswordException.class)
+    public ResponseEntity<ApiResponse> handleUserSamePasswordException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("PASSWORD ALREADY USED")
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleAnnotationException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
