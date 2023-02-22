@@ -21,9 +21,6 @@ export const write = ({
         if (images != null) {
             images.forEach((image) => formData.append("images", image));
         }
-
-        console.log("안빌려줌 ㅅㄱ");
-        client.post('http://localhost:8080/boards/add', formData);
 }
 
 

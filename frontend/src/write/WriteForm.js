@@ -7,6 +7,7 @@ import ImageUploader from 'react-images-upload'
 import Select from 'react-select';
 import 'react-google-flight-datepicker/dist/main.css';
 import FullButton from "../Components/common/FullButton";
+import { changeField,writePost } from '../modules/write';
 
 
 const WriteFormBlock = styled(Responsive)`
@@ -70,100 +71,71 @@ const CustomFullButton = styled(FullButton)`
     }
 `;
 
-const WriteForm = ({
-    onChangeField,
-    onSelect,
-    options,
-    option
-}) => {
+const WriteForm = () => {
     const [error, setError] = useState('');
-    const dispatch = useDispatch();
-    const {
-        userId,
-        postType,
-        category,
-        rentalPrice,
-        title,
-        content,
-        date,
-        writer,
-        images,
-        post,
-        postError,
-    } = useSelector(({ write }) => ({
-        userId: write.userId,
-        postType: write.postType,
-        category: write.category,
-        rentalPrice: write.rentalPrice,
-        title: write.title,
-        content: write.content,
-        date: write.date,
-        writer: write.writer,
-        images: write.images,
-        post: write.post,
-        postError: write.postError,
-    }));
 
-    const onPublish = () => {
-        if(title === '') {
+    const [postData,setPostData] = useState({
+        "category" : "",
+        "title" : "",
+        "content" : ""
+    });
+
+    const dispatch = useDispatch();
+
+    const onInputChange = (e) => {
+        setPostData({...postData,[e.target.name]:e.target.value});
+    }
+
+    const onSelect = (value) => {
+        dispatch(changeField({
+            key: "category",
+            value: value.value
+        }))
+
+        setOption(value);
+        postData.category = value.value;
+    };
+
+    const postSubmit = async () => {
+        console.log(postData.title,postData.content,postData.category);
+    }
+
+    const [option, setOption] = useState('');
+    const options = [
+        { value: '공지사항', label: '공지사항' },
+        { value: '세미나', label: '세미나' },
+        { value: '스터디', label: '스터디' },
+        { value: '해커톤', label: '해커톤' },
+        { value: '친목', label: '친목' },
+        { value: '소개', label: '소개' },
+    ];
+
+    const onPublish = async () => {
+        if(postData.title == '') {
             setError('제목을 입력해주세요');
 
             return;
         }
 
-        if(content === '') {
+        if(postData.content == '') {
             setError('내용을 적어주세요');
 
             return;
         }
 
-        if(category === '' && postType === '모집 게시물') {
+        if(postData.category === '') {
             setError('카테고리를 지정해주세요');
 
             return;
         }
 
-        if(rentalPrice === null && postType === '모집 게시물') {
-            setError('가격을 입력해주세요');
-
-            return;
-        }
-
-        if(category === '' && postType === '모집 게시물') {
-            setError('카테고리를 지정해주세요');
-
-            return;
-        }
-
-        if(date === null && postType === '모집 게시물') {
-            setError('날짜를 정해주세요');
-
-            return;
-        }
-
-        if(images === null && postType === '모집 게시물') {
-            setError('이미지를 넣어주세요');
-
-            return;
-        }
-
-        if(postError) {
+        if(error != '') {
             setError('에러 발생!');
-            console.log(postError);
+            setError('');
             return;
         }
 
-        dispatch(writePost({
-            userId,
-            postType,
-            category,
-            rentalPrice,
-            title,
-            content,
-            date,
-            writer,
-            images,
-        }));
+        await postSubmit();
     };
 
     const onCancel = () => {
@@ -171,12 +143,6 @@ const WriteForm = ({
 
         history.goBack();
     };
-
-    useEffect(() => {
-        if(post) {
-            history.onPublish("/boards/add");
-        }
-    }, [history, post]);
 
     return(
         <>
@@ -191,13 +157,13 @@ const WriteForm = ({
                         autoComplete="title"
                         name="title"
                         placeholder="게시글 제목을 작성해주세요"
-                        onChange={ onChangeField }
+                        onChange={(e) => {onInputChange(e)}}
                     />
                     <ContentInput
                         autoComplete="content"
                         name="content"
                         placeholder="게시글 내용을 작성해주세요"
-                        onChange={ onChangeField }
+                        onChange={(e) => {onInputChange(e)}}
                     />
                     { error && <ErrorMessage>{ error }</ErrorMessage> }
             </WriteFormBlock>
