@@ -9,6 +9,7 @@ import VoteCreate from "./Components/VoteCreate";
 import PostList from './Components/PostPage/BoardList/PostList';
 import MyPage from './Components/MyPage/MyPage';
 import WritePage from './write/WritePage';
+import WriteApp from './write/WriteApp';
 
 const App = () => {
 

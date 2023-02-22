@@ -7,7 +7,8 @@ import axios from 'axios';
 
 const SearchBarArea = styled.div`
     float: left;
-    width: 100%;
+    width: 80%;
+    transform: translate(0%, -130%);
 `;
 
 const SearchBar = () => {

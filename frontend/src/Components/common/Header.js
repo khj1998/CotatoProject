@@ -11,6 +11,7 @@ const HeaderBlock = styled.div`
   width: 100%;
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+  z-index: 1;
 `;
 
 /**
@@ -50,6 +51,8 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
+
+
 const onClick = async (e) => {
   e.preventDefault();
   await axios.get(`http://localhost:8080/logout`).then((res) => {
@@ -67,10 +70,13 @@ const Header = (User) => {
     <>
       <HeaderBlock>
         <Wrapper>
+          
           {/* index 로 이동하는 Link 컴포넌트 */}
           <Link to="/cotato" className="logo">
-            Cotato
+        　　　Cotato
           </Link>
+          
+        
           {/* user 값이 있으면 즉, 로그인 상태면 로그아웃을 버튼을 보여주고, 그렇지 않으면 로그인 버튼 보여주기 */}
           {User != null ? (
             <div className="right">
@@ -80,8 +86,10 @@ const Header = (User) => {
           ) : (
             <div className="right">
               <Button to="/login">로그인</Button>
+            
             </div>
           )}
+       
         </Wrapper>
       </HeaderBlock>
       <Spacer />

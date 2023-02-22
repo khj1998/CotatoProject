@@ -4,7 +4,9 @@ import palette from "../../../lib/styles/palette";
 
 const SearchButtonArea = styled.div`
     width: 60px;
-    float: left;
+    float: right;
+    transform: translate( 110%, -120%);
+    
 `;
 
 const Button = styled.button`
@@ -15,6 +17,7 @@ const Button = styled.button`
     color: #ffffff;
     outline: none;
     border: none;
+    z-index: 2;
     &: hover {
         width: 60px;
         height: 40px;
