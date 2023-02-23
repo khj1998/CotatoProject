@@ -66,49 +66,45 @@ const NewDate = {
     "end":""
 }
 
-
 function CalendarView(){
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [newDate, setNewDate] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState([]);
 
-
     useEffect(()=>{
         loadUser();
     }, []);
-
 
      const loadUser=async ()=>{
             const result=await axios.get(`http://localhost:8080/cotato`)
             .then(function (response) {
                    let appointments = response.data;
-                   let map = new Map([])
-
+                   let map = [];
                    console.log(appointments)
-
+                   
                    appointments.map(i => {
+                    let temp = { "title":"","start":"","end":""};
                     let startShow = new Date(i.startYear+"."+i.startMonth+"."+i.startDay);
                     let endShow = new Date(i.endYear+"."+i.endMonth+"."+i.endDay);
 
-                   NewDate.title = i.content;
-                   NewDate.start = startShow;
-                   NewDate.end = endShow;
+                    temp.title = i.content;
+                    temp.start = startShow;
+                    temp.end = endShow;
 
-                   console.log(NewDate);
+                    console.log(temp);
 
-                   map.set(NewDate)
+                    map.push(temp);
                    })
 
                    for (let i = 0; i < appointments.length; i++) {
-
                     let startShow = new Date(appointments[i].startYear+"."+appointments[i].startMonth+"."+appointments[i].startDay);
                     let endShow = new Date(appointments[i].endYear+"."+appointments[i].endMonth+"."+appointments[i].endDay);
 
-                   NewDate.title = appointments[i].content;
-                   NewDate.start = startShow;
-                   NewDate.end = endShow;
-
-                   allEvents.push(NewDate);
+                    NewDate.title = appointments[i].content;
+                    NewDate.start = startShow;
+                    NewDate.end = endShow;
+                    
+                    allEvents.push(NewDate);
                    }
 
                     console.log(allEvents)
