@@ -65,7 +65,8 @@ public class BoardServiceImpl implements BoardService {
         List<BoardPostEntity> entities = boardRepository.findAll();
 
         for (BoardPostEntity boardPostEntity : entities) {
-            result.add(mapper.map(boardPostEntity,BoardDto.class));
+            BoardDto boardDto = mapper.map(boardPostEntity,BoardDto.class);
+            result.add(boardDto);
         }
         return result;
     }

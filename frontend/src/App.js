@@ -13,6 +13,7 @@ import DoVote from './Components/DoVote';
 import CalendarView from './Components/calendar/CalendarView';
 import Home from './Components/main/Home';
 import ModifyUserInfo from './Components/ModifyUserInfo';
+import BoardPost from './write/BoardPost';
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route component={DoVote} path="/vote" exact/>
             <Route component={CalendarView} path="/calendar" />
             <Route component={Home} path="/home" />
+            <Route component={BoardPost} path="/board/post/:boardPostId" exact/>
         </>
     );
 };

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardDto {
-    public Long board_post_id;
+    public Long boardPostId;
     public String nickname;
     public String category;
     public String title;

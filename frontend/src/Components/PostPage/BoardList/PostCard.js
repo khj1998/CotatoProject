@@ -52,13 +52,10 @@ const CardDate = styled.div`
     color: ${ palette.gray[6] }
 `;
 
-//<CardImage
-//                    src={ item.images[0] }
-//                />
-
 const PostCard = ({ item }) => {
+    if (item.username == null) item.username = "어떤 감자";
     return(
-        <Link to={ `/${item.postId}` }>
+        <Link to={ `/board/post/${item.boardPostId}` }>
             <PostCardBlock>
                 <CardCategory>
                     {"카테고리 : "+item.category}
@@ -66,11 +63,8 @@ const PostCard = ({ item }) => {
                 <CardTitle>
                     {"제목 : "+item.title }
                 </CardTitle>
-                <CardNickname>
-                    {"작성자 : "+item.username }
-                </CardNickname>
                 <CardDate>
-                    { item.createdAt }
+                    { item.createdAt.substr(0,10) }
                 </CardDate>
             </PostCardBlock>
         </Link>
