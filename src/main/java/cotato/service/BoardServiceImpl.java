@@ -3,6 +3,7 @@ package cotato.service;
 import cotato.config.AuthenticationStorage;
 import cotato.dto.board.AddPostDto;
 import cotato.exception.BoardPostNotFoundException;
+import cotato.exception.UserNotAdminException;
 import cotato.exception.UserNotAuthenticated;
 import cotato.repository.BoardFileRepository;
 import cotato.repository.BoardRepository;
@@ -10,6 +11,7 @@ import cotato.repository.UserRepository;
 import cotato.vo.BoardFileEntity;
 import cotato.vo.BoardPostEntity;
 import cotato.dto.board.BoardDto;
+import cotato.vo.Role;
 import cotato.vo.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,10 @@ public class BoardServiceImpl implements BoardService {
     public void saveBoardPost(AddPostDto addPostDto) {
         if (authenticationStorage.getAuthentication() == null) {
             throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
+        }
+
+        if (addPostDto.getCategory().equals("공지사항")) {
+            checkAdmin();
         }
 
         ModelMapper modelMapper = new ModelMapper();
@@ -121,7 +127,18 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
-    private List<BoardFileEntity> getFilesList(List<MultipartFile> files,BoardPostEntity boardPostEntity) {
+    private void checkAdmin() {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_ADMIN")) {
+                return;
+            }
+        }
+        throw new UserNotAdminException("관리자만 접근 가능합니다.");
+    }
+
+    private List<BoardFileEntity> getFilesList(List<MultipartFile> files, BoardPostEntity boardPostEntity) {
         List<BoardFileEntity> result = new ArrayList<>();
         files.stream().forEach(file -> {
             String originalFileName = file.getOriginalFilename();

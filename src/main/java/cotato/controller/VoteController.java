@@ -86,6 +86,7 @@ public class VoteController {
     public ResponseEntity<String> vote(@PathVariable String postId,
                                        @RequestBody VoteAddDto voteAddDto)
     {
+        log.info("{}",voteAddDto);
         Long postID = Long.valueOf(postId);
         Long userID = voteAddDto.getUserid();
 

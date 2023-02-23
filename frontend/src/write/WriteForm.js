@@ -104,6 +104,8 @@ const WriteForm = () => {
             if (res.data.message == "Board Add Success") {
                 alert("글 등록이 완료되었습니다.");
                 history.go(-1);
+            } else if(res.data.message == "NOT ADMIN") {
+                alert("공지사항은 관리자만 등록할 수 있습니다.");                
             } else {
                 alert("알 수 없는 오류로 글 등록에 실패하였습니다.");
             }
