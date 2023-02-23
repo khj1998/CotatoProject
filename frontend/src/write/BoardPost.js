@@ -1,9 +1,11 @@
+import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 import Responsive from "../Components/common/Responsive";
 import Select from 'react-select';
 import palette from "../lib/styles/palette";
 import { useParams } from 'react-router-dom';
+import FullButton from "../Components/common/FullButton";
 
 const WriteFormBlock = styled(Responsive)`
     padding-top: 5rem;
@@ -44,45 +46,74 @@ const ContentInput = styled.textarea`
     resize: none;
 `;
 
-let post = {
-    "category" : "",
-    "title" : "",
-    "content" : ""
-}
+const CustomFullButton = styled(FullButton)`
+    margin-right: 25px;
+    margin-left: 25px;
+    width: 200px;
+    &:hover {
+        margin-right: 25px;
+        margin-left: 25px;
+        width: 200px;
+        cursor: pointer;
+    }
+`;
 
-const postSubmit = async (postId) => {
-    await axios.get(`http://localhost:8080/boards/${postId}`,{
-        withCredentials : true,
-        headers : {"Content-Type" : "application/json"}
-    }).then((res) => {
-        if (res.data.message == "GET POST") {
-            console.log(res.data.data);
-        } 
-    })
-}
+const onCancel = () => {
+    history.go(-1);
+};
 
 const BoardPost = () => {
     const postid = useParams();
-    postSubmit(postid.boardPostId);
+
+    const [post,setPost] = useState({
+        "category" : "",
+        "title" : "",
+        "content" : "",
+        "nickname" : ""
+    });
+
+    const postSubmit = async (postId) => {
+        await axios.get(`http://localhost:8080/boards/${postId}`,{
+            withCredentials : true,
+            headers : {"Content-Type" : "application/json"}
+        }).then((res) => {
+            if (res.data.message == "GET POST") {
+                setPost(res.data.data);
+                console.log(post);
+            } else {
+                alert("해당 글을 불러올 수 없습니다.");
+                history.go(-1);
+            }
+        })
+    }
+    
+    useEffect(() => {
+        postSubmit(postid.boardPostId);
+    },[]);
+
     return(
         <>
             <WriteFormBlock>
                     <Select
-                        placeholder="카테고리를 정해주세요"
+                        placeholder={post.category}
                     />
                     <TitleInput
-                        placeholder="게시글 제목을 작성해주세요"
+                        placeholder={post.title}
                         readOnly
                     />
                     <ContentInput
-                        placeholder="게시글 내용을 작성해주세요"
+                        placeholder={post.content}
                         readOnly
                     />
                     <AuthorInput
-                        placeholder="작성자"
+                        placeholder={"작성자 : " + post.nickname}
                         readOnly
                     />
             </WriteFormBlock>
+
+            <CustomFullButton red onClick={ onCancel }>
+                뒤로가기
+            </CustomFullButton>
         </>
     );
 };

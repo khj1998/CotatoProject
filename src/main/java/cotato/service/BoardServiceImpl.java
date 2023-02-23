@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +61,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto findByBoardPostId(Long id) {
         Optional<BoardPostEntity> boardPostEntity = boardRepository.findById(id);
-        //boardPostEntity.orElseThrow(new BoardPostNotFoundException("Board Not Found"));
+        boardPostEntity.orElseThrow(() -> new BoardPostNotFoundException("해당 글을 찾지 못했습니다."));
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return mapper.map(boardPostEntity.get(),BoardDto.class);
