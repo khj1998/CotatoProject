@@ -21,6 +21,17 @@ const TitleInput = styled.input`
     outline: none;
 `;
 
+const AuthorInput = styled.input`
+    width: 100%;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    border: none;
+    border-bottom: 1px solid ${ palette.blue[2] };
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    outline: none;
+`;
+
 const ContentInput = styled.textarea`
     width: 100%;
     height: 400px;
@@ -33,22 +44,26 @@ const ContentInput = styled.textarea`
     resize: none;
 `;
 
-const postSubmit = async () => {
-    await axios.post(`http://localhost:8080/boards/add`,postData,{
+let post = {
+    "category" : "",
+    "title" : "",
+    "content" : ""
+}
+
+const postSubmit = async (postId) => {
+    await axios.get(`http://localhost:8080/boards/${postId}`,{
         withCredentials : true,
         headers : {"Content-Type" : "application/json"}
     }).then((res) => {
-        if (res.data.message == "Board Add Success") {
-            alert("글 등록이 완료되었습니다.");
-        } else {
-            alert("알 수 없는 오류로 글 등록에 실패하였습니다.");
-        }
+        if (res.data.message == "GET POST") {
+            console.log(res.data.data);
+        } 
     })
 }
 
 const BoardPost = () => {
     const postid = useParams();
-    console.log(postid.boardPostId);
+    postSubmit(postid.boardPostId);
     return(
         <>
             <WriteFormBlock>
@@ -61,6 +76,10 @@ const BoardPost = () => {
                     />
                     <ContentInput
                         placeholder="게시글 내용을 작성해주세요"
+                        readOnly
+                    />
+                    <AuthorInput
+                        placeholder="작성자"
                         readOnly
                     />
             </WriteFormBlock>

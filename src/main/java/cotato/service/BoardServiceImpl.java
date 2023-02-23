@@ -2,6 +2,7 @@ package cotato.service;
 
 import cotato.config.AuthenticationStorage;
 import cotato.dto.board.AddPostDto;
+import cotato.exception.BoardPostNotFoundException;
 import cotato.exception.UserNotAuthenticated;
 import cotato.repository.BoardFileRepository;
 import cotato.repository.BoardRepository;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -55,6 +57,15 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.save(boardPostEntity);
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public BoardDto findByBoardPostId(Long id) {
+        Optional<BoardPostEntity> boardPostEntity = boardRepository.findById(id);
+        //boardPostEntity.orElseThrow(new BoardPostNotFoundException("Board Not Found"));
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return mapper.map(boardPostEntity.get(),BoardDto.class);
     }
 
     @Override

@@ -11,4 +11,5 @@ public interface BoardService {
     List<BoardDto> findPostByKeyword(String keyword);
     List<BoardDto> findPostByUserName();
     List<BoardDto> findAllBoardPosts();
+    BoardDto findByBoardPostId(Long id);
 }

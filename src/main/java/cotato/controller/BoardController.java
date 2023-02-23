@@ -7,11 +7,8 @@ import cotato.dto.board.BoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 @Slf4j
@@ -29,6 +26,18 @@ public class BoardController {
                 .success(true)
                 .message("GET ALL BOARD POSTS")
                 .data(result)
+                .build();
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ApiResponse> getPost(@PathVariable Long postId) {
+        log.info("{}",postId);
+        BoardDto boardDto = boardService.findByBoardPostId(postId);
+        log.info("{}",boardDto);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET POST")
+                .data(boardDto)
                 .build();
     }
 

@@ -79,6 +79,14 @@ public class ExceptionHandleController {
                 .build();
     }
 
+    @ExceptionHandler(BoardPostNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleBoardPostNotFoundException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("BOARD POST NOT FOUND")
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleAnnotationException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
