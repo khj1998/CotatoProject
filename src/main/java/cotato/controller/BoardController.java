@@ -31,9 +31,7 @@ public class BoardController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<ApiResponse> getPost(@PathVariable Long postId) {
-        log.info("{}",postId);
         BoardDto boardDto = boardService.findByBoardPostId(postId);
-        log.info("{}",boardDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("GET POST")

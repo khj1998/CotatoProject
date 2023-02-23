@@ -59,18 +59,20 @@ const StyledInput = styled.input`
 const ButtonWithMarginTop = styled(Button)`
   margin-top: 1rem;
 `;
+let nickname = {"nickname":""}
 
 const ModifyUserInfo = () => {
   const [form, setForm] = useState({});
   
   const onInputChange = (e) => {
-    setForm({...form,[e.target.name]:e.target.value});
+    nickname.nickname = e.target.value;
   }
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log(nickname);
 
-    await axios.post(`http://localhost:8080/users/modify/info`,form,
+    await axios.post(`http://localhost:8080/users/modify/info`,nickname,
     {
         withCredentials: true,
         headers : {"Content-Type" : "application/json"}
@@ -113,12 +115,7 @@ const ModifyUserInfo = () => {
                     placeholder= {form.username}
                     readOnly
                 />
-                <StyledInput
-                    autocomplete="username"
-                    name="username"
-                    placeholder= {form.nickname}
-                    readOnly
-                />
+
                 <StyledInput
                     autocomplete="new-password"
                     name="nickname"

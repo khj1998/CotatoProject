@@ -70,7 +70,9 @@ public class BoardServiceImpl implements BoardService {
         boardPostEntity.orElseThrow(() -> new BoardPostNotFoundException("해당 글을 찾지 못했습니다."));
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper.map(boardPostEntity.get(),BoardDto.class);
+        BoardDto boardDto = mapper.map(boardPostEntity.get(),BoardDto.class);
+        boardDto.setNickname(boardPostEntity.get().getUserEntity().getNickname());
+        return boardDto;
     }
 
     @Override

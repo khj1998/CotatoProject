@@ -171,6 +171,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void modifyUserInfo(UserInfoDto userInfoDto) {
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        log.info("{},{}",userInfoDto.getNickname(),user.getNickname());
         if (userInfoDto.getNickname().equals(user.getNickname())) {
             throw new UserSameNickNameException("이미 사용중인 닉네임 입니다.");
         }
