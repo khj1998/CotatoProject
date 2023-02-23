@@ -6,7 +6,7 @@ import PostCard from './PostCard';
 import axios from 'axios';
 
 const PostListTemplateBlock = styled.div`
-    background: ${ palette.gray[2] };
+    background: #ECDBBA;
     padding-top: 30px;
     display: flex;
     flex-direction: center;

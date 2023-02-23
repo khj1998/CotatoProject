@@ -15,17 +15,32 @@ const ButtonBlock = styled.div`
     display: flex;
     width: 40%;
     justify-content: flex-start;
+    transform: translate(-40%, -500%);
+    color: #C69B7B;
 `;
 
 const BorderButton = styled.button`
     width: 100px;
     height: 50px;
     border-radius: 30px;
-    border: 2px solid ${palette.blue[1]};
-    color: ${palette.blue[1]};
-    background-color: white;
+    border: 2px solid ${palette.gray[1]};
+    color: ${palette.gray[1]};
+    background-color: #ECDBBA;
     font-size: 20px;
     font-weight: bold;
+    
+    &: hover {
+        width: 100px;
+    height: 50px;
+    border-radius: 30px;
+    border: 2px solid ${palette.gray[1]};
+    color: ${palette.gray[1]};
+    background-color: #FFE9B1;
+    font-size: 20px;
+    font-weight: bold;
+    
+    }
+    
 `;
 
 const ClassificationBlock = styled.div`
@@ -33,10 +48,33 @@ const ClassificationBlock = styled.div`
     width: 40%;
     justify-content: flex-end;
     align-items: center;
+    
 `;
+
+const Button = styled.button`
+    width: 90px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #C69B7B;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    z-index: 2;
+    &: hover {
+        width: 60px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: #FFE9B1;
+        color: #ffffff;
+        outline: none;
+        border: none;
+    }
+`;
+
 
 const StyledClassification = styled(Select)`
     width: 200px;
+    transform: translate(%, -400%);
 `;
 
 const PostHeader = () => {
@@ -60,13 +98,7 @@ const PostHeader = () => {
                     </Link>
                 </BorderButton>
             </ButtonBlock>
-            <ClassificationBlock>
-                <StyledClassification onChange={ onSelect }
-                                      options={ options }
-                                      value={ option }
-                                      placeholder="분류"
-                />
-            </ClassificationBlock>
+          
         </HeaderBlock>
     );
 };

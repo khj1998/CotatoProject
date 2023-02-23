@@ -1,60 +1,56 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import SidebarItem from "./SidebarItem";
-//import profile from "../Components/assets/profile.png";
+import React, {useEffect, useRef, useState} from "react";
+import styles from "./sidebar.module.css";
 
-const Side = styled.div`
-  display: flex;
-  border-right: 1px solid #e0e0e0;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
-`
 
-const Profile = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
-`
+const Sidebar = ({ width=280, children }) => {
+  const [isOpen, setOpen] = useState(false);
+  const [xPosition, setX] = useState(width);
+  const side = useRef();
+  
+  // button 클릭 시 토글
+  const toggleMenu = () => {
+    if (xPosition > 0) {
+      setX(0);
+      setOpen(true);
+    } else {
+      setX(width);
+      setOpen(false);
+    }
+  };
+  
+  // 사이드바 외부 클릭시 닫히는 함수
+  const handleClose = async e => {
+    let sideArea = side.current;
+    let sideCildren = side.current.contains(e.target);
+    if (isOpen && (!sideArea || !sideCildren)) {
+      await setX(width); 
+      await setOpen(false);
+    }
+  }
 
-const Menu = styled.div`
-  margin-top: 30px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-`
+  useEffect(()=> {
+    window.addEventListener('click', handleClose);
+    return () => {
+      window.removeEventListener('click', handleClose);
+    };
+  })
 
-function Sidebar() {
-  const menus = [
-    { name: "공지사항", path: "/announce" },
-    { name: "프로젝트", path: "/project" },
-    { name: "스터디", path: "/study"},
-    { name: "번개", path: "/lightening"}
-  ];
+
   return (
-    <Side>
-      <Profile src='https://velog.velcdn.com/images/kkaerrung/post/968879a7-d7ec-48e8-ad0c-23bd2942dcd4/image.png'></Profile>
-      <Menu>
-        {menus.map((menu, index) => {
-          return (
-            <NavLink
-              exact
-              style={{color: "gray", textDecoration: "none"}}
-              to={menu.path}
-              key={index}
-              activeStyle={{color: "black"}}
-            >
-              <SidebarItem
-                menu={menu}
-              />
-            </NavLink>
-          );
-        })}
-      </Menu>
-    </Side>
+    <div className={styles.container}>
+      <div ref={side}  className={styles.sidebar} style={{ width: `${width}px`, height: '100%',  transform: `translatex(${-xPosition}px)`}}>
+          <button onClick={() => toggleMenu()}
+          className={styles.button} >
+            {isOpen ? 
+            <span>X</span> : <img src="https://velog.velcdn.com/images/kkaerrung/post/de18c10d-a136-4407-b513-f20cf5508771/image.jpg" alr="contact open button" className={styles.openBtn}/>
+            }
+          </button>
+        
+        <div className={styles.content}>{children}</div>
+      </div>
+    </div>
   );
-}
+};
+
 
 export default Sidebar;

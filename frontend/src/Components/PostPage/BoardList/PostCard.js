@@ -29,12 +29,14 @@ const CardCategory = styled.div`
     text-align: center;
     padding-top: 10px;
     padding-left: 10px;
+    color: #191919;
 `
 
 const CardImage = styled.img`
     float: left;
     width: 400px;
     height: 200px
+    color: #191919;
 `;
 
 const CardNickname = styled.div`
@@ -49,7 +51,7 @@ const CardDate = styled.div`
     width: 90px;
     padding-left: 10px;
     text-align: left;
-    color: ${ palette.gray[6] }
+    color: #191919;
 `;
 
 const PostCard = ({ item }) => {

@@ -30,6 +30,10 @@ const Wrapper = styled(Responsive)`
     display: flex;
     align-items: center;
   }
+  .h2 {
+    color: #CDBBA7;
+    font-color: #CDBBA7;
+  }
 `;
 
 
@@ -69,7 +73,9 @@ const Header = () => {
         <Wrapper>
           {/* index 로 이동하는 Link 컴포넌트 */}
           <Link to="/cotato" className="logo">
+          <h2>
             Cotato
+            </h2>
           </Link>
           {/* user 값이 있으면 즉, 로그인 상태면 로그아웃을 버튼을 보여주고, 그렇지 않으면 로그인 버튼 보여주기 */}
           {localStorage.getItem("username") != null ? (

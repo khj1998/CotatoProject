@@ -1,9 +1,10 @@
 import React from 'react';
-import CafeList from './CafeList';
-
+import BoardPost from '../write/BoardPost';
+import HeaderTemplate from './common/HeaderTemplate';
 const Board = () => {
    return (
-          <CafeList />
+          <>
+          </>
    );
 };
 

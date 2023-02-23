@@ -13,6 +13,7 @@ import axios from 'axios';
 const WriteFormBlock = styled(Responsive)`
     padding-top: 5rem;
     padding-bottom: 5rem;
+    z-index: 5;
 `;
 
 const PostTypeArea = styled.div`
@@ -26,10 +27,11 @@ const TitleInput = styled.input`
     font-size: 1rem;
     padding-bottom: 0.5rem;
     border: none;
-    border-bottom: 1px solid ${ palette.blue[2] };
+    border-bottom: 1px solid #CEAB93;
     margin-top: 1rem;
     margin-bottom: 2rem;
     outline: none;
+    z-index: -3;
 `;
 
 const ContentInput = styled.textarea`
@@ -42,6 +44,8 @@ const ContentInput = styled.textarea`
     margin-bottom: 1rem;
     outline: none;
     resize: none;
+    border-bottom: 1px solid #CEAB93;
+    z-index: -4;
 `;
 
 const ErrorMessage = styled.div`
@@ -63,6 +67,7 @@ const CustomFullButton = styled(FullButton)`
     margin-right: 25px;
     margin-left: 25px;
     width: 200px;
+    transform: translate(40%, -50%);
     &:hover {
         margin-right: 25px;
         margin-left: 25px;
