@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 import  Content from  '../../Layout/Content';
 
 import  './Home.css';
@@ -16,7 +16,7 @@ function HomeScreen() {
           </div>
           <div className="lead-overlay"></div>
           <div className="lead-down">
-              <Link rel="nofollow" to="content" spy={true} smooth={true} duration={500}>
+              <Link to="content" spy={true} smooth={true} duration={500}>
                 <span>
                     About Us
                 </span>

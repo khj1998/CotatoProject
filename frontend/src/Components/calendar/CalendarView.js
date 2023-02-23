@@ -5,7 +5,7 @@ import parse from 'date-fns/parse';
 import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useRef} from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -71,53 +71,65 @@ function CalendarView(){
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [newDate, setNewDate] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState([]);
+    const calendarRef=useRef(null);
+
+
 
 
     useEffect(()=>{
-        loadUser();
+       handleDateSet();
     }, []);
 
 
-     const loadUser=async ()=>{
-            const result=await axios.get(`http://localhost:8080/cotato`)
-            .then(function (response) {
-                   let appointments = response.data;
-                   let map = new Map([])
+   async function handleDateSet(data){
+               const result=await axios.get(`http://localhost:8080/cotato`)
+               .then(function (response) {
+                      let appointments = response.data;
+                      let map = [];
+                      console.log(appointments)
 
-                   console.log(appointments)
+                      appointments.map(i => {
+                       let temp = { "title":"","start":"","end":""};
+                       let startShow = new Date(i.startYear+"."+i.startMonth+"."+i.startDay);
+                       let endShow = new Date(i.endYear+"."+i.endMonth+"."+i.endDay);
 
-                   appointments.map(i => {
-                    let startShow = new Date(i.startYear+"."+i.startMonth+"."+i.startDay);
-                    let endShow = new Date(i.endYear+"."+i.endMonth+"."+i.endDay);
+                       temp.title = i.content;
+                       temp.start = startShow;
+                       temp.end = endShow;
 
-                   NewDate.title = i.content;
-                   NewDate.start = startShow;
-                   NewDate.end = endShow;
+                       console.log(temp);
 
-                   console.log(NewDate);
+                       map.push(temp);
+                       setNewDate(response.data);
+                      })
 
-                   map.set(NewDate)
-                   })
+                      for (let i = 0; i < appointments.length; i++) {
+                       let startShow = new Date(appointments[i].startYear+"."+appointments[i].startMonth+"."+appointments[i].startDay);
+                       let endShow = new Date(appointments[i].endYear+"."+appointments[i].endMonth+"."+appointments[i].endDay);
 
-                   for (let i = 0; i < appointments.length; i++) {
+                       NewDate.title = appointments[i].content;
+                       NewDate.start = startShow;
+                       NewDate.end = endShow;
 
-                    let startShow = new Date(appointments[i].startYear+"."+appointments[i].startMonth+"."+appointments[i].startDay);
-                    let endShow = new Date(appointments[i].endYear+"."+appointments[i].endMonth+"."+appointments[i].endDay);
+                       allEvents.push(NewDate);
+                      }
 
-                   NewDate.title = appointments[i].content;
-                   NewDate.start = startShow;
-                   NewDate.end = endShow;
+                       console.log(allEvents)
+                       console.log(map)
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
+           }
 
-                   allEvents.push(NewDate);
-                   }
-
-                    console.log(allEvents)
-                    console.log(map)
-                 })
-                 .catch(function (error) {
-                   console.log(error);
-                 });
-        }
+     const onEventAdded=(newDate)=>{
+            let calendarApi=calendarRef.current.getApi();
+            calendarApi.handleAddEvent({
+                start:moment(newDate.start).toDate(),
+                end:moment(newDate.end).toDate(),
+                title:newDate.title,
+            });
+            };
 
     const onSubmit= async(e) => {
         e.preventDefault();
@@ -183,6 +195,7 @@ function CalendarView(){
 
             <Calendar localizer={localizer}
              events={allEvents}
+
               startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
               </form>
               </div>

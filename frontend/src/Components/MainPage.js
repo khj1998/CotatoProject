@@ -6,10 +6,7 @@ import Content from '../Layout/Content';
 import Gate from '../Layout/Gate';
 import SnsTemplate from '../Contents/Insta';
 import Copy from '../Layout/Copy';
-import Calendar from '../Layout/Calendar/containers/Calendar';
-import '../Layout/Calendar/style/calendar.css';
-import '../Layout/Calendar/style/table.css';
-import '../Layout/Calendar/style/modal.css';
+
 import Home from '../Components/main/Home';
 import { Link } from 'react-scroll';
 import  '../Components/main/Home.css';
@@ -42,9 +39,7 @@ const MainPage = () => {
                 <Layout1>
                 <Gate/>
                 </Layout1>
-                <Layout1>
-                    <Calendar/>
-                </Layout1>
+
                 <Layout1>
                 <SnsTemplate/>
                 </Layout1>
