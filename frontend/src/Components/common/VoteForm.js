@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-//import Button from "./Button";
 import _ from 'lodash';
 import {Button ,Card, Divider, Image, Placeholder } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
@@ -82,6 +81,9 @@ const VoteForm = () => {
     const [offlinevote, setOfflinevote] = useState(0);
     const [onlinevote, setOnlinevote] = useState(0);
     const [voted, setVoted] = useState(false);
+    const [btnactiveA, setBtnactiveA] = useState(false);
+    const [btnactiveB, setBtnactiveB] = useState(false);
+
 
     const submitVote = async (attend) => {
         voteForm.attend = attend;
@@ -166,7 +168,10 @@ const VoteForm = () => {
 
                         <Card.Content extra>
                             <Button primary
-                                    onClick = {() => onAttendClicked(card.header)}>
+                                    disabled={card.id==='offline'?btnactiveA:btnactiveB}
+                                    onClick = {() =>
+                                        [card.id==='offline'?[setBtnactiveA(true),setBtnactiveB(false)]:[setBtnactiveB(true),setBtnactiveA(false)],
+                                        onAttendClicked(card.header)]}>
                                 투표
                             </Button>
                         </Card.Content>
@@ -176,7 +181,7 @@ const VoteForm = () => {
             </Card.Group>
 
                 <br></br>                
-                <StyledButton onClick = {() => submitVote(attend)}>
+                <StyledButton onClick = {() => [submitVote(attend), setBtnactiveA(false), setBtnactiveB(false)]}>
                     투표 하기
                 </StyledButton>
                 <StyledButton onClick={onCancel}>취소</StyledButton>
