@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -65,6 +66,16 @@ public class UserController {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("LOGOUT SUCCESS")
+                .build();
+    }
+
+    @GetMapping("/users/all")
+    public ResponseEntity<ApiResponse> getAllUsers() {
+        List<UserInfoDto> result = userService.findAllUsers();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("FIND ALL USERS")
+                .data(result)
                 .build();
     }
 

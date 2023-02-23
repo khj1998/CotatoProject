@@ -14,6 +14,7 @@ import CalendarView from './Components/calendar/CalendarView';
 import Home from './Components/main/Home';
 import ModifyUserInfo from './Components/ModifyUserInfo';
 import BoardPost from './write/BoardPost';
+import ScoreManager from './Components/managing/scoremanager';
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
             <Route component={CalendarView} path="/calendar" />
             <Route component={Home} path="/home" />
             <Route component={BoardPost} path="/board/post/:boardPostId" exact/>
+            <Route component={ScoreManager} path="/users/score" exact />
         </>
     );
 };

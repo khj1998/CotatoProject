@@ -84,7 +84,7 @@ const VoteCreateForm = () => {
 
     const onCancel = () =>{
         // history 객체 사용으로 뒤로 가기
-        window.open(`http://localhost:3000/cotato`,'_self');
+        history.go(-1);
     };
 
     return (

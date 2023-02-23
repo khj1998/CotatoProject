@@ -79,7 +79,6 @@ const BoardPost = () => {
         }).then((res) => {
             if (res.data.message == "GET POST") {
                 setPost(res.data.data);
-                console.log(post);
             } else {
                 alert("해당 글을 불러올 수 없습니다.");
                 history.go(-1);
@@ -95,10 +94,10 @@ const BoardPost = () => {
         <>
             <WriteFormBlock>
                     <Select
-                        placeholder={post.category}
+                        placeholder={"카테고리 : "+post.category}
                     />
                     <TitleInput
-                        placeholder={post.title}
+                        placeholder={"제목 : " + post.title}
                         readOnly
                     />
                     <ContentInput

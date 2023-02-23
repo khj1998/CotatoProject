@@ -18,6 +18,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService{
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationStorage authenticationStorage;
+    private final int ROLE_INDEX = 0;
 
     @Override
     public UserDto saveUser(UserDto userDto) {
@@ -38,7 +41,6 @@ public class UserServiceImpl implements UserService{
             admin.setScore(new ScoreEntity());
             admin.setNickname("ADMIN");
             userRepository.save(admin);
-            log.info("admin 계정 , {}",admin.getRoles());
             return userDto;
         }
 
@@ -69,6 +71,7 @@ public class UserServiceImpl implements UserService{
                 .plus(score.getPlus())
                 .minus(score.getMinus())
                 .nickname(user.getNickname())
+                .role(user.getRoles().get(ROLE_INDEX).getName())
                 .build();
     }
 
@@ -171,12 +174,28 @@ public class UserServiceImpl implements UserService{
     @Override
     public void modifyUserInfo(UserInfoDto userInfoDto) {
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
-        log.info("{},{}",userInfoDto.getNickname(),user.getNickname());
         if (userInfoDto.getNickname().equals(user.getNickname())) {
             throw new UserSameNickNameException("이미 사용중인 닉네임 입니다.");
         }
 
         user.setNickname(userInfoDto.getNickname());
         userRepository.save(user);
+    }
+
+    @Override
+    public List<UserInfoDto> findAllUsers() {
+        List<UserEntity> users = userRepository.findAll();
+        List<UserInfoDto> result = new ArrayList<>();
+        users.stream().forEach(user -> {
+            result.add(UserInfoDto.builder()
+                    .userId(user.getId())
+                    .nickname(user.getNickname())
+                    .plus(user.getScore().getPlus())
+                    .minus(user.getScore().getMinus())
+                    .role(user.getRoles().get(ROLE_INDEX).getName())
+                    .build()
+            );
+        });
+        return result;
     }
 }

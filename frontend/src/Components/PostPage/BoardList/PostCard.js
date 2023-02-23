@@ -29,19 +29,6 @@ const CardCategory = styled.div`
     text-align: center;
     padding-top: 10px;
     padding-left: 10px;
-`
-
-const CardImage = styled.img`
-    float: left;
-    width: 400px;
-    height: 200px
-`;
-
-const CardNickname = styled.div`
-    float: left;
-    width: 300px;
-    text-align: left;
-    padding-left: 10px;
 `;
 
 const CardDate = styled.div`
@@ -53,7 +40,7 @@ const CardDate = styled.div`
 `;
 
 const PostCard = ({ item }) => {
-    if (item.username == null) item.username = "어떤 감자";
+
     return(
         <Link to={ `/board/post/${item.boardPostId}` }>
             <PostCardBlock>
