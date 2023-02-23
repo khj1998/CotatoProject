@@ -16,9 +16,4 @@ public class BoardDto {
 
     public String createdAt;
     public String updatedAt;
-
-    @Builder
-    public BoardDto(String nickname) {
-        this.nickname = nickname;
-    }
 }

@@ -4,6 +4,7 @@ import palette from '../../../lib/styles/palette';
 import { withRouter } from 'react-router';
 import PostHeader from './PostHeader';
 import PostCard from './PostCard';
+import axios from 'axios';
 
 const PostListTemplateBlock = styled.div`
     background: ${ palette.gray[2] };
@@ -15,7 +16,21 @@ const PostListTemplateBlock = styled.div`
     align-items: center;
 `;
 
-const PostListTemplate = ({ history }) => {
+let isPostGetEnd = false;
+const getAllPosts = async () => {
+    await axios.get(`http://localhost:8080/boards/all`,{
+        withCredentials : true,
+        headers : {"Content-Type" : "application/json"}
+    }).then((res) => {
+        console.log(res.data.data[0]);
+        if (res.data.message == "GET ALL BOARD POSTS") {
+
+        }
+    });
+    isPostGetEnd = true;
+}
+
+const PostListTemplate = () => {
     const dummyData = [
         { "id" : 1 ,"category":"스터디" , "title": "test-01", "content":"", "username": "test-01", createdAt: "2020-01-01" },
         { "id" : 2 ,"category":"스터디" , "title": "test-02", "content":"", "username": "test-01", createdAt: "2020-01-01" },
@@ -23,6 +38,7 @@ const PostListTemplate = ({ history }) => {
         { "id" : 4 ,"category":"스터디" , "title": "test-04", "content":"", "username": "test-01", createdAt: "2020-01-01" },
     ];
 
+    getAllPosts();
     return(
         <>
             <PostHeader />

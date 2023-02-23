@@ -10,4 +10,5 @@ public interface BoardService {
     void saveBoardPost(AddPostDto addPostDto);
     List<BoardDto> findPostByKeyword(String keyword);
     List<BoardDto> findPostByUserName();
+    List<BoardDto> findAllBoardPosts();
 }

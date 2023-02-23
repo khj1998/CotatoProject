@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,6 +55,19 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.save(boardPostEntity);
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public List<BoardDto> findAllBoardPosts() {
+        List<BoardDto> result = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        List<BoardPostEntity> entities = boardRepository.findAll();
+
+        for (BoardPostEntity boardPostEntity : entities) {
+            result.add(mapper.map(boardPostEntity,BoardDto.class));
+        }
+        return result;
     }
 
     @Override
