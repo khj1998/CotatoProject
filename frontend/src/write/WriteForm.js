@@ -103,7 +103,7 @@ const WriteForm = () => {
         }).then((res) => {
             if (res.data.message == "Board Add Success") {
                 alert("글 등록이 완료되었습니다.");
-                history.go(-2);
+                history.go(-1);
             } else {
                 alert("알 수 없는 오류로 글 등록에 실패하였습니다.");
             }

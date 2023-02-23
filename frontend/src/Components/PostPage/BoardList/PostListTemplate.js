@@ -14,28 +14,31 @@ const PostListTemplateBlock = styled.div`
     justify-content: center;
     align-items: center;
 `;
-let postData = []
-
-const getAllPosts = async (postData) => {
-    await axios.get(`http://localhost:8080/boards/all`,{
-        withCredentials : true,
-        headers : {"Content-Type" : "application/json"}
-    }).then((res) => {
-        if (res.data.message == "GET ALL BOARD POSTS" ) {
-            for (let i =0; i<res.data.data.length;i++) {
-                postData.push(res.data.data[i]);
-            }
-        }
-        console.log(postData);
-    });
-}
-getAllPosts(postData);
 
 const PostListTemplate = () => {
+    const [postData,setPostData] = useState([]);
+    
+    const getAllPosts = async () => {
+        await axios.get(`http://localhost:8080/boards/all`,{
+            withCredentials : true,
+            headers : {"Content-Type" : "application/json"}
+        }).then((res) => {
+            if (res.data.message == "GET ALL BOARD POSTS" ) {
+                for (let i =0; i<res.data.data.length;i++) {
+                    setPostData(postData => [...postData,res.data.data[i]]);
+                }
+            }
+        });
+    }
+
+    useEffect(() => {
+        getAllPosts();
+    },[])
     return (
         <>
             <PostListTemplateBlock>
                 {
+                    postData.length>0 &&
                     postData.map((post) => {
                         return  <PostCard item={ post } key = {post.boardPostId}
                                 />
