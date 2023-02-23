@@ -28,9 +28,6 @@ const localizer=dateFnsLocalizer({
        locales}
 )
 
-const events=[
-]
-
 let startDate = {}
 let endDate = {}
 
@@ -63,59 +60,69 @@ const SUBMIT_FORMAT = {
     "endDay" : ""
 }
 
-
+const NewDate = {
+    "title":"",
+    "start":"",
+    "end":""
+}
 
 
 function CalendarView(){
-
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
-    const [allEvents, setAllEvents] = useState(events);
-    const [date, setDate]=useState({
-        postId:"",
-        authorId:"",
-        content:"",
-        startYear:"",
-        startMonth:"",
-        startDay:"",
-        endYear:"",
-        endMonth:"",
-        endDay:""
-    })
+    const [newDate, setNewDate] = useState({ title: "", start: "", end: "" });
+    const [allEvents, setAllEvents] = useState([]);
+
 
     useEffect(()=>{
         loadUser();
     }, []);
 
-    const loadUser=async ()=>{
-        const result=await axios.get(`http://localhost:8080/cotato`)
-        .then(function (response) {
-                console.log(response.data);
-                let appointments = response.data;
 
-                for (let i = 0; i < appointments.length; i++) {
-                    var startDate = appointments[i].startYear+"-"+appointments[i].startMonth+"-"+appointments[i].startDay;
-                    var endDate = appointments[i].endYear+"-"+appointments[i].endMonth+"-"+appointments[i].endDay;
+     const loadUser=async ()=>{
+            const result=await axios.get(`http://localhost:8080/cotato`)
+            .then(function (response) {
+                   let appointments = response.data;
+                   let map = new Map([])
 
-                    newEvent.title = appointments[i].content;
-                    newEvent.start = startDate;
-                    newEvent.end = endDate;
+                   console.log(appointments)
 
-                    events.fill(setNewEvent(appointments[i].content, startDate, endDate));
+                   appointments.map(i => {
+                    let startShow = new Date(i.startYear+"."+i.startMonth+"."+i.startDay);
+                    let endShow = new Date(i.endYear+"."+i.endMonth+"."+i.endDay);
 
-                    console.log(appointments[i])
-                }
+                   NewDate.title = i.content;
+                   NewDate.start = startShow;
+                   NewDate.end = endShow;
 
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+                   console.log(NewDate);
 
-    }
+                   map.set(NewDate)
+                   })
+
+                   for (let i = 0; i < appointments.length; i++) {
+
+                    let startShow = new Date(appointments[i].startYear+"."+appointments[i].startMonth+"."+appointments[i].startDay);
+                    let endShow = new Date(appointments[i].endYear+"."+appointments[i].endMonth+"."+appointments[i].endDay);
+
+                   NewDate.title = appointments[i].content;
+                   NewDate.start = startShow;
+                   NewDate.end = endShow;
+
+                   allEvents.push(NewDate);
+                   }
+
+                    console.log(allEvents)
+                    console.log(map)
+                 })
+                 .catch(function (error) {
+                   console.log(error);
+                 });
+        }
 
     const onSubmit= async(e) => {
         e.preventDefault();
         startDate = newEvent.start.toString().split(' ',4);
-        endDate = newEvent.start.toString().split(' ',4);
+        endDate = newEvent.end.toString().split(' ',4);
         SUBMIT_FORMAT["author"]["id"] = 1;
         SUBMIT_FORMAT["content"] = newEvent.title;
         SUBMIT_FORMAT["startYear"] = startDate[3];
@@ -140,6 +147,9 @@ function CalendarView(){
 };
     function handleAddEvent(){
         setAllEvents([...allEvents, newEvent]);
+
+        console.log(newEvent);
+        console.log(allEvents);
     };
     return(
 
@@ -167,7 +177,7 @@ function CalendarView(){
                         placeholderText="종료일"
                         selected={newEvent.end}
                         onChange={(end) => setNewEvent({ ...newEvent, end })} />
-                    <button stlye={{ marginTop: "10px" }} onClick={handleAddEvent}>
+                    <button styLe={{ marginTop: "10px" }} onClick={handleAddEvent}>
                         등록하기
                     </button>
 
@@ -176,6 +186,7 @@ function CalendarView(){
               startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
               </form>
               </div>
+
         </div>
 
     );
