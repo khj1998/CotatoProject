@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import Button from "./common/Button"
@@ -61,10 +61,7 @@ const ButtonWithMarginTop = styled(Button)`
 `;
 
 const ModifyUserInfo = () => {
-  const [form, setForm] = useState(
-    {
-       nickname: localStorage.getItem("nickname")
-    });
+  const [form, setForm] = useState({});
   
   const onInputChange = (e) => {
     setForm({...form,[e.target.name]:e.target.value});
@@ -80,13 +77,25 @@ const ModifyUserInfo = () => {
     }).then((res) => {
         if (res.data.message == "INFO MODIFY SUCCESS") {
           alert("회원 정보가 수정되었습니다."); 
-          window.open(`http://localhost:3000/mypage`,'_self');
+          history.go(-1);
         } else if (res.data.message = "NICKNAME ALREADY USED") {
           alert("이미 사용중인 닉네임 입니다.");
         }
     })
   }
-  console.log(localStorage.getItem("nickname"));
+
+  const getUserInfo = async () => {
+    await axios.get(`http://localhost:8080/users/info`,{
+      withCredentials : true,
+      headers : {"Content-Type" : "application/json"}
+    }).then((res) => {
+       setForm(res.data.data);
+    })
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  });
 
   return(
     <>
@@ -101,13 +110,13 @@ const ModifyUserInfo = () => {
                 <StyledInput
                     autocomplete="username"
                     name="username"
-                    placeholder= {localStorage.getItem("username")}
+                    placeholder= {form.username}
                     readOnly
                 />
                 <StyledInput
                     autocomplete="username"
                     name="username"
-                    placeholder= {"현재 닉네임 : "+localStorage.getItem("nickname")}
+                    placeholder= {form.nickname}
                     readOnly
                 />
                 <StyledInput

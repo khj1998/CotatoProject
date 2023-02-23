@@ -95,6 +95,7 @@ const Modify = () => {
         withCredentials: true
       }).then((res) => {
         if (res.data.message = "LOGOUT SUCCESS") {
+          alert("비밀번호가 변경되었습니다. 바뀐 비밀번호로 로그인하세요.");
           window.open(`http://localhost:3000/login`,'_self');
         }
       })

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -35,7 +34,9 @@ class Navigation extends Component {
                     <NavItem>
                         <Link to = "/vote">투표하기</Link>
                     </NavItem>    
-                    <NavItem><Link to = "/mypage">마이페이지</Link></NavItem>
+                    <NavItem>
+                        <Link to = "/mypage">마이페이지</Link>
+                    </NavItem>
                     <NavItem>
                          <Link to ="/List"> 리스트 </Link>
                     </NavItem>
@@ -64,20 +65,14 @@ const NavList = styled.ul`
     margin: 5px auto;
 `
 
-
-
 const NavItem = styled.li`
 
-    width: 20vw;
+    width: 30vw;
     margin-left: 50px;
     margin-top: 5px;
     display: flex;
     padding-right:20px;
     padding-top:10px;
-
-
-
-
     `
 
 const LogItem = styled.li`

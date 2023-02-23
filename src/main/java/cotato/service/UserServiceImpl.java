@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService{
         } else {
             UserEntity user = setRoleToUser(userDto);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setNickname("감자");
             user.setScore(new ScoreEntity());
             userRepository.save(user);
         }

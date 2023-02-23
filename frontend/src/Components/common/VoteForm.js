@@ -134,7 +134,7 @@ const VoteForm = () => {
                     }).then((res) => {
                     if (res.data.data == null) {
                     alert('등록된 투표 게시물이 없습니다.');
-                    window.open('http://localhost:3000/cotato','_self');
+                    history.go(-1);
                 } else {
                     setVoteForm(res.data.data);
                     console.log(voteForm);
