@@ -6,6 +6,7 @@ import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,6 +97,15 @@ public class UserController {
                 .success(true)
                 .message("GET USER INFO")
                 .data(userInfoDto)
+                .build();
+    }
+
+    @PostMapping("/users/score/update")
+    public ResponseEntity<ApiResponse> updateUserScore() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("UPDATE USER SCORE")
+                .data(null)
                 .build();
     }
 
