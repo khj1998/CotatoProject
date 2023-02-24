@@ -10,7 +10,7 @@ public class ApiResponse<T> {
     private final HttpStatus httpStatusCode;
     private final boolean success;
     private final String message;
-    private final T  data;
+    private final T data;
 
     private ApiResponse(ApiResponseBuilder builder) {
         this.httpStatusCode = builder.httpStatusCode;

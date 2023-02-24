@@ -47,22 +47,9 @@ const HeaderTemplate = () => {
                     COTATO
                 </Link>
             </Title>
-
-            <Nav>
-                <Shortcut
-                    path="/"
-                    //src={ home_outline }
-                />
-                <Shortcut
-                    path="/posts"
-                    //src={ home_outline }
-                />
-                <Shortcut
-                    path="/user/myPage"
-                    //src={ home_outline }
-                />
-            </Nav>
-
+            <Title>
+                MyPage
+            </Title>
         </HeaderBox>
     );
 };

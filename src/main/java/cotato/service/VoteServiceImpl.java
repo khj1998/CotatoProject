@@ -2,6 +2,7 @@ package cotato.service;
 
 import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
+import cotato.exception.NoVotePostFoundException;
 import cotato.repository.UserRepository;
 import cotato.repository.VotePostRepository;
 import cotato.vo.UserEntity;
@@ -20,6 +21,15 @@ public class VoteServiceImpl implements VoteService{
 
     private final VotePostRepository votePostRepository;
     private final UserRepository userRepository;
+
+    @Override
+    public VotePost findVotePostById() {
+        VotePost post = votePostRepository.findByPostId(1L);
+        if (post == null) {
+            throw new NoVotePostFoundException("등록된 투표가 없습니다.");
+        }
+        return post;
+    }
 
     @Override
     public List<VoteShowPostDto> showAllVotePostsWithVoteShowPostDto() {

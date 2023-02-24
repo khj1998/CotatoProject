@@ -1,15 +1,12 @@
 import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import LogoutButton from './LogoutButton';
-import LogoutBox from './LogoutBox';
 import { useDispatch, useSelector } from 'react-redux';
-import {logout} from '../../modules/user';
-
+import axios from 'axios';
 
 const MyPageFormBlock = styled.table`
     width: 50%;
-    height: 400px;
+    height: 200px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
@@ -20,11 +17,6 @@ const LineBlock = styled.tr`
     padding: 0;
     margin: auto 0;
 `;
-
-   const onLogout = () => {
-        dispatch(logout());
-    };
-
 
 const FullLine = styled.td`
     display: flex;
@@ -67,24 +59,39 @@ const TextBox = styled.div`
     font-size: 20px;
 `;
 
+const onClick = async (e) => {
+    e.preventDefault();
+    await axios.get(`http://localhost:8080/logout`)
+    .then((res) => {
+        if (res.data.message == "LOGOUT SUCCESS") {
+            alert("로그아웃 되었습니다.");
+            window.open('http://localhost:3000/login','_self');
+        }
+    });
+}
+
 const MyPageForm = ({ history }) => {
     return(
         <MyPageFormBlock>
             <LineBlock>
-                <FullLine>
+                <HalfLeftLine>
+                    <Link to ="/modify/user/info">
+                        닉네임 변경
+                    </Link>
+                </HalfLeftLine>
+                <HalfRightLine>
                     <TextBox>
-                        안녕하세요 <b>nickname</b> 님!
+                        <Link onClick={(e) => onClick(e)}>
+                            로그아웃
+                        </Link>
                     </TextBox>
-                    <LogoutBox>
-                    <LogoutButton onLogout={ onLogout } />
-                    </LogoutBox>
-                </FullLine>
+                </HalfRightLine>
             </LineBlock>
             <LineBlock>
                 <HalfLeftLine>
                     <TextBox>
                         <Link to="/modify">
-                            회원 정보 수정
+                            비밀번호 변경
                         </Link>
                     </TextBox>
                 </HalfLeftLine>
@@ -98,28 +105,11 @@ const MyPageForm = ({ history }) => {
             </LineBlock>
             <LineBlock>
                 <HalfLeftLine>
-                    <TextBox>
-                        <Link to="#">
-                            찜 리스트
-                        </Link>
-                    </TextBox>
+                    내 상점 : {localStorage.getItem("plus")}
                 </HalfLeftLine>
                 <HalfRightLine>
-                    <TextBox>
-                        <Link to="#">
-                            쪽지함
-                        </Link>
-                    </TextBox>
+                    내 벌점 : {localStorage.getItem("minus")}
                 </HalfRightLine>
-            </LineBlock>
-            <LineBlock>
-                <FullLine>
-                    <TextBox>
-                        <Link to="#">
-                            대여 내역
-                        </Link>
-                    </TextBox>
-                </FullLine>
             </LineBlock>
         </MyPageFormBlock>
     );

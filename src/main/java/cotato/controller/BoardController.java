@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Slf4j
@@ -19,6 +18,26 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse> getAllPost() {
+        List<BoardDto> result = boardService.findAllBoardPosts();
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET ALL BOARD POSTS")
+                .data(result)
+                .build();
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ApiResponse> getPost(@PathVariable Long postId) {
+        BoardDto boardDto = boardService.findByBoardPostId(postId);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET POST")
+                .data(boardDto)
+                .build();
+    }
 
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addPost(@RequestBody AddPostDto addPostDto) {
@@ -42,7 +61,6 @@ public class BoardController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse> searchPost(@RequestParam("keyword") String keyword) {
-        log.info("{}",keyword);
         List<BoardDto> result =  boardService.findPostByKeyword(keyword);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)

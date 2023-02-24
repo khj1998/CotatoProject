@@ -1,10 +1,9 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
 import Button from './Button';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -32,15 +31,12 @@ const Wrapper = styled(Responsive)`
   }
 `;
 
-
-
 /**
  * 헤더가 fixed로 되어 있기 때문에 겹치지 않게 페이지의 컨텐츠가 4rem 아래 나타나도록 해주는 컴포넌트
  */
 const Spacer = styled.div`
   height: 4rem;
 `;
-
 
 /**
  * user 정보 띄워줄 컴포넌트
@@ -62,7 +58,30 @@ const onClick = async (e) => {
   });
 }
 
-const Header = (User) => {
+const Header = () => {
+  const [nickname,setNickName] = useState("");
+
+  const getUserInfo = async() => {
+    let userData;
+    await axios.get(`http://localhost:8080/users/info`,
+    {
+        withCredentials: true,
+        headers : {"Content-Type" : "application/json"}
+    }).then((res) => {
+        localStorage.clear();   
+        userData = res.data.data;
+        setNickName(userData.nickname);
+        localStorage.setItem("plus",userData.plus);
+        localStorage.setItem("minus",userData.minus);
+        localStorage.setItem("username",userData.username);
+        localStorage.setItem("nickname",userData.nickname);
+    });
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  },[]);
+
   return (
     <>
       <HeaderBlock>
@@ -72,9 +91,9 @@ const Header = (User) => {
             Cotato
           </Link>
           {/* user 값이 있으면 즉, 로그인 상태면 로그아웃을 버튼을 보여주고, 그렇지 않으면 로그인 버튼 보여주기 */}
-          {User != null ? (
+          {nickname != "" ? (
             <div className="right">
-              <UserInfo>{User.username}</UserInfo>
+              <UserInfo>{nickname}</UserInfo>
               <Button onClick = {(e) => onClick(e)}>로그아웃</Button>
             </div>
           ) : (

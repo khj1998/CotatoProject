@@ -4,11 +4,12 @@ import cotato.dto.CalendarShowUserDto;
 import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
 import cotato.vo.UserEntity;
+import cotato.vo.VotePost;
 
 import java.util.List;
 
 public interface VoteService {
-
+    VotePost findVotePostById();
     List<VoteShowPostDto> showAllVotePostsWithVoteShowPostDto();
 
     VoteShowPostDto findVotePost(Long postId);

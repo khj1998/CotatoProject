@@ -49,3 +49,24 @@ npm i redux-actions
 npm start를 하면 처음 나오는 문장에 y입력
 
 위의 코드들은 clone해온 후 한번만 입력하시면 됩니다!
+
+
+
+----------------------------------------------------------------------------------------------------------
+npm i redux-saga-effects
+  
+yarn add datepicker
+  
+yarn add react-big-calendar
+  
+yarn add date-fns
+  
+yarn add react-scroll
+  
+yarn add semantic-ui-react
+  
+yarn add semantic-ui-css
+  
+yarn add chart.js
+  
+yarn add  @reactchartjs/react-chart.js

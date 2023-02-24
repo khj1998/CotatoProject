@@ -3,6 +3,7 @@ import HeaderContainer from './HeaderContainer';
 import SearchHeaderTemplate from '../Search/SearchHeaderTemplate';
 import PostListTemplate from './PostListTemplate';
 import Sidebar from './Sidebar';
+import PostHeader from './PostHeader';
 
 const PostListPage = () => {
     return (
@@ -10,6 +11,7 @@ const PostListPage = () => {
             <HeaderContainer />
             <Sidebar/>
             <SearchHeaderTemplate/>
+            <PostHeader />
             <PostListTemplate />
         </>
     );
