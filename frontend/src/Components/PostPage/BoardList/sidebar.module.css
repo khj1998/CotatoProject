@@ -15,7 +15,7 @@
   }
   .button {
     position: relative;
-    left: 330px; 
+    left: 330px;
     top: 10px;
     width: 40px;
     height: 40px;
@@ -37,4 +37,5 @@
   .icon {
     margin: 0;
     color: #C69B7B;
+
   }

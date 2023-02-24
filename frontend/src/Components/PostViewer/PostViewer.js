@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palettes';
+import palette from '../../lib/styles/palette';
 import FullButton from '../common/FullButton';
 import Shortcut from '../common/Shortcut';
 import paper_plane_outline from '../../static/img/paper-plane-outline.svg';
 import CommentContainer from '../comment/CommentContainer';
 import ImageSlider from '../common/ImageSlider';
+import { Helmet } from 'react-helmet-async';
 
 const PostViewerBlock = styled.div`
     padding-top: 200px;
@@ -80,11 +81,9 @@ const RentalButton = styled(FullButton)`
 const StyledShorcut = styled(Shortcut)`
     color: ${palette.blue[4]};
 `;
-const PostViewer = ({
-    post,
-    error,
-    loading
-}) => {
+
+
+const PostViewer = ({ post, error,loading}) => {
     const dummyData = [
         { "images": "https://picsum.photos/id/0/1000/1000.jpg" },
         { "images": "https://picsum.photos/id/1/1000/1000.jpg" },
@@ -107,7 +106,7 @@ const PostViewer = ({
     return(
         <PostViewerBlock>
             <PostHead>
-                <h1>title</h1>
+                <h1>{title}</h1>
                 <SubInfo>
                     <span>
                         <b>writer</b>

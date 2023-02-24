@@ -1,4 +1,5 @@
 import client from './client';
+import axios from 'axios';
 
 export const write = ({
     userId,
@@ -17,10 +18,10 @@ export const write = ({
         formData.append('type', type);
         formData.append('title', title);
         formData.append('content', content);
-        
-        if (images != null) {
-            images.forEach((image) => formData.append("images", image));
-        }
+        images.forEach((image) => formData.append("images", image));
+
+        console.log("안빌려줌 ㅅㄱ");
+        client.post('/boards/add', formData);
 }
 
 
