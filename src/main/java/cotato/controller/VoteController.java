@@ -7,7 +7,8 @@ import cotato.exception.PostNotFoundException;
 import cotato.exception.UserNotFoundException;
 import cotato.service.UserService;
 import cotato.service.VoteService;
-import cotato.vo.VotePost;
+import cotato.dto.VoteParticipantDto;
+import cotato.vo.VotePostEntity;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class VoteController {
 
     @GetMapping("/cotato/voate/all")
     public ResponseEntity<ApiResponse> findAllVotePost() {
-        VotePost result = voteService.findVotePostById();
+        VotePostEntity result = voteService.findVotePostById();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("FIND VOTE POST")
@@ -69,6 +70,16 @@ public class VoteController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(votePostDto);
+    }
+
+    @GetMapping("/cotato/vote/participant/{postId}")
+    public ResponseEntity<ApiResponse> getParticipant(@PathVariable Long postId) {
+        VoteParticipantDto dto = voteService.getParticipant(postId);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("GET PARTICIPANT INFO")
+                .data(dto)
+                .build();
     }
 
     @GetMapping("/cotato/vote/{postId}")

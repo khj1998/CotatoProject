@@ -1,15 +1,14 @@
 package cotato.service;
 
-import cotato.dto.CalendarShowUserDto;
 import cotato.dto.VotePostDto;
 import cotato.dto.VoteShowPostDto;
-import cotato.vo.UserEntity;
-import cotato.vo.VotePost;
+import cotato.dto.VoteParticipantDto;
+import cotato.vo.VotePostEntity;
 
 import java.util.List;
 
 public interface VoteService {
-    VotePost findVotePostById();
+    VotePostEntity findVotePostById();
     List<VoteShowPostDto> showAllVotePostsWithVoteShowPostDto();
 
     VoteShowPostDto findVotePost(Long postId);
@@ -30,4 +29,5 @@ public interface VoteService {
     Boolean isUserExist(Long id);
 
     Boolean isPostExist(Long postId);
+    VoteParticipantDto getParticipant(Long postId);
 }
