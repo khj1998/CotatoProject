@@ -129,7 +129,6 @@ public class UserServiceImpl implements UserService {
         }
         String UserName = authenticationStorage.getAuthentication().getPrincipal().toString();
         UserEntity userEntity = userRepository.findByUsername(UserName);
-        log.info("{},{}",userEntity.getUsername(),userEntity.getScore().getMinus());
         if (userEntity.getScore().getMinus() <= -5) {
             throw new UserKickedException("해당 유저는 벌점누적으로 활동이 정지되었습니다.");
         }

@@ -89,7 +89,14 @@ const VoteForm = () => {
     const [offlinevote, setOfflinevote] = useState(0);
     const [onlinevote, setOnlinevote] = useState(0);
     const [voted, setVoted] = useState(false);
+    const [participant,setParticipant] = useState({});
     
+    const getPartcipant = async () => {
+        await axios.get(`http://localhost:8080/cotato/vote/participant/1`)
+            .then((res) => {
+                setParticipant(res.data.data);
+        });
+    }
 
     const submitVote = async (attend) => {
         voteResult.attend = attend;
@@ -158,6 +165,7 @@ const VoteForm = () => {
 
     useEffect(() => {
         getUserId();
+        getPartcipant();
     },[])
     
     return (
@@ -174,6 +182,7 @@ const VoteForm = () => {
             />
             <VotePostButtonBlock>
 
+            대면:{participant.offlineNum} / 비대면: {participant.onlineNum}
             <Divider/>
 
             <Card.Group doubling itemsPerRow={3} stackable>

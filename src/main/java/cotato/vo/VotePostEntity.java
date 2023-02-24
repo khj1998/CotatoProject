@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "vote_posts")
-public class VotePost {
+public class VotePostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
