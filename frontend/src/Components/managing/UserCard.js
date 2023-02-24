@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import MinusButton from './MinusButton';
 import PlusButton from './PlusButton';
@@ -36,16 +36,41 @@ const CardCategory = styled.div`
 `;
 
 const PostCard = ({ user }) => {
-    const updateScore = async() => {
-        await axios.post(`http://localhost:8080/users/score/update`)
+    const updateScore = async(scoreUpdate) => {
+        await axios.post(`http://localhost:8080/users/score/update`,scoreUpdate,{
+            withCredentials : true,
+            headers : {"Content-Type" : "application/json"}
+            ,params : {
+                userId : user.userId
+            }
+        })
         .then((res) => {
-            console.log(res);
+            if (res.data.message == "UPDATE USER SCORE") {
+                alert(res.data.data.userId+"번 감자의 "+"점수가 업데이트 되었습니다.");
+            } else if (res.data.message == "USER NOT FOUND") {
+                alert("존재하지 않는 감자입니다.");
+            } else if (res.data.message == "USER BANNED") {
+                alert("해당 감자는 벌점 누적으로 활동이 정지되었습니다.");
+            }
         });
     }
 
-    const onClick = (e) => {
+    const onPlusClick = (e) => {
+        const scoreUpdate = {
+            "plusUpdate" : 1,
+            "minusUpdate" : 0
+        }
         e.preventDefault();
-        updateScore();
+        updateScore(scoreUpdate);
+    }
+
+    const onMinusClick = (e) => {
+        const scoreUpdate = {
+            "plusUpdate" : 0,
+            "minusUpdate" : -1
+        }
+        e.preventDefault();
+        updateScore(scoreUpdate);
     }
 
     return(
@@ -58,11 +83,11 @@ const PostCard = ({ user }) => {
             </CardTitle>
             <CardTitle>
                 {"상점 : "+user.plus}
-                &nbsp;&nbsp; <PlusButton>상점 부여</PlusButton>
+                &nbsp;&nbsp; <PlusButton onClick = {(e) => onPlusClick(e)}>상점 부여</PlusButton>
             </CardTitle>
             <CardTitle>
                 {"벌점 : "+user.minus}
-                &nbsp;&nbsp; <MinusButton>벌점 부여</MinusButton>
+                &nbsp;&nbsp; <MinusButton onClick = {(e) => onMinusClick(e)}>벌점 부여</MinusButton>
             </CardTitle>
         </PostCardBlock>
     );

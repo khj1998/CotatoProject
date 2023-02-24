@@ -87,6 +87,14 @@ public class ExceptionHandleController {
                 .build();
     }
 
+    @ExceptionHandler(UserKickedException.class)
+    public ResponseEntity<ApiResponse> handleUserKickedException() {
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(false)
+                .message("USER BANNED")
+                .build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleAnnotationException() {
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)

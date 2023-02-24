@@ -3,6 +3,7 @@ package cotato.service;
 import cotato.config.AuthenticationStorage;
 import cotato.dto.UserDto;
 import cotato.dto.UserInfoDto;
+import cotato.dto.UserScoreDto;
 import cotato.exception.*;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
@@ -22,11 +23,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -77,7 +79,7 @@ public class UserServiceImpl implements UserService{
 
     private boolean checkUserExists(String userName) {
         UserEntity user = userRepository.findByUsername(userName);
-        return user!=null;
+        return user != null;
     }
 
     private UserEntity setRoleToUser(UserDto userDto) {
@@ -125,6 +127,12 @@ public class UserServiceImpl implements UserService{
         if (authenticationStorage.getAuthentication() == null) {
             throw new UserNotAuthenticated("인증되지 않은 유저입니다.");
         }
+        String UserName = authenticationStorage.getAuthentication().getPrincipal().toString();
+        UserEntity userEntity = userRepository.findByUsername(UserName);
+        log.info("{},{}",userEntity.getUsername(),userEntity.getScore().getMinus());
+        if (userEntity.getScore().getMinus() <= -5) {
+            throw new UserKickedException("해당 유저는 벌점누적으로 활동이 정지되었습니다.");
+        }
     }
 
     @Override
@@ -163,7 +171,7 @@ public class UserServiceImpl implements UserService{
         }
 
         UserEntity user = userRepository.findByUsername(userInfoDto.getUsername());
-        if (passwordEncoder.matches(userInfoDto.getPassword(),user.getPassword())) {
+        if (passwordEncoder.matches(userInfoDto.getPassword(), user.getPassword())) {
             throw new UserSamePasswordException("이미 사용중인 패스워드입니다.");
         }
 
@@ -197,5 +205,28 @@ public class UserServiceImpl implements UserService{
             );
         });
         return result;
+    }
+
+    @Override
+    public UserInfoDto updateUserScore(Long userId, UserScoreDto userScoreDto) {
+        Optional<UserEntity> user = userRepository.findById(userId);
+        user.orElseThrow(() -> new UserNotExistsException("해당 유저를 찾을 수 없습니다."));
+        UserEntity userEntity = user.get();
+        ScoreEntity scoreEntity = userEntity.getScore();
+
+        if (scoreEntity.getMinus()<=-5) {
+            throw new UserKickedException("해당 유저는 활동이 정지되었습니다.");
+        }
+
+        scoreEntity.setPlus(scoreEntity.getPlus() + userScoreDto.getPlusUpdate());
+        scoreEntity.setMinus(scoreEntity.getMinus() + userScoreDto.getMinusUpdate());
+        userEntity.setScore(scoreEntity);
+        userRepository.save(userEntity);
+
+        return UserInfoDto.builder()
+                .userId(userEntity.getId())
+                .plus(userScoreDto.getPlusUpdate())
+                .minus(userScoreDto.getMinusUpdate())
+                .build();
     }
 }

@@ -2,6 +2,7 @@ package cotato.service;
 
 import cotato.dto.UserDto;
 import cotato.dto.UserInfoDto;
+import cotato.dto.UserScoreDto;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface UserService {
     void modifyUserPassword(UserInfoDto userInfoDto);
     void modifyUserInfo(UserInfoDto userInfoDto);
     List<UserInfoDto> findAllUsers();
+    UserInfoDto updateUserScore(Long userId, UserScoreDto userScoreDto);
 }

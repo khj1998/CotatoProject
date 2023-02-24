@@ -2,17 +2,15 @@ package cotato.controller;
 
 import cotato.dto.UserDto;
 import cotato.dto.UserInfoDto;
+import cotato.dto.UserScoreDto;
 import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -101,11 +99,12 @@ public class UserController {
     }
 
     @PostMapping("/users/score/update")
-    public ResponseEntity<ApiResponse> updateUserScore() {
+    public ResponseEntity<ApiResponse> updateUserScore(@RequestParam Long userId, @RequestBody UserScoreDto userScoreDto) {
+        UserInfoDto userInfoDto = userService.updateUserScore(userId,userScoreDto);
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
                 .message("UPDATE USER SCORE")
-                .data(null)
+                .data(userInfoDto)
                 .build();
     }
 

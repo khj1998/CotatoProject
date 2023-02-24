@@ -21,9 +21,11 @@ const getUserValid = async () => {
       withCredentials: true,
       headers : {"Content-Type" : "application/json"}
    }).then((res) => {
-      console.log(res.data.message);
       if (res.data.message == "USER NOT AUTHENTICATED") {
          alert("로그인을 먼저 진행해주세요.");
+         window.open('http://localhost:3000/login','_self');
+      } else if (res.data.message == "USER BANNED")  {
+         alert("해당 감자는 벌점 누적으로 활동이 정지되었습니다.");
          window.open('http://localhost:3000/login','_self');
       }
    });
