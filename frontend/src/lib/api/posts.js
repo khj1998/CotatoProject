@@ -2,28 +2,27 @@ import client from './client';
 import axios from 'axios';
 
 export const write = ({
+    userId,
     category,
     title,
     content,
+    date,
+    writer,
     images,
+    type
 }) => {
         const formData = new FormData();
 
         formData.append('category', category);
         formData.append('images', images);
+        formData.append('type', type);
         formData.append('title', title);
         formData.append('content', content);
-        axios.post(`http://localhost:8080/boards/add`, formData,
-        {
-            withCredentials: false,
-            headers : {"Content-Type" : "application/json"}}
-        )
-       .then((data) => console.log(data));
-        }
+        images.forEach((image) => formData.append("images", image));
 
-export const readPost = id => client.get(`/api/posts/${id}`); 
-
-
+        console.log("안빌려줌 ㅅㄱ");
+        client.post('/boards/add', formData);
+}
 
 
 

@@ -27,7 +27,7 @@ const WriteContainer = () => {
             value
         }));
     };
-/*
+
     const onUpdate = (startDate, endDate) => {
         var start = splitString(startDate);
         var end = splitString(endDate);
@@ -38,7 +38,6 @@ const WriteContainer = () => {
         }));
     };
 
-*/
     const onSelect = (value) => {
         dispatch(changeField({
             key: "category",
@@ -86,7 +85,7 @@ const WriteContainer = () => {
         <WriteForm
             onChangeField={ onChangeField }
             onDrop={ onDrop }
-            //onUpdate={ onUpdate }
+            onUpdate={ onUpdate }
             onSelect={ onSelect }
             options={ options }
             option={ option }

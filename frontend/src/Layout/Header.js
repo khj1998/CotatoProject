@@ -39,6 +39,8 @@ const Element = styled.div`
     height: 100px;
     display: flex;
     flex-flow: row wrap;
+    background-color: #EEE3CB;
+    z-index: 1;
 `
 
 const Logo = styled.div`
@@ -50,6 +52,7 @@ const Logo = styled.div`
     margin-right: 180px;
     position:relative;
     z-index: 2;
+    background-color: #EEE3CB;
     `
 
 const ShortCut = styled.div`

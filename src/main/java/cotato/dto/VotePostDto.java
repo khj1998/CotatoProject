@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cotato.vo.UserEntity;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +17,9 @@ public class VotePostDto {
 
     private UserEntity author;
 
+    private String title;
+
     private String content;
-
-    private String startYear;
-
-    private String startMonth;
-
-    private String startDay;
-
-    private String endYear;
-
-    private String endMonth;
-
-    private String endDay;
 
     List<Long> participatedUsersId = new ArrayList<>();
 

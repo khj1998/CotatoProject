@@ -8,8 +8,7 @@ import VoteResult from "./Components/VoteResult";
 import VoteCreate from "./Components/VoteCreate";
 import PostList from './Components/PostPage/BoardList/PostList';
 import MyPage from './Components/MyPage/MyPage';
-import WritePage from './write/WritePage';
-import WriteApp from './write/WriteApp';
+
 
 const App = () => {
 
@@ -24,7 +23,6 @@ const App = () => {
             <Route component={VoteCreate} path="/votecreate" />
             <Route component={PostList} path="/postlist" />
             <Route component={MyPage} path="/mypage"/>
-            <Route component = {WritePage} path="/write" exact/>
         </>
     );
 };

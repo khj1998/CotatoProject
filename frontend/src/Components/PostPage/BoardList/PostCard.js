@@ -6,7 +6,7 @@ import palette from '../../../lib/styles/palette';
 const PostCardBlock = styled.div`
     background-color: white;
     width: 400px;
-    height: 300px;
+    height: 100px;
     margin: 20px;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -15,17 +15,28 @@ const PostCardBlock = styled.div`
 const CardTitle = styled.div`
     float: left;
     width: 400px;
-    height: 50px;
+    height: 20px;
     overflow: hidden;
-    text-align: left;
-    padding-top: 10px;
+    text-align: center;
     padding-left: 10px;
 `;
+
+const CardCategory = styled.div`
+    float: left;
+    width: 400px;
+    height: 45px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #191919;
+`
 
 const CardImage = styled.img`
     float: left;
     width: 400px;
-    height: 200px;
+    height: 200px
+    color: #191919;
 `;
 
 const CardNickname = styled.div`
@@ -38,24 +49,24 @@ const CardNickname = styled.div`
 const CardDate = styled.div`
     float: left;
     width: 90px;
-    color: ${ palette.gray[6] }
+    padding-left: 10px;
+    text-align: left;
+    color: #191919;
 `;
 
 const PostCard = ({ item }) => {
+    if (item.username == null) item.username = "어떤 감자";
     return(
-        <Link to={ `/${item.postId}` }>
+        <Link to={ `/board/post/${item.boardPostId}` }>
             <PostCardBlock>
-                <CardImage
-                    src={ item.images[0] }
-                />
+                <CardCategory>
+                    {"카테고리 : "+item.category}
+                </CardCategory>
                 <CardTitle>
-                    { item.title }
+                    {"제목 : "+item.title }
                 </CardTitle>
-                <CardNickname>
-                    { item.nickname }
-                </CardNickname>
                 <CardDate>
-                    { item.createdAt }
+                    { item.createdAt.substr(0,10) }
                 </CardDate>
             </PostCardBlock>
         </Link>

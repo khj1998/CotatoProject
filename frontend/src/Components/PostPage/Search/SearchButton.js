@@ -13,7 +13,7 @@ const Button = styled.button`
     width: 90px;
     height: 40px;
     border-radius: 4px;
-    background-color: ${ palette.blue[1] };
+    background-color: #C69B7B;
     color: #ffffff;
     outline: none;
     border: none;
@@ -22,7 +22,7 @@ const Button = styled.button`
         width: 60px;
         height: 40px;
         border-radius: 4px;
-        background-color: ${ palette.blue[2] };
+        background-color: #F7CCAC;
         color: #ffffff;
         outline: none;
         border: none;

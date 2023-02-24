@@ -4,6 +4,7 @@ import styled from "styled-components";
 import palette from "../lib/styles/palette";
 import ImageUploader from 'react-images-upload'
 import Select from 'react-select';
+import 'react-google-flight-datepicker/dist/main.css';
 import WriteButtonContainer from "./WriteButtonContainer";
 
 

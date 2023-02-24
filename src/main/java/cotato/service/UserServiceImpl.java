@@ -1,10 +1,9 @@
 package cotato.service;
 
 import cotato.config.AuthenticationStorage;
-import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
-import cotato.exception.UserAlreadyExistsException;
-import cotato.exception.UserNotAuthenticated;
+import cotato.dto.UserInfoDto;
+import cotato.exception.*;
 import cotato.repository.RoleRepository;
 import cotato.repository.UserRepository;
 import cotato.vo.Role;
@@ -20,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -32,6 +32,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto saveUser(UserDto userDto) {
+        if (userDto.getUsername().equals("admin@gmail.com")) {
+            UserEntity admin = setRoleToAdmin(userDto);
+            admin.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            admin.setScore(new ScoreEntity());
+            admin.setNickname("ADMIN");
+            userRepository.save(admin);
+            log.info("admin 계정 , {}",admin.getRoles());
+            return userDto;
+        }
+
         if (checkUserExists(userDto.getUsername())) {
             throw new UserAlreadyExistsException(String.format("User %s already exists", userDto.getUsername()));
         } else {
@@ -45,10 +55,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ScoreDto getScore() {
+    public UserInfoDto getUserInfo() {
+        if (authenticationStorage.getAuthentication() == null) {
+            throw new UserNotAuthenticated("인증되지 않은 유저입니다!");
+        }
+
         UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
         ScoreEntity score = user.getScore();
-        return new ScoreDto(score.getPlus(),score.getMinus());
+        return UserInfoDto.builder()
+                .userId(user.getId())
+                .username(user.getUsername())
+                .plus(score.getPlus())
+                .minus(score.getMinus())
+                .nickname(user.getNickname())
+                .build();
     }
 
     private boolean checkUserExists(String userName) {
@@ -70,9 +90,29 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    private UserEntity setRoleToAdmin(UserDto userDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserEntity admin = modelMapper.map(userDto, UserEntity.class);
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+
+        if (adminRole == null) {
+            adminRole = createAdminRole();
+        }
+
+        admin.setRoles(Arrays.asList(adminRole));
+        return admin;
+    }
+
     private Role createRole() {
         Role role = new Role();
         role.setName("ROLE_USER");
+        return roleRepository.save(role);
+    }
+
+    private Role createAdminRole() {
+        Role role = new Role();
+        role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 
@@ -84,6 +124,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void checkAdmin() {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_ADMIN")) {
+                return;
+            }
+        }
+        throw new UserNotAdminException("관리자만 접근 가능합니다.");
+    }
+
+    @Override
     public void setAuthentication() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -92,7 +144,37 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void logoutProcess() {
+        if (authenticationStorage.getAuthentication() == null) {
+            throw new UserAlreadyLogoutException("이미 로그아웃한 유저입니다.");
+        }
+
         SecurityContextHolder.clearContext();
         authenticationStorage.setAuthentication(null);
+    }
+
+    @Override
+    public void modifyUserPassword(UserInfoDto userInfoDto) {
+        if (!userInfoDto.getPassword().equals(userInfoDto.getPasswordConfirm())) {
+            throw new UserPasswordInValidException("패스워드 불일치!");
+        }
+
+        UserEntity user = userRepository.findByUsername(userInfoDto.getUsername());
+        if (passwordEncoder.matches(userInfoDto.getPassword(),user.getPassword())) {
+            throw new UserSamePasswordException("이미 사용중인 패스워드입니다.");
+        }
+
+        user.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void modifyUserInfo(UserInfoDto userInfoDto) {
+        UserEntity user = userRepository.findByUsername(authenticationStorage.getAuthentication().getPrincipal().toString());
+        if (userInfoDto.getNickname().equals(user.getNickname())) {
+            throw new UserSameNickNameException("이미 사용중인 닉네임 입니다.");
+        }
+
+        user.setNickname(userInfoDto.getNickname());
+        userRepository.save(user);
     }
 }

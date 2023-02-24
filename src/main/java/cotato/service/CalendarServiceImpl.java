@@ -80,6 +80,16 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
+    public Boolean canCreateDate(CalendarPostDto calendarPostDto) {
+        if(Integer.parseInt(calendarPostDto.getStartYear()) <= Integer.parseInt(calendarPostDto.getEndYear()))
+            if(Integer.parseInt(calendarPostDto.getStartMonth()) <= Integer.parseInt(calendarPostDto.getEndMonth()))
+                if(Integer.parseInt(calendarPostDto.getStartDay()) <= Integer.parseInt(calendarPostDto.getEndDay()))
+                    return true;
+
+        return false;
+    }
+
+    @Override
     public Boolean isUserExist(Long id) {
         return userRepository.findById(id).isPresent();
     }

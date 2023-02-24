@@ -1,7 +1,7 @@
 package cotato.controller;
 
-import cotato.dto.ScoreDto;
 import cotato.dto.UserDto;
+import cotato.dto.UserInfoDto;
 import cotato.service.UserService;
 import cotato.vo.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -68,21 +68,43 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/users/score")
-    public ResponseEntity<ApiResponse> getUserScore() {
-        ScoreDto scoreDto = userService.getScore();
+    @GetMapping("/users/role")
+    public ResponseEntity<ApiResponse> getUserRole() {
+        UserInfoDto userInfoDto = userService.getUserInfo();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("GET SCORE")
-                .data(scoreDto)
+                .message("GET INFO")
+                .data(userInfoDto)
                 .build();
     }
 
-    @PostMapping("/users/modify")
-    public ResponseEntity<ApiResponse> modifyUser() {
+    @GetMapping("/users/info")
+    public ResponseEntity<ApiResponse> getUserInfo() {
+        UserInfoDto userInfoDto = userService.getUserInfo();
         return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
                 .success(true)
-                .message("MODIFY SUCCESS")
+                .message("GET USER INFO")
+                .data(userInfoDto)
+                .build();
+    }
+
+    @PostMapping("/users/modify/password")
+    public ResponseEntity<ApiResponse> modifyUserPwd(@RequestBody UserInfoDto userInfoDto) {
+        userService.modifyUserPassword(userInfoDto);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("PASSWORD MODIFY SUCCESS")
+                .data(userInfoDto)
+                .build();
+    }
+
+    @PostMapping("/users/modify/info")
+    public ResponseEntity<ApiResponse> modifyUserInfo(@RequestBody UserInfoDto userInfoDto) {
+        userService.modifyUserInfo(userInfoDto);
+        return new ApiResponse.ApiResponseBuilder<>(HttpStatus.OK)
+                .success(true)
+                .message("INFO MODIFY SUCCESS")
+                .data(userInfoDto)
                 .build();
     }
 }

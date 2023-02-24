@@ -26,7 +26,7 @@ const Title = styled.div`
     align-items: center;
     padding-left: 30px;
     a {
-        color: ${palette.blue[0]};
+        color: #AA8B56;
     }
 `;
 
@@ -49,17 +49,17 @@ const HeaderTemplate = () => {
             </Title>
 
             <Nav>
-                <Shortcut
-                    path="/"
-                    //src={ home_outline }
+            <Shortcut
+                    path="/postlist"
+                    src='https://velog.velcdn.com/images/kkaerrung/post/61416348-fc57-47f6-9150-2f9a897b4191/image.png' 
                 />
                 <Shortcut
-                    path="/posts"
-                    //src={ home_outline }
+                    path="/mypage"
+                    src= 'https://velog.velcdn.com/images/kkaerrung/post/9c15ac89-ed7f-4d91-a4de-83e7ff3a2668/image.png'
                 />
                 <Shortcut
-                    path="/user/myPage"
-                    //src={ home_outline }
+                    path="/cotato"
+                    src= 'https://velog.velcdn.com/images/kkaerrung/post/a0f1087c-43a0-45fd-97fc-aca58a841d08/image.png'
                 />
             </Nav>
 

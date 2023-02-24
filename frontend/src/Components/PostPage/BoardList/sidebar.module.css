@@ -1,27 +1,27 @@
 .container {
-    background-color: #E3ECF1;
+    background-color: #C69B7B;
   }
   .sidebar {
-    background-color: #E3ECF1;
-    border-right: 4px solid #202020;
+    background-color: #FFFFE8;
+    border-right: 4px solid #C69B7B;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     transition: 0.4s ease;
-    color: #202020;
+    color: #C69B7B;
     height: 100%;
     z-index: 99;
   }
   .button {
     position: relative;
-    left: 330px; 
+    left: 330px;
     top: 10px;
     width: 40px;
     height: 40px;
     z-index: 99;
     transition: 0.8s ease;
-    border: 2px solid #202020;
+    border: 2px solid #C69B7B;
     border-radius: 40px;
     overflow: hidden;
   }
@@ -36,5 +36,6 @@
   }
   .icon {
     margin: 0;
-    color: #202020;
+    color: #C69B7B;
+
   }
