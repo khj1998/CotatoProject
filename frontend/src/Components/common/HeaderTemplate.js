@@ -47,6 +47,9 @@ const HeaderTemplate = () => {
                     COTATO
                 </Link>
             </Title>
+            <Title>
+                MyPage
+            </Title>
         </HeaderBox>
     );
 };

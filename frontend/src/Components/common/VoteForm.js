@@ -76,7 +76,15 @@ const VoteForm = () => {
         "content": "",
         "userid" : "",
         "attend" : false
+    });
+
+    let [voteResult,setVoteResult] = useState({
+        "title" : "",
+        "content": "",
+        "userid" : "",
+        "attend" : false
     })
+
     const [loading, setLoading] = useState(false);
     const [offlinevote, setOfflinevote] = useState(0);
     const [onlinevote, setOnlinevote] = useState(0);
@@ -84,10 +92,9 @@ const VoteForm = () => {
     
 
     const submitVote = async (attend) => {
-        voteForm.attend = attend;
-        console.log(voteForm);
+        voteResult.attend = attend;
         await axios
-            .post(`http://localhost:8080/cotato/vote/1`,voteForm,{
+            .post(`http://localhost:8080/cotato/vote/1`,voteResult,{
                 withCredentials : true,
                 headers : {"Content-Type" : "application/json"}
             })
@@ -95,17 +102,17 @@ const VoteForm = () => {
                 (response) => {
                     if (response.data == "투표를 완료하였습니다.") {
                         attend == true ? alert("대면으로 투표에 참여하셨습니다.") : alert("비대면으로 투표에 참여하셨습니다.");
-                        window.open('http://localhost:3000/cotato','_self');
+                        history.go(-1);
                     } else if( response.data == "이미 참석에 투표하셨습니다.") {
                         alert("이미 대면으로 투표에 참여하셨습니다.");
                     } else if(response.data == "참석으로 투표를 변경하셨습니다.") {
                         alert("대면으로 투표를 변경하셨습니다.");
-                        window.open('http://localhost:3000/cotato','_self');
+                        history.go(-1);
                     } else if(response.data == "이미 불참에 투표하셨습니다.") {
                         alert("이미 비대면으로 투표에 참여하셨습니다.");
                     } else if(response.data == "불참으로 투표를 변경하셨습니다.") {
                         alert("비대면으로 투표를 변경하셨습니다.");
-                        window.open('http://localhost:3000/cotato','_self');
+                        history.go(-1);
                     }
                 },
                 (error) => {
@@ -125,8 +132,7 @@ const VoteForm = () => {
                 alert('로그인 하지 않은 유저입니다. 로그인을 진행하세요.');
                 window.open('http://localhost:3000/login','_self');
             } else {
-                console.log(res.data.data);
-                localStorage.setItem("Id",res.data.data.userId);
+                voteResult.userid = res.data.data.userId;
     
                     axios.get(`http://localhost:8080/cotato/voate/all`,{
                         withCredentials : false,
@@ -137,7 +143,8 @@ const VoteForm = () => {
                     history.go(-1);
                 } else {
                     setVoteForm(res.data.data);
-                    console.log(voteForm);
+                    voteResult.title = res.data.data.title;
+                    voteResult.content = res.data.data.content;
                 }
             });
             }
@@ -167,7 +174,6 @@ const VoteForm = () => {
             />
             <VotePostButtonBlock>
 
-            대면:{offlinevote} / 비대면: {onlinevote}
             <Divider/>
 
             <Card.Group doubling itemsPerRow={3} stackable>

@@ -71,6 +71,7 @@ const VoteCreateForm = () => {
                 (response) => {
                     if (response.data.message == "NOT ADMIN") {
                         alert("관리자만 투표를 생성할 수 있습니다!");
+                        history.go(-1);
                     } else {
                         alert("투표가 생성되었습니다.");
                         window.open('http://localhost:3000/cotato','_self');
