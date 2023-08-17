@@ -28,8 +28,73 @@
    <img src="https://img.shields.io/badge/React-0088CC?style=flat-square&logo=React&logoColor=white"/>
 
 ## 📌 주요 기능
+- 초기화면 <br/>
+  메인 페이지에 접속했을 때, 로그인이 되어있지 않은 회원은 로그인을 하도록 자동으로 로그인 페이지로 이동합니다.
 
-----------------------------------------------------------------------------------------------------------
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/4b2a3b4e-2957-4ba9-ba79-0fa59b5f2220" alt="image" width="500" height="250" />
+</p>
+
+  
+- <b>로그인</b> <br/>
+  회원 가입을 한 후, 로그인을 진행합니다. <br/>
+  로그인에 성공하면 메인페이지로 이동합니다.
+
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/7dac22e4-4f69-42ba-aa36-6a2a38c5a1b5" alt="image" width="500" height="250" />
+</p>
+
+- <b>메인 페이지</b> <br/>
+  동아리 SNS 계정과 네이버 카페로 이동할 수 있습니다. <br/>
+  네비게이션 바의 항목을 선택하면 해당 페이지로 이동합니다.
+
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/9a64989c-fca5-4ef5-9ea5-cd3945794263" alt="image" width="500" height="250" />
+</p>
+
+- <b>일정 페이지</b> <br/>
+  일정, 시작일, 종료일에 해당하는 값을 입력하고 등록하기 버튼을 누르면 해당하는 일정이 등록됩니다.
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/4cdb4d30-b8be-4191-81d1-2146cd3dec6d" alt="image" width="500" height="300" />
+</p>
+
+- <b>게시글 생성 & 게시판</b> <br/>
+  일반 유저들은 공지사항을 제외한 다른 카테고리로 글을 작성할 수 있습니다. <br/>
+  관리자 유저는 공지사항에 글을 작성할 수 있습니다. <br/>
+  작성한 글은 등록이 가능하며, 게시판에서 내용을 확인할 수 있습니다. <br/>
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/9b918f45-28ec-4c8f-ace5-aa0107e6a777" alt="image" width="500" height="300" />
+</p>
+
+
+- <b>닉네임 변경</b> <br/>
+  닉네임을 설정하지 않은 일반 사용자들의 이름은 기본적으로 '감자'가 됩니다. <br/>
+  이는 마이페이지에서 닉네임을 변경할 수 있고, 비밀번호 또한 변경이 가능합니다. <br/>
+  상,벌점 또한 확인이 가능하도록 구현했습니다.. <br/>
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/a3308b3e-1c31-46db-9a9c-1b254a68e2fd" alt="image" width="500" height="300" />
+</p>
+
+- <b>투표</b> <br/>
+  투표는 관리자로 등록되어 있는 계정만 생성할 수 있습니다.. <br/>
+  메인 페이지에서 투표하기를 누르면, 생성된 투표를 확인할 수 있습니다. <br/>
+ 
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/93967332-ba40-490f-99f2-02d020f7a5b5" alt="image" width="500" height="300" />
+</p>
+
+- <b>관리자 계정 - 상,벌점</b> <br/>
+ 관리자는 모든 회원의 상벌점을 관리할 수 있습니다. <br/>
+특정 회원의 벌점이 5점을 초과할 경우, 그 회원의 아이디를 정지시킵니다. <br/>
+ 
+<p align="center">
+  <img src="https://github.com/khj1998/CotatoProject/assets/109844803/276fa328-8353-43e8-96a6-88111349fb16" alt="image" width="500" height="300" />
+</p>
+
+
+
+
+---------------------------------------------------------------------------------------------------------
 <b>아래 문서는 백엔드와 프론트엔드 개발자들 간의 필요한 정보를 효율적으로 공유하고 협력하는 데 도움을 제공하기 위해 작성되었습니다.</b>
 
 node_modules,package.json 제거하고 다시 npm init할 경우
